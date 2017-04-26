@@ -1,0 +1,219 @@
+@import "variables.scss";
+
+/* -------------------------------------
+ * HIDE CONTENT AT SIZE
+ *
+ * Hide elements by adding the classes
+ * for either mobile or desktop screen
+ * width.
+ ------------------------------------ */
+
+@media only screen and (min-width: 992px) {
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* -------------------------------------
+ * CONTENT
+ *
+ * Style for the content containers
+ ------------------------------------ */
+
+.page-head {
+  display: inline-block;
+  width: 100%;
+}
+
+/* Wrapper for page content for most pages */
+.page-content-frame {
+  padding-right: 20px;
+}
+
+@media (min-width: 0px) and (max-width: 991px) {
+  .page-content-frame {
+    padding-right: 0;
+  }
+}
+
+.content-margin-fix {
+  margin-left: 0px;
+  margin-right: 20px;
+}
+
+/* 74px to push content away from "top nav" */
+.page-container {
+  margin-top: $top-nav-height;
+  padding-left: 0;
+  padding-right: 0;
+
+}
+
+.page-main-content {
+  position: relative;
+}
+
+.page-content-wrapper {
+  z-index: 0;
+}
+
+.page-content-wrapper .page-main-content {
+  /* set height to position loading */
+  min-height: 100%;
+}
+
+@media (min-width: 992px) {
+  .page-content-wrapper .page-main-content {
+    margin-left: 269px;
+    min-width: 850px;
+    min-height: 100%;
+    padding-left: 0;
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 991px) {
+  .page-main-content {
+    padding-left: 20px;
+    padding-right: 20px; 
+  }
+}
+
+@media (min-width: 992px) {
+  .page-content-wrapper .page-main-content {
+    
+  }
+}
+
+/* Workaround fix to display & align content correct */
+.page-head:after, .page-head:before {
+  display: none !important;
+}
+
+.page-inner-content {
+  /* Replace later with variable for inner menu width + 20px */
+  margin-left: 270px;
+}
+
+@media (max-width: 767px) {
+  .page-inner-content {
+    margin-left: 0;
+  }
+}
+
+/* -------------------------------------
+ * CONTENT: COLUMN
+ *
+ * New and overriding bootstrap 
+ * column style.
+ * Related group: "content";
+ ------------------------------------ */
+
+/* Override bootstrap margins */
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (min-width: 767px) and (max-width: 991px) {
+  .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    padding-left: 0;
+    padding-right: 20;
+  }
+}
+
+/* workaround to keep page width not overflow*/
+.col-xs-12-mod {
+  width: calc(100% - 20px);
+  position: relative;
+  min-height: 1px;
+  float: left;
+}
+
+@media (min-width: 0px) and (max-width: 991px) {
+  .col-xs-12-mod {
+    width: 100%;
+  }
+}
+
+/* workaround for aligning columns in getmarket */
+@media (max-width: 991px) { 
+.align-col-market {
+display: inline-block;
+width: 100%;
+  }
+}
+
+/* Utilized in pages that uses the class
+"forcepush" to compensate column width.
+Basically to keep both columns at 50% each. */
+.col-md-6-mod-10 {
+  width: calc(50% - 10px);
+  position: relative;
+  min-height: 1px;
+  float: left;
+}
+
+@media (min-width: 0px) and (max-width: 991px) {
+  .col-md-6-mod-10 {
+    width: 100%;
+  }
+}
+
+.col-md-6-mod-20 {
+  width: calc(50% - 20px);
+  position: relative;
+  min-height: 1px;
+  float: left;
+}
+
+@media (min-width: 0px) and (max-width: 991px) {
+  .col-md-6-mod-20 {
+    width: 100%;
+  }
+}
+
+/* Push content to right side,
+creates a right side column
+for selected groups (competitions) */
+.col-md-forcepush {
+  position: absolute;
+  top: 0;
+  padding-right: 20px;
+}
+
+@media (max-width: 992px) {
+  .col-md-forcepush {
+    position: static;
+    top: auto;
+    margin-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* Modified version of col-md-forcepush
+to adapt to the html structure of the
+market settings page */
+.col-md-forcepush-mod {
+  position: absolute;
+  top: 0;
+  padding-left: 10px;
+}
+
+@media (max-width: 992px) {
+  .col-md-forcepush-mod {
+    position: static;
+    top: auto;
+    margin-left: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+

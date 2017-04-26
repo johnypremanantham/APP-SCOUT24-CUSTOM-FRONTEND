@@ -1,0 +1,33 @@
+@import "variables.scss";
+
+/* -------------------------------------
+ * VALIDATION STATES
+ *
+ * Form, alerts, errors
+ ------------------------------------ */
+.input-text-error {
+  position: relative;
+  z-index: 5;
+  background-color: #fff;
+  color: #e53935;
+  border-top: 3px solid #e53935;
+  margin: -2px 0 -20px 0;
+  display: block;
+} 
+
+.input-checkbox-error {
+  display: block;
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  background: rgba(229, 57, 53, 0.15);
+  border: 1px solid #e53935;
+  padding: 3px 10px 3px 10px;
+  color: #e53935;
+}
+
+.selected-sports {
+  position: absolute;
+  top: 7px;
+  right: 3px;
+}

@@ -1,0 +1,402 @@
+@import "variables.scss";
+
+/* -------------------------------------
+ * TABLE
+ *
+ * Styling content in regular table
+ ------------------------------------ */
+th {
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+.table-head-row {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.table-head-label {
+  border-top: none !important;
+}
+
+.table > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 1px solid $main-border-color;
+}
+
+.fixed-scroll {
+  max-height: 300px;
+  overflow-y: auto !important;
+}
+
+.table-scrollable {
+  border: none !important;
+  border-top: 1px solid #e7ecf1 !important;
+  border-bottom: 1px solid #e7ecf1 !important;
+}
+
+/* Remove 300px height limitation when box is expanded (for select competitions)  */
+.portlet.box.portlet-fullscreen > div > .table-scrollable.fixed-scroll {
+  max-height: none;
+}
+
+.has-info .md-checkbox label, .has-info.md-checkbox label {
+  border-top: none;
+}
+
+/* checkbox table entry (label) */
+.has-info .md-checkbox label,
+.has-info.md-checkbox label {
+  padding: 10px 0 10px 35px;
+  width: 100%;
+}
+
+/* checkbox, box */
+.has-info .md-checkbox label > .box, .has-info.md-checkbox label > .box {
+  top: calc(30% + 1px);
+  left: 13px;
+}
+
+/* checkbox rectangle size */
+.md-checkbox label > .box {
+  height: 12px !important;
+  width: 12px !important;
+  border: 1px solid $main-text-color !important;
+  z-index: 2 !important;
+}
+
+/* checkbox, unchecked (hidden) */
+.md-checkbox label > .check {
+  top: 27% !important;
+  left: 13px !important;
+  z-index: 0 !important;
+//  Display the hidden check
+//  when working with its position:
+//  opacity: 1 !important;
+//  background: red;
+}
+
+/* checkbox, checked */
+.md-checkbox input[type=checkbox]:checked ~ label > .check {
+  top: 23% !important;
+  left: 13px !important;
+}
+
+/* checkbox interactive bubble animation */
+.md-checkbox label > span.inc {
+  left: -5px !important;
+  top: 2px !important;
+  height: 45px !important;
+  width: 45px !important;
+}
+
+/* bubble animation */
+/* Not overwriting for some reason */
+@-webkit-keyframes growCircle {
+  0%, 100% {
+    -webkit-transform: scale(0);
+    opacity: 1; }
+  70% {
+    background: #eee;
+    -webkit-transform: scale(1.25); } }
+
+@-moz-keyframes growCircle {
+  0%, 100% {
+    -moz-transform: scale(0);
+    opacity: 1; }
+  70% {
+    background: rgba(66, 165, 245, 0.6) !important;
+    -moz-transform: scale(1.25); } }
+
+@keyframes growCircle {
+  0%, 100% {
+    transform: scale(0);
+    opacity: 1; }
+  70% {
+    background: rgba(66, 165, 245, 0.6) !important;
+    transform: scale(1.25);
+    } }
+
+/* ----------------
+ * CHECKBOX COLORS
+ --------------- */
+
+/* label */
+.has-info .md-checkbox label, .has-info.md-checkbox label {
+  color: $main-text-color !important;
+}
+
+/* checkbox */
+.has-info .md-checkbox label > .box, .has-info.md-checkbox label > .box {
+  border-color: $main-accent-color;
+}
+
+/* check */
+.has-info .md-checkbox label > .check, .has-info.md-checkbox label > .check {
+  color: $main-accent-color;
+}
+
+
+/* ----------------
+ * MARKET TABLE
+ * POINTS
+ --------------- */
+input[type="text"].points-input {
+  padding: 10px 0 10px 0;
+}
+
+/* Appeal Points input disabled */
+input[type="text"].points-input:disabled {
+  border: none !important;
+  background: transparent;
+  background-color: transparent;
+  border-radius: 100% !important;
+  width: 45px !important;
+  text-align: center !important;
+}
+
+/* Appeal Points input disabled, on hover */
+input[type="text"].points-input:disabled:hover {
+  cursor: pointer;
+}
+
+/* Only the text (label) will be clickable,
+instead of the entire column */
+.feed-table-label {
+    width: auto !important;
+}
+
+/* positioning to enable on hover circle on appeal points */
+.table-fixed-head * > input[type="text"].points-input {
+//  padding-left: 18px;
+//  margin-left: -18px;
+  transition: .2s;
+  border: 1px solid #eee;
+  border-radius: 0;
+  height: 40px;
+  width: 70px;
+  text-align: left;
+  padding: 0 10px;
+}
+
+.table-fixed-head * > input[type="text"].points-input:disabled:hover {
+  cursor: pointer;
+  background-color: #eee;
+  border-radius: 100%;
+  transition: .2s;
+}
+
+.table-fixed-head * > input[type="text"].points-input.points-active {
+  border-radius: 0 !important;
+  height: 31px;
+  width: 70px;
+  text-align: left;
+  padding: 0 10px;
+}
+
+
+/* ----------------
+ * TABLE EXPANDED
+ --------------- */
+.portlet-fullscreen * > .table-container-height {
+  max-height: 100%;
+}
+
+.portlet-fullscreen * > .portlet.box {
+  overflow: auto;
+}
+
+.portlet-fullscreen * > portlet-body form {
+  overflow: hidden;
+}
+
+
+/* -------------------------------------
+ * FIXED HEAD TABLE
+ *
+ * Specific styling for tables
+ * with fixed headers
+ ------------------------------------ */
+.table-fixed-head {
+  position: relative;
+  /* Table head height */
+  //  padding-top: 37px;
+  /* Table head height temporary workaround */
+  padding-top: 56px;
+  /* Table head row color */
+  background: #fff;
+  cursor: auto;
+  /* workaround */
+  overflow: hidden;
+}
+
+.table-fixed-head * > table {
+  width: 100%;
+}
+
+.table-container-height {
+  overflow-y: auto;
+  min-height: 50px;
+  max-height: 300px;
+  border-top: 1px solid #e7ecf1;
+  border-bottom: 1px solid #e7ecf1;
+}
+
+.table-fixed-head * > th {
+  background: transparent;
+  border-bottom:1px solid #eee;
+  color: $main-text-color;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 20px;
+}
+
+.table-fixed-head * > td {
+  background: transparent;
+//  border-bottom:1px solid #eee;
+  color: $main-text-color;
+  padding: 5px 20px 4px 20px;
+}
+
+@media (max-width: 991px) {
+  .table-fixed-head * > td {
+    /* shrink spacing on mobile */
+    padding: 5px 0px 4px 10px;
+  }
+}
+
+.table-head-label > .md-checkbox.has-info {
+  /* positioning workaround for table head checkbox "Team" */
+  margin-left: -10px;
+  margin-left: -18px;
+  margin-top: -10px;
+}
+
+.table-head-label > .md-checkbox.has-info > label {
+  margin-left: 20px;
+}
+
+.table-fixed-head * > tbody > tr:nth-child(odd) {
+  background-color: #fbfcfd;
+}
+
+.table-fixed-head * > tbody > tr:nth-child(even) {
+  background-color: #fff;
+}
+
+.table-fixed-head * > th {
+  height: 0;
+  line-height: 0;
+  padding-top: 0 ;
+  padding-bottom: 0;
+  color: transparent;
+  border: none;
+  white-space: nowrap;
+}
+
+.table-fixed-head * > th .table-head-label {
+  position: absolute;
+  background: transparent;
+  top: 0;
+  color: $main-text-color;
+  margin-left: 6px;
+  line-height: normal;
+  /* positioning of reglar labels within table-fixed-head class */
+  padding-top: 10px;
+  padding-left: 12px;
+}
+
+/* -------------------------------------
+ * TABLE ADS TAB
+ *
+ * The table appearing in the ads tab
+ * in SCM.
+ ------------------------------------ */
+
+.create-ad-container {
+  
+  .create-ad-select-item {
+    display: block;
+    float: left;
+    margin-right: 10px;
+  }
+}
+
+#ad-list-tools {
+  margin-bottom: 10px;
+  position: relative;
+  
+  input[type="text"] {
+    height: 38px;
+    padding: 8px 20px 7px 10px;
+    margin-left: -7px;
+    width: 50%;
+    outline: none;
+    text-indent: 30px;
+  }
+  
+  .fa.fa-search {
+    position: absolute;
+    top: 13px;
+    left: 144px;
+    font-size: 15px;
+    color: #c2c2c2;
+  }
+  
+}
+
+
+#ad-list-market {
+  background-color: #fff;
+  padding: 30px;
+  max-width: 1300px;
+  
+  table {
+    width: 100%;
+  }
+  
+  thead {
+    th {
+      padding-bottom: 25px;
+      padding-left: 25px;
+      font-weight: 600;
+    }
+  }
+  
+  tfoot {
+    td {
+      padding-top: 35px;
+    }
+  }
+  
+  tbody {
+    td {
+      padding-top: 15px;
+      padding-right: 15px;
+      padding-bottom: 15px;
+      padding-left: 25px;
+      max-width: 300px;
+    }
+    
+    tr:nth-child(odd) {
+      background-color: #f8f8f8;
+    }
+    
+    tr:first-child {
+      border-top: 1px solid #e2e2e2;
+    }  
+    
+    tr:last-child {
+      border-bottom: 1px solid #e2e2e2;
+    }
+  }
+
+  .icon {
+    width: 15px;
+    height: auto;
+    max-height: 17px;
+    max-width: 20px;
+  }
+  
+
+}

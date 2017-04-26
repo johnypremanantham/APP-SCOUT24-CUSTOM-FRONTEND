@@ -1,0 +1,161 @@
+@import "variables.scss";
+
+/* -------------------------------------
+ * PORTLET: BOXED
+ *
+ * Encapsulate content in box
+ ------------------------------------ */
+
+/* boxed-2col-# are used in the
+"Create a New Market" and "Market Settings"
+page, to dynamically fill the right side
+with selected groups (competitions) */
+.boxed-2col-left {
+  padding-left: 0;
+  padding-right: 10px;
+}
+
+@media (min-width: 0px) and (max-width: 991px) {
+    .boxed-2col-left {
+      padding-left: 0;
+      padding-right: 0;
+  }
+}
+
+.boxed-2col-right {
+  padding-right: 0;
+  padding-left: 10px;
+}
+
+@media (min-width: 0px) and (max-width: 991px) {
+  .boxed-2col-right {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+/* Used in Manage Feed (Get Feed)
+Make columns next to each other equally
+tall, to ensure clean stacking columns. By
+clearing the nth-child columns' left side.
+
+Xn+Y, X is columns in each viewport row
+Y is X+1, to select the first column in the
+next row. */
+@media (min-width:768px) and (max-width: 991px) {
+  .row-2col > div:nth-child(1n+2) {
+    clear: left;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .row-2col > div:nth-child(2n+3) {
+    clear: left;
+  }
+}
+@media (min-width: 1200px) {
+  .row-2col > div:nth-child(2n+3) {
+    clear: left;
+  }
+}
+
+/* Used in Manage Feed (Get Feed)
+Add margin-right and margin-left
+to leave a gap between the two columns */
+@media (min-width: 992px) {
+  /* Add margin to all left column */
+  .row-2col > div:nth-child(odd) {
+    padding-right: 10px;
+  }
+
+  .row-2col > div:nth-child(even) {
+  /* Add margin to all right column */
+    padding-left: 10px;
+  }
+}
+
+/* Regular white box*/
+.boxed-reg {
+  border: $main-border;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.boxed-reg-nomargin {
+  border: $main-border;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 20px;
+}
+
+/* Box title */
+.box-headline {
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.box-form-headline-wrapper {
+  padding-top: 19px;
+  display: inline-block;
+}
+
+/* Box headline panel */
+.box-form-headline-panel {
+  margin-top: -20px;
+  margin-left: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: calc(100% + 40px);
+  height: 55px;
+}
+
+.hr-headline-panel {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+/* colored header boxes */
+.portlet {
+  margin-bottom: 20px !important;
+}
+
+/* Workaround to fix box portlet title on mobile */
+@media (max-width: 991px) {
+  .portlet-title-xs {
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+/* Options for portlets (boxes), unlike "tools" which are ways to manipulate portlets */
+.options {
+  float: right;
+}
+
+/* ----------------
+ * BOX HEADING 
+ * COLORS
+ --------------- */
+
+/* Main accent color */
+.portlet.box.accent-color {
+  border: 1px solid $main-border-color;
+  border-top: 0;
+}
+
+.portlet > .portlet-body.blue, .portlet.accent-color {
+  background-color: $main-accent-color;
+}
+
+.portlet.box.accent-color > .portlet-title {
+  background-color: $main-accent-color;
+  /* workaround to display the default cursor on preview-popup headline */
+  cursor: auto;
+}
+
+/* Header icon color */
+.portlet > .portlet-title > .caption > i {
+  color: #fff !important;
+}

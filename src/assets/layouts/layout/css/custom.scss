@@ -1,0 +1,89 @@
+/* here you can put your own css to customize and override the theme */
+
+@import "variables.scss";
+@import "sandbox.scss";
+/* ------------------------- */
+@import "navigation.scss";
+@import "accordion-tab-menu-mobile.scss";
+@import "hamburger-button.scss";
+@import "content-column.scss";
+@import "portlet-box.scss";
+@import "table.scss";
+@import "card.scss";
+@import "buttons.scss";
+@import "scrollbar.scss";
+@import "preview-tool.scss";
+@import "icons.scss";
+@import "text-font.scss";
+@import "validation.scss";
+
+/* -------------------------------------
+ * GENERAL
+ *
+ * General styling for the website
+ ------------------------------------ */
+
+body {
+  background-color: $site-bg-color;
+  font-family: $ff-main !important;
+  font-size: $fs-nav-menu;
+  letter-spacing: -0.5px;
+  min-width: 320px;
+}
+
+.body-desktop {
+  min-width: 1250px !important;
+//  overflow-x: hidden;
+}
+
+.hidden-obj {
+  display: none !important;
+}
+
+/* coloring fontawesome icons */
+.color-white {
+  color: #fff;
+}
+
+/* coloring fontawesome icons */
+.color-black {
+  color: #333;
+}
+
+.clickable {
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+/* -------------------------------------
+ * DATE & TIME
+ *
+ * Styling date & time picker
+ ------------------------------------ */
+.date-picker-wrapper {
+  padding-right: 4px;
+}
+
+.time-picker-wrapper { 
+  padding-left: 4px;
+}
+
+/* -------------------------------------
+ * FLOAT
+ *
+ * Float directions
+ ------------------------------------ */
+
+.float-l {
+  float: left;
+}
+
+.float-r {
+  float: right;
+}

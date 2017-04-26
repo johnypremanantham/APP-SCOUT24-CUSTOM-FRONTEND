@@ -1,0 +1,44 @@
+<div *ngIf = "showComponent">
+<!-- BEGIN PAGE HEAD-->
+<div class="page-head">
+  <!-- BEGIN PAGE TITLE -->
+
+  <div class="page-title">
+    <h1>Market: {{store.marketName}}
+
+      <small>Description: {{store.marketDescription}}</small>
+      <!--
+            <small>Market name: <b>{{storeservice.marketName}}</b></small>
+      -->
+      <!--      <small>Adjust the feed to customize and prioritize the games to be shown in the ad</small>-->
+    </h1>
+  </div>
+
+  <div class="page-btn-container">
+    <i class="icon-settings hide-desktop"></i> <!--(click)="editMarket();"-->
+  </div>
+
+  <!-- END PAGE TITLE -->
+
+</div>
+<!-- END PAGE HEAD-->
+</div>
+
+
+
+
+<div>
+  <input type="text" [(ngModel)]="objectId" />
+
+
+
+
+  <button (click) = "getData();">Get data</button>
+
+  <div>
+    {{objectData}}
+  </div>
+
+</div>
+
+

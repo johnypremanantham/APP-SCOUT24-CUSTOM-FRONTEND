@@ -1,0 +1,368 @@
+@import "variables.scss";
+
+/* -------------------------------------
+ * SPORTSBOOK PREVIEW
+ *
+ * Styling for the preview tool
+ ------------------------------------ */
+
+/* ----------------
+ * PREVIEW BUTTON
+ --------------- */
+#preview-button {
+  border-radius: 100%;
+  width: $preview-btn-size;
+  height: $preview-btn-size;
+  background-color: dodgerblue;
+  position: fixed;
+  bottom: $preview-bottom;
+  right: $preview-right;
+  /* material design shadow */
+  box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+  /* Previous shadow */
+//  box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  transition: .5s;
+}
+
+@media (max-width: 767px) {
+  #preview-button {
+    width: $preview-btn-mobile-size;
+    height: $preview-btn-mobile-size;
+    bottom: $preview-mobile-bottom;
+    right: $preview-mobile-right;
+  }
+}
+
+#preview-button:hover {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  bottom: calc($preview-bottom + 1px);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  #preview-button:hover {
+    bottom: ($preview-mobile-bottom + 1px);
+  }
+}
+
+#preview-button.preview-button-expand {
+  opacity: 1;
+  width: 300px;
+  height: 312px;
+  box-shadow: none;
+  background-color: transparent;
+  visibility: hidden;
+  border-radius: $rounded-corners;
+  transition: All .5s cubic-bezier(0, 0, 0, 1);
+}
+
+#preview-button-icon {
+  cursor: pointer;
+  transition: .2s;
+  height: 100%;
+  width: auto;
+  padding: 18px;
+}
+
+#preview-button-icon.hide-me,
+#preview-sidebar.hide-me {
+  visibility: hidden;
+}
+
+/* ----------------
+ * PREVIEW BUTTON
+ * LABEL
+ --------------- */
+.preview-button-label-bubble {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  background-color: dodgerblue;
+  height: auto;
+  width: auto;
+  padding: 5px 10px;
+  color: #fff;
+  text-align: center;
+  /* position above the preview button */
+  top: -72px;
+  border-radius: $rounded-corners;
+//  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+  transition: All .2s cubic-bezier(0, 0, 0, 1);
+}
+
+/* Label (speech bubble) triangle */
+.preview-button-label-bubble:after {
+  content: "";
+  position: absolute;
+  bottom: -13px;
+  left: 25px;
+  border-width: 13px 10px 0;
+  border-style: solid;
+  border-color: #1e90ff transparent;
+  display: block;
+  width: 0;
+}
+
+.preview-button-label-bubble.label-hover {
+  opacity: 1;
+  visibility: visible;
+  transition: all .5s;
+  box-shadow: 0px -1px 13px rgba(0, 0, 0, 0.3), 0px 7px 12px rgba(0, 0, 0, 0.22);
+  transition: All .2s cubic-bezier(0, 0, 0, 1);
+}
+
+
+/* ----------------
+ * PREVIEW POPUP
+ --------------- */
+#preview-popup {
+  cursor: pointer;
+  transition: all .4s cubic-bezier(0, 1.04, 1, 1);
+  border-radius: 100%;
+  position: fixed;
+  bottom: $preview-bottom;
+  right: $preview-right;
+  border-radius: $rounded-corners;
+  height: $preview-btn-size;
+  width: $preview-btn-size;
+  background-color: white;
+  box-shadow: 0 0px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  opacity: 0;
+  visibility: hidden; 
+}
+
+@media (max-width: 767px) {
+  #preview-popup {
+//    bottom: $preview-mobile-bottom;
+//    right: $preview-mobile-right;
+//    height: $preview-btn-mobile-size;
+//    width: $preview-btn-mobile-size; 
+    bottom: 0;
+    right: 0;
+    height: 100% !important;
+    width: 100% !important;
+    padding-top: $top-nav-height;
+  }
+}
+
+#preview-popup > .portlet.box {
+  border: none;
+  margin-bottom: 0 !important;
+}
+
+.preview-popup-content {
+  padding: 0 10px 10px 10px;
+  height: 250px;
+  width: 100%;
+}
+
+.show-preview-popup#preview-popup {
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.3s cubic-bezier(0, 0.8, 1, 1);
+  height: 350px;
+  width: 300px;
+  z-index: 9;
+}
+
+.preview-popup-expand#preview-popup {
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  height: 800px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0, 0.8, 1, 1);
+}
+
+#preview-popup * > .caption {
+  text-transform: uppercase;
+}
+
+/* Table height */
+#preview-popup * > .table-container-height {
+  max-height: 200px;
+}
+
+#preview-popup .options-wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  margin-left: -10px;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  border-bottom-left-radius: $rounded-corners;
+  border-bottom-right-radius: $rounded-corners;
+  z-index: 2;
+  
+}
+
+/* ----------------
+ * PREVIEW SIDEBAR
+ --------------- */
+
+/* BEGIN TEMPORARY WORKAROUND FOR TABLE ALTERNATE COLOR (USING TBODY, INSTEAD OF TR)*/
+#preview-sidebar * > tbody:nth-child(odd) {
+  background-color: #fbfcfd;
+}
+
+#preview-sidebar * > tbody:nth-child(even) {
+  background-color: #fff;
+}
+
+#preview-sidebar * > .table-fixed-head * > tbody * > tr:nth-child(odd) {
+  background-color: transparent;
+}
+
+#preview-sidebar * > .table-fixed-head * > tbody  * > tr:nth-child(odd) {
+  background-color: transparent;
+}
+/* END TEMPORARY WORKAROUND FOR TABLE ALTERNATE COLOR (USING TBODY, INSTEAD OF TR)*/
+
+.preview-sidebar-content-wrapper.slide-in {
+  right: -300;
+//  transition: 2s;
+}
+
+.preview-sidebar-wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 300px;
+}
+
+.preview-sidebar.show-preview-sidebar {
+  right: 0;
+  z-index: 10;
+  transition: All 0.5s cubic-bezier(0, 0.71, 0.29, 0.99);
+}
+
+.preview-sidebar {
+  height: calc(100% - 95px); 
+  top: 95px;
+  width: 300px;
+  border-top-left-radius: $rounded-corners;
+  border-bottom-left-radius: $rounded-corners;
+  background-color: white;
+  float: right;
+  right: -300px;
+  position: fixed;
+  padding: 20px 20px 71px 20px;
+  box-shadow: rgba(0, 0, 0, 0.08431) 0px 4px 7px 0px;
+  /* slide out animation time for preview sidebar */
+  transition: All 0.5s cubic-bezier(0.06, 1.35, 0.6, 1.05);
+}
+
+.preview-sidebar.show-preview-sidebar {
+  right: 0;
+  /* slide in animation time for preview sidebar */
+  transition: All 0.5s cubic-bezier(0, 0.71, 0.29, 0.99);
+}
+
+#preview-sidebar-content-wrapper {
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+/* positioning of icons in preview sidebar */
+#preview-sidebar * > .tools {
+  float: right;
+  padding-top: 20px;
+  display: inline-block;
+}
+
+/* horizontal spacing of icons in preview sidebar */
+#preview-sidebar * > .tools > * {
+  margin-left: 5px;
+}
+
+#preview-sidebar .options-wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  margin-left: -20px;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  z-index: 2;
+}
+
+/* -------------------------------------
+ * PREVIEW POPUP & SIDEBAR
+ *
+ * Table row colors
+ ------------------------------------ */
+//#preview-sidebar * > .table-fixed-head * > tbody > tr:nth-child(4n+1),
+//#preview-popup * > .table-fixed-head * > tbody > tr:nth-child(4n+1)
+//#preview-sidebar * > .table-fixed-head * > tbody > tr:nth-child(4n+2),
+//#preview-popup * > .table-fixed-head * > tbody > tr:nth-child(4n+2){
+//  background-color: #fbfcfd;
+//}
+//
+//#preview-sidebar * > .table-fixed-head * > tbody > tr:nth-child(4n+3),
+//#preview-popup * > .table-fixed-head * > tbody > tr:nth-child(4n+3)
+//#preview-sidebar * > .table-fixed-head * > tbody > tr:nth-child(4n+4),
+//#preview-popup * > .table-fixed-head * > tbody > tr:nth-child(4n+4){
+//  background-color: red;
+//}
+
+
+/* -------------------------------------
+ * PREVIEW POPUP & SIDEBAR
+ *
+ * Icons
+ ------------------------------------ */
+.fullscreen-icon, .fullscreen-collapse-icon {
+  font-family: FontAwesome;
+}
+
+a.fullscreen-icon:hover, a.fullscreen-collapse-icon:hover {
+  text-decoration: none;
+}
+
+.fullscreen-icon:before {
+  content: "\f065";
+}
+
+.fullscreen-icon.color-white:hover {
+  .fullscreen-icon {
+    color: #fff;
+  }
+}
+
+/* hide fullscreen icon on mobile */
+@media (max-width: 991px) {
+  .fullscreen-icon {
+    display: none !important;
+  }
+}
+
+.fullscreen-collapse-icon:before {
+  content: "\f066";
+}
+
+.collapse-icon-white {
+  background-image: url(./img/portlet-collapse-icon-white.png);
+  width: 14px;
+  height: 14px;
+}
+
+.collapse-icon-black {
+  background-image: url("./img/portlet-collapse-icon-black.png");
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+}
+
+#preview-sidebar * > .tools > .reload {
+  background-image: url(./img/portlet-reload-icon-black.png);
+  width: 13px;
+  display: inline-block;
+  height: 14px;
+}

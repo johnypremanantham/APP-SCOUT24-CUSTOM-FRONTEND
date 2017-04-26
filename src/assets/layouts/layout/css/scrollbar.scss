@@ -1,0 +1,101 @@
+@import "variables.scss";
+
+/* -------------------------------------
+ * SCROLLBAR (webkit)
+ *
+ * Styling webkit scrollbars
+ ------------------------------------ */
+
+/* Table competitions select menu */
+/* Scroll */
+div.mousescroll {
+  overflow: hidden;
+  transition: 2s;
+}
+ 
+div.mousescroll:hover {
+  overflow-y: scroll;
+  transition: 2s;
+}
+
+.table-container-height::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-container-height::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+
+/* normal state for thumb */
+.table-container-height::-webkit-scrollbar-thumb {
+  background: #cecece;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+
+/* On hover thumb color */
+.table-container-height::-webkit-scrollbar-thumb:hover {
+  background: #b5b5b5;
+}
+
+/* normal state scroll background */
+.table-container-height::-webkit-scrollbar-track {
+  background: #ececec;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+
+/* on hover scrollbar background */
+.table-container-height::-webkit-scrollbar-track:hover {
+  background: #ececec;
+}
+
+.table-container-height::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0);
+}
+
+
+/* ----------------
+ * LEFT SIDEBAR
+ * SCROLLBAR
+ * (webkit)
+ --------------- */
+.accordion-menu::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.accordion-menu::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+
+/* normal state for thumb */
+.accordion-menu::-webkit-scrollbar-thumb {
+  background: #cecece;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+
+/* On hover thumb color */
+.accordion-menu::-webkit-scrollbar-thumb:hover {
+  background: #b5b5b5;
+}
+
+/* normal state scroll background */
+.accordion-menu::-webkit-scrollbar-track {
+  background: #fff;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+
+/* on hover scrollbar background */
+.accordion-menu::-webkit-scrollbar-track:hover {
+  background: #fff;
+}
+
+.accordion-menu::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0);
+}

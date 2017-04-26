@@ -1,0 +1,77 @@
+@import "variables.scss";
+
+/* -------------------------------------
+ * ICONS
+ *
+ * General Icons and Font Awesome
+ ------------------------------------ */
+
+/* Sidebar arrow */
+.page-sidebar
+.page-sidebar-menu li>a>.arrow.open:before,
+.page-sidebar .page-sidebar-menu li>a>.arrow:before,
+.page-sidebar-closed.page-sidebar-fixed
+.page-sidebar:hover
+.page-sidebar-menu li>a>.arrow.open:before,
+.page-sidebar-closed.page-sidebar-fixed
+.page-sidebar:hover
+.page-sidebar-menu li>a>.arrow:before {
+  color: $main-accent-color;
+}
+
+/* Sidebar arrow again */
+.page-sidebar
+.page-sidebar-menu>li>a>.arrow.open:before,
+.page-sidebar
+.page-sidebar-menu>li>a>.arrow:before,
+.page-sidebar-closed.page-sidebar-fixed
+.page-sidebar:hover
+.page-sidebar-menu>li>a>.arrow.open:before,
+.page-sidebar-closed.page-sidebar-fixed
+.page-sidebar:hover
+.page-sidebar-menu>li>a>.arrow:before {
+  color: $main-accent-color;
+}
+
+/* Expand to fullscreen icon */
+.portlet.box > .portlet-title > .tools > a.fullscreen {
+  text-decoration: none;
+}
+
+/* Market settings cog wheel icon */
+button.settings-cog {
+  background-image: url(./img/settings-cog.png);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: transparent;
+  height: 20px;
+  float: right;
+  width: 20px;
+  border: none;
+  margin-top: 14px;
+}
+
+button.settings-cog span {
+/* Hide market settings icon label.
+Solely used to identify the button */
+  display: none;
+}
+
+/* mobile settings cog icon */
+@media (max-width: 991px) {
+  .icon-settings {
+    font-size: 23px;
+    margin-top: 6px;
+  }
+}
+
+.portlet > .portlet-title > .tools > a {
+  opacity: .9;
+  color: #fff;
+}
+
+/* expand icon hover behaviour */
+.portlet > .portlet-title > .tools > a {
+  opacity: .7;
+}

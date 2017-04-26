@@ -1,0 +1,1042 @@
+@import "variables.scss";
+
+/* -------------------------------------
+ * NAVIGATION
+ *
+ * Styles for navigations
+ ------------------------------------ */
+
+/* ----------------
+ * TOP NAV
+ --------------- */
+
+/* mobiled sticky mobile top nav */
+
+@media (max-width: 991px) {
+  .top-nav {
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    }
+}
+
+.logo-top {
+  background: url(./img/adssets-logo.png);
+  height: $top-nav-height;
+  width: 150px;
+  background-repeat: no-repeat;
+  background-size: auto 50px;
+  display: block;
+  background-position: center; 
+}
+
+.page-header.navbar .page-logo {
+  height: $top-nav-height !important;
+}
+
+/* mobile logo*/
+@media (max-width: 991px) {
+    .logo-resp-height {
+//    content: url(/../../img/adssets-symbol.png);
+    height: 40px;
+    margin-top: 20px;
+  }
+}
+
+/* Top nav height */
+.page-header.navbar {
+  height: $top-nav-height;
+  min-height: 50px;
+}
+
+/* Add a slight tint of grey one mobile top nav */
+@media (min-width: 0px) and (max-width: 991px) {
+  .page-header.navbar {
+    -webkit-box-shadow: 0px 0px 14px 4px rgba(119, 119, 119, 0.03);
+    -moz-box-shadow: 0px 0px 14px 4px rgba(119, 119, 119, 0.03);
+    box-shadow: 0px 0px 14px 4px rgba(119, 119, 119, 0.03);
+  }
+}
+
+.top-menu-pull-right {
+  float: right;
+}
+
+/* mobile, remove top header border bottom (to display shadow instead) */
+.page-header.navbar {
+      border-bottom: 1px solid #e9ecf3;
+}
+
+/* User menu */
+.page-header.navbar
+.top-menu
+.navbar-nav>li.dropdown-user
+.dropdown-toggle {
+  padding: 29px 12px 24px;
+  /* Fix user menu "toggled" height */
+  height: $top-nav-height;
+}
+
+@media (max-width: 991px) {
+  .page-header.navbar .top-menu .navbar-nav {
+    margin: 0;
+  }
+}
+
+.page-header.navbar .top-menu .navbar-nav>li.dropdown:last-child {
+  /* small adjustment to position of user menu */
+  margin-top: -1px;
+}
+
+@media (max-width: 991px) { 
+  .page-header.navbar .top-menu .navbar-nav>li.dropdown-user>.dropdown-menu {
+    margin-right: 10px;
+  }
+}
+  
+.page-header.navbar .top-menu .navbar-nav>li.dropdown-user .dropdown-toggle>img {
+  /* To fit user icon on devices with 320px width
+  E.g. iPhone 4 & 5, Android One */
+  height: 28px;
+}
+
+/* Hide tabs buttons on mobile */
+/* The items should be displayed 
+on a seprate menu on mobile */
+@media (max-width: 991px) {
+  .page-tabs {
+    display: none !important;
+  }
+}
+
+.label-haschildren {
+  max-width: 190px;
+  display: inline-block;
+}
+
+
+/* ----------------
+ * TOP NAV TABS
+ --------------- */
+
+.top-nav-item {
+  padding: 29px 12px 24px;
+  height: 75px;
+}
+
+.top-nav-item a {
+  height: $top-nav-height;
+  cursor: pointer;
+}
+
+.nav > li > a > span {
+  color: $main-text-color;
+  font-size: $fs-nav-menu;
+}
+
+.nav > li.top-nav-item > a:focus, 
+.nav > li.top-nav-item > a:hover {
+  background-color: transparent;
+}
+
+.nav > li.top-nav-item:hover {
+  background-color: #f2f6f9;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) { 
+  .navbar-nav > li > a {
+    padding: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .nav > li.active-page {
+  border-bottom: 7px solid $main-accent-color;
+  }
+}
+
+
+/* ----------------
+ * SIDEBAR
+ --------------- */
+
+.page-sidebar-fixed .page-sidebar {
+  z-index: 999;
+}
+
+@media (min-width: 992px) {
+  .page-sidebar {
+    width: 249px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .page-sidebar .page-sidebar-menu {
+    /* Force menu container auto height  */
+    height: auto !important;
+  }
+}
+
+/* Mobile */
+@media (min-width: 0px) and (max-width: 991px) {
+  /* sidebar menu top bottom margin */
+  .page-sidebar .page-sidebar-menu {
+    margin: 18px 0;
+  }
+}
+
+/* Sidebar collapsed */
+.page-sidebar-closed .page-content-wrapper .page-main-content {
+  margin-left: 74px !important;
+}
+
+.page-sidebar .page-sidebar-menu {
+  margin-top: 18px;
+  /* force mobile sidebar menu auto height */
+  // height: auto !important;
+}
+
+.slimScrollDiv {
+  /* force mobile sidebar menu auto height */
+  // height: auto !important;
+  
+  overflow: overlay !important;
+}
+
+
+/* -------------------------------------
+ * LISTS & MENU ITEMS
+ *
+ * Elements within lists and menus
+ ------------------------------------ */
+.sub-menu li {
+    line-height: 35px;
+    font-size: $fs-nav-menu;
+    display: flex;
+}
+
+.page-sidebar .page-sidebar-menu .sub-menu li > a {
+  font-size: $fs-nav-menu;
+  padding: 0 0 0 40px;
+  width: 100%;
+  flex: 99;
+  word-wrap: break-word;
+  position: relative;
+}
+
+.page-sidebar .page-sidebar-menu .sub-menu li:hover {
+  background-color: #f2f6f9 !important;
+}
+
+.active-highlight {
+  background: transparent !important;
+  border-left: 7px solid $main-accent-color;
+}
+
+.active-highlight > a > span {
+  display: block;
+  word-break: break-word;
+  max-width: 170px;
+  /* size of page indicator */
+  margin-left: -7px;
+  color: $main-accent-color;
+}
+
+/* replace width 100% to encompass the
+market settings cog icon */
+li.active-highlight > a {
+  width: auto !important;
+}
+
+.page-sidebar .page-sidebar-menu .sub-menu li > a .active-hightlight > a {
+  padding: 0 0 0 32px; 
+}
+
+/* When menu item is active */
+.page-sidebar
+.page-sidebar-menu>li.active.open>a,
+.page-sidebar
+.page-sidebar-menu>li.active>a,
+.page-sidebar-closed.page-sidebar-fixed
+.page-sidebar:hover
+.page-sidebar-menu>li.active.open>a,
+.page-sidebar-closed.page-sidebar-fixed
+.page-sidebar:hover
+.page-sidebar-menu>li.active>a {
+  background: $highlight-hover-bg;
+  color: $main-accent-color;
+}
+
+/* Menu item hover colors */
+.page-sidebar
+.page-sidebar-menu>li.open>a,
+.page-sidebar
+.page-sidebar-menu>li:hover>a,
+.page-sidebar-closed.page-sidebar-fixed
+.page-sidebar:hover
+.page-sidebar-menu>li.open>a,
+.page-sidebar-closed.page-sidebar-fixed
+.page-sidebar:hover
+.page-sidebar-menu>li:hover>a {
+  background: $highlight-hover-bg;
+  color: $main-accent-color;
+}
+
+/* Navbar menu item label color */
+.page-header.navbar
+.top-menu .navbar-nav>li.dropdown-language>.dropdown-toggle>.langname,
+.page-header.navbar
+.top-menu .navbar-nav>li.dropdown-user>.dropdown-toggle>.username,
+.page-header.navbar
+.top-menu
+.navbar-nav>li.dropdown-user>.dropdown-toggle>i {
+  color: $main-text-color;
+}
+
+
+/* ----------------
+ * DROPDOWN MENUS
+ --------------- */
+
+/* Dropdown padding */
+.select-padding-reg {
+  padding: 5px;
+}
+
+.dropdown-flex {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+}
+
+/* Dropdown styling */
+.select-reg  {
+  display:inline-block;
+  vertical-align:middle;
+  position:relative;
+}
+
+select.select-reg {
+  background-color: #fff;
+}
+
+.select-reg select {
+  line-height:normal;
+  height:38px;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  -ms-appearance:none;
+  appearance:none;
+  border-radius:6px;
+  display:block;
+  width:100%;
+  border:1px solid #c8c8c8;
+  color:#3e3e3e;
+  padding:8px 20px 7px 10px;
+  margin:0;
+  line-height:normal;
+  -webkit-border-radius:0;
+  -moz-border-radius:0;
+  border-radius: $rounded-corners;
+}
+.ie8 .select-reg select{padding-right:3px}
+.plain-select select:focus {
+  background:#ffffff;
+  outline:none;
+  border-color:#333;
+}
+.select-reg ::-ms-expand {
+ display:none;
+}
+.select-reg:after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  right:8px;
+  top:50%;
+  margin-top:-3px;
+  height:0;
+  width:0;
+  border-top:6px solid #3e3e3e;
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+  pointer-events:none;
+}
+
+
+/* -------------------------------------
+ * ACCORDION MENU
+ *
+ * Left sidebar, use this and replace
+ * metronic's left side navigation
+ ------------------------------------ */
+#main-nav > .accordion-menu {
+//  position: fixed;
+}
+
+.accordion-menu {
+  width: 250px !important;
+  max-width: 600px;
+  list-style-type: none;
+  background: #fff;
+  border-radius: $rounded-corners;
+  font-size: 16px;
+  color: $main-text-color;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 0;
+  overflow: overlay;
+}
+
+.accordion-menu button.settings-cog {
+  background-image: url(./img/settings-cog.png);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: transparent;
+  height: 20px;
+  float: right;
+  width: 20px;
+  border: none;
+  margin-top: -35px;
+  margin-right: 12px;
+  z-index: 1;
+  position: relative;
+}
+
+.accordion-menu .arrow-menu-icon {
+  float: right;
+  margin-top: 7px;
+  transform: rotate(90deg);
+  font-size: 13px;
+  transition: .25s;
+}
+
+.accordion-menu input[type=checkbox]:checked + label > .arrow-menu-icon {
+  transform: rotate(0deg);
+  transition: .25s;
+}
+
+.accordion-menu label {
+  margin-bottom: 0;
+}
+
+.accordion-menu ul {
+  /* by default hide all sub menus */
+  display: none;
+  list-style-type: none;
+  padding-left: 0;
+}
+.accordion-menu li {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.accordion-menu input[type=checkbox] {
+  /* hide native checkbox */
+  position: absolute;
+  opacity: 0;
+}
+.accordion-menu label, .accordion-menu a {
+  position: relative;
+  display: block;
+  padding: 10px 15px 10px 20px;
+  background: #fff;
+  border-radius: $rounded-corners;
+  text-decoration: none;
+  word-break: break-all;
+}
+.no-touch .accordion-menu label:hover, .no-touch .accordion-menu a:hover {
+  background: $highlight-hover-bg;
+}
+.accordion-menu label::before, .accordion-menu label::after, .accordion-menu a::after {
+  /* icons */
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.accordion-menu label {
+  cursor: pointer;
+}
+.accordion-menu label::before, .accordion-menu label::after {
+  background-image: url(../img/cd-icons.svg);
+  background-repeat: no-repeat;
+}
+.accordion-menu label::before {
+  /* arrow icon */
+  left: 18px;
+  background-position: 0 0;
+  -webkit-transform: translateY(-50%) rotate(-90deg);
+  -moz-transform: translateY(-50%) rotate(-90deg);
+  -ms-transform: translateY(-50%) rotate(-90deg);
+  -o-transform: translateY(-50%) rotate(-90deg);
+  transform: translateY(-50%) rotate(-90deg);
+}
+.accordion-menu label::after {
+  /* folder icons */
+  left: 41px;
+  background-position: -16px 0;
+}
+
+.accordion-menu li a.active-page {
+  box-shadow: inset 7px 0 0 0 $main-accent-color;
+  border-radius: 0;
+  padding-left: 60px;
+}
+
+.accordion-menu * > ul > li > a:hover {
+  background-color: $highlight-hover-bg; 
+} 
+
+.accordion-menu a::after {
+  /* image icon */
+  left: 36px;
+  background: url(../img/cd-icons.svg) no-repeat -48px 0;
+}
+.accordion-menu input[type=checkbox]:checked + label::before {
+  /* rotate arrow */
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.accordion-menu input[type=checkbox]:checked + label::after {
+  /* show open folder icon if item is checked */
+  background-position: -32px 0;
+}
+.accordion-menu input[type=checkbox]:checked + label + ul,
+.accordion-menu input[type=checkbox]:checked + label:nth-of-type(n) + ul {
+  /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
+  /* show children when item is checked */
+  display: block;
+}
+
+.accordion-menu input[type=checkbox]:checked + label {
+  background-color: $highlight-hover-bg;
+  color: $main-accent-color;
+}
+
+.accordion-menu ul label,
+.accordion-menu ul a {
+  background: transparent;
+  padding-left: 60px;
+  color: $main-text-color;
+  word-wrap: break-word;
+  display: inline-block;
+}
+
+.accordion-menu * > label:hover {
+  color: $main-accent-color;
+  background-color: $highlight-hover-bg;
+} 
+
+.no-touch .accordion-menu ul label:hover, .no-touch
+.accordion-menu ul a:hover {
+  background: $highlight-hover-bg;
+}
+
+.accordion-menu > li:last-of-type > label,
+.accordion-menu > li:last-of-type > a,
+.accordion-menu > li > ul > li:last-of-type label,
+.accordion-menu > li > ul > li:last-of-type a {
+  box-shadow: none;
+}
+.accordion-menu ul label::before {
+  left: 36px;
+}
+.accordion-menu ul label::after,
+.accordion-menu ul a::after {
+  left: 59px;
+}
+.accordion-menu ul ul label,
+.accordion-menu ul ul a {
+  padding-left: 20px;
+}
+.accordion-menu ul ul label::before {
+  left: 54px;
+}
+.accordion-menu ul ul label::after,
+.accordion-menu ul ul a::after {
+  left: 77px;
+}
+.accordion-menu ul ul ul label,
+.accordion-menu ul ul ul a {
+  padding-left: 118px;
+}
+.accordion-menu ul ul ul label::before {
+  left: 72px;
+}
+.accordion-menu ul ul ul label::after,
+.accordion-menu ul ul ul a::after {
+  left: 95px;
+}
+@media only screen and (min-width: 992px) {
+  .accordion-menu {
+    line-height: 30px;
+  }
+  
+  .accordion-menu label, .accordion-menu a {
+    padding: 10px 15px 10px 20px;
+    font-size: 16px;
+  }
+  .accordion-menu label::before {
+    left: 24px;
+  }
+  .accordion-menu label::after {
+    left: 53px;
+  }
+  .accordion-menu ul label,
+  .accordion-menu ul a {
+    padding-left: 60px;
+    width: 100%;
+  }
+  .accordion-menu ul label::before {
+    left: 48px;
+  }
+  .accordion-menu ul label::after,
+  .accordion-menu ul a::after {
+    left: 77px;
+  }
+  .accordion-menu ul ul label,
+  .accordion-menu ul ul a {
+    padding-left: 0;
+  }
+  .accordion-menu ul ul label::before {
+    left: 72px;
+  }
+  .accordion-menu ul ul label::after,
+  .accordion-menu ul ul a::after {
+    left: 101px;
+  }
+  .accordion-menu ul ul ul label,
+  .accordion-menu ul ul ul a {
+    padding-left: 154px;
+  }
+  .accordion-menu ul ul ul label::before {
+    left: 96px;
+  }
+  .accordion-menu ul ul ul label::after,
+  .accordion-menu ul ul ul a::after {
+    left: 125px;
+  }
+}
+.accordion-menu.animated label::before {
+  /* this class is used if you're using jquery to animate the accordion */
+  -webkit-transition: -webkit-transform 0.3s;
+  -moz-transition: -moz-transform 0.3s;
+  transition: transform 0.3s;
+}
+
+/* -------------------------------------
+ * MOBILE NAVIGATION
+ *
+ * Left sidebar navigation gets 
+ * replaced with this on mobile view
+ ------------------------------------ */
+//header {
+//  position: fixed;
+//  top: 0;
+//  left: 0;
+//  height: 50px;
+//  width: 100%;
+//  background: #31353d;
+//  text-align: center;
+//  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+//  z-index: 4;
+//}
+
+/* hide menu bar on desktop */
+@media only screen and (min-width: 992px) {
+  nav.main-nav, #hamburger-menu {
+    display: none;
+    height: 0;
+  } 
+}
+
+/* "cart" is right side sidebar (not used) */
+#hamburger-menu, #cart-trigger {
+  position: absolute;
+  top: 0;
+  height: 75px;
+}
+#hamburger-menu a, #cart-trigger a {
+  width: 60px;
+  height: 100%;
+}
+
+//#hamburger-menu {
+//  left: 0;
+//  background: #fff;
+//  content:  url("/../../img/hamburger-menu-black.svg");
+//  width: 50px;
+//  padding: 10px;
+//  cursor: pointer;
+//}
+
+@media only screen and (min-width: 992px) {
+  #hamburger-menu {
+    display: none;
+  }
+}
+
+#cart-trigger {
+  right: 0;
+}
+#cart-trigger a {
+  background: #26292f url("../img/cd-cart.svg") no-repeat center center;
+}
+@media only screen and (min-width: 992px) {
+  #cart-trigger {
+    /* cart right margin on desktop */
+    right: 0;
+  }
+  #cart-trigger a {
+    position: relative;
+    width: 100px;
+    border-left: none;
+    background-color: #26292f;
+  }
+}
+
+/* reset css */
+#main-nav > ul, {
+  list-style-type: none;
+  margin-bottom: 0px;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+
+#main-nav, #cart {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 250px;
+  /* header height */
+  padding-top: 75px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  z-index: 11;
+}
+
+
+@media only screen and (min-width: 768px) {
+  #main-nav, #cart {
+    width: $main-nav-width;
+  }
+}
+@media only screen and (min-width: 992px) {
+  #main-nav, #cart
+  {
+    width: 30%;
+    /* header height has changed */
+    padding-top: 80px;
+  }
+}
+
+#main-nav {
+  left: -100%;
+  background: #FFF;
+  -webkit-transition: left 0.3s;
+  -moz-transition: left 0.3s;
+  transition: left 0.3s;
+  overflow-x: hidden;
+}
+
+/* menu default text color */
+nav * > a {
+  color: $main-text-color;
+}
+
+/* menu active page text color */
+nav * > a.current {
+  color: $main-accent-color;
+}
+
+#main-nav.speed-in {
+  left: 0;
+}
+#main-nav ul a {
+  display: block;
+  min-height: 50px;
+  line-height: 50px;
+  padding: 0 1em;
+  border-bottom: 1px solid #e0e6ef;
+  text-align: left;
+}
+#main-nav ul .current {
+  box-shadow: inset 7px 0 $main-accent-color;
+}
+@media only screen and (min-width: 992px) {
+  #main-nav {
+    /* reset main nav style */
+    position: absolute;
+    height: auto;
+    width: 250px;
+    left: 0;
+    right: 8em;
+    padding-top: 0;
+    top: 0;
+    margin-top: 95px;
+    background: transparent;
+    box-shadow: none;
+    /* header height */
+    line-height: 80px;
+    z-index: 7;
+  }
+    
+  #main-nav li {
+    display: block;
+  }
+  
+  #main-nav li ul li {
+    padding-left: 20px;
+  }
+
+  #main-nav ul a {
+    height: auto;
+    line-height: 1;
+    padding: 1em 1.4em;
+    border-bottom: none;
+    color: $main-text-color;
+    margin-left: -20px;
+    padding-top: 1em;
+    padding-right: 30px;
+    padding-left: 40px;
+    padding-bottom: 1em;
+  }
+  #main-nav ul a.current {
+    box-shadow: none;
+    background: #435779;
+    color: #FFF;
+  }
+  .no-touch #main-nav ul a:hover {
+    background: $highlight-hover-bg;
+    color: $main-text-color;
+    width: calc(100% + 20px);
+  }
+}
+.no-js #main-nav {
+  position: fixed;
+}
+
+#cart {
+  right: -100%;
+  background: #FFF;
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
+}
+#cart.speed-in {
+  right: 0;
+}
+#cart > * {
+  padding: 0 1em;
+}
+
+#cart .cart-items {
+  padding: 0;
+}
+#cart .cart-items li {
+  position: relative;
+  padding: 1em;
+  border-top: 1px solid #e0e6ef;
+}
+#cart .cart-items li:last-child {
+  border-bottom: 1px solid #e0e6ef;
+}
+#cart .qty, #cart .price {
+  color: #a5aebc;
+}
+#cart .price {
+  margin-top: .4em;
+}
+#cart .item-remove {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  bottom: auto;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: url("../img/cd-remove-item.svg") no-repeat center center;
+}
+.no-touch #cart .item-remove:hover {
+  background-color: #e0e6ef;
+}
+#cart .cart-total {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+#cart .cart-total span {
+  float: right;
+}
+#cart .cart-total::after {
+  /* clearfix */
+  content: '';
+  display: table;
+  clear: both;
+}
+#cart .checkout-btn {
+  display: block;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background: #7dcf85;
+  color: #FFF;
+  text-align: center;
+}
+.no-touch #cart .checkout-btn:hover {
+  background: #a2dda8;
+}
+#cart .go-to-cart {
+  text-align: center;
+  margin: 1em 0;
+}
+#cart .go-to-cart a {
+  text-decoration: underline;
+}
+@media only screen and (min-width: 992px) {
+  #cart > * {
+    padding: 0 2em;
+  }
+  #cart .cart-items li {
+    padding: 1em 2em;
+  }
+  #cart .item-remove {
+    right: 2em;
+  }
+  
+  .main-nav-publisher-menu {
+    padding-top: 10px;
+    padding-left: 40px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 991px) {
+  .main-nav-publisher-menu {
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .main-nav-publisher-menu {
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+#shadow-layer {
+  position: fixed;
+  min-height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(8, 17, 31, 0.5);
+  cursor: pointer;
+  z-index: 10;
+  display: none;
+}
+#shadow-layer.is-visible {
+  display: block;
+  -webkit-animation: m-nav-fade-in 0.3s;
+  -moz-animation: m-nav-fade-in 0.3s;
+  animation: m-nav-fade-in 0.3s;
+}
+
+/* ----------------
+ * MOBILE NAV
+ * KEYFRAME
+ --------------- */
+@-webkit-keyframes m-nav-fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes m-nav-fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes m-nav-fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* -------------------------------------
+ * FOOTER (STICKY)
+ *
+ * Styles for sticky footer
+ ------------------------------------ */
+
+html {
+  height: 100%;
+}
+
+body {
+  height: calc(100% - 75px); 
+  min-height: calc(100% - 75px); 
+}
+
+.page-wrap {
+  min-height: 100%;
+  /* Footer height */
+  margin-bottom: -($footer-height); 
+}
+
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+
+.site-footer-inner, .page-wrap:after {
+  height: $footer-height;
+}
+
+.site-footer {
+//  background: darken($site-bg-color, 10%);
+  background: transparent;
+}
+
+.site-footer-inner {
+  margin-left: ($main-nav-width + 20px);
+}
+
+.footer-copyright {
+  margin: 5px;
+  display: inline-block;
+}

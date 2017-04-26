@@ -1,0 +1,382 @@
+@import "variables.scss";
+
+/* -------------------------------------
+ * CARD SYSTEM LAYOUT
+ *
+ * Responsive card grid. 
+ * Laying out content like a field of  
+ * memory game cards. 
+ ------------------------------------ */
+
+/* -------------------------------------
+ * HIERARCHY:
+ * 
+ * CARD:
+ * .card-col
+ * -- .card
+ * -- -- .card-thumbnail
+ * -- -- .card-metadata
+ *
+ * POP UP:
+ * .card-popup-shadow (.is-visible)
+ * .card-popup .boxed-reg-nomargin (.is-visible)
+ * -- #card-popup-content
+ * -- .card-popup-options-wrapper
+ * -- -- card-popup-options
+ *
+ ------------------------------------- */
+
+$card-width: 200px;
+$card-xs-width: 50px;
+$card-margin-right: 15px;
+$card-margin-bottom: 15px;
+$card-thumbnail-height: 200px;
+$card-xs-thumbnail-height: 50px;
+$card-metadata-padding: 10px;
+
+
+/* mobile cards, make into list */
+@media only screen and (max-width: 767px) { 
+  .card {
+    width: 100%;
+    height: ($card-xs-thumbnail-height + 1px);
+    background-color: #fff;
+    border-bottom: $main-border;
+    padding-right: 15px;
+    /* mobile workaround */
+    display: flex;
+  } 
+  
+  .card-metadata {
+    display: inline-block;
+  }
+  
+  .card-thumbnail {
+    width: $card-xs-width;
+    display: inline-block;
+    height: $card-xs-thumbnail-height;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left center;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .card-col:hover {
+    cursor: pointer;
+  }
+  
+  .card-col a:hover {
+    text-decoration: none;
+  } 
+
+  .card-metadata label, .card-metadata p {
+    width: 100%;
+    color: $main-text-color;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0;
+  }
+  
+  .card-metadata label {
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
+}
+
+@media (min-width: 768px) {
+  .card-col {
+    float: left;
+    position: relative;
+    min-height: 1px;
+    
+  }
+  
+  .card {
+    width: $card-width;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-right: $card-margin-right;
+    margin-bottom: $card-margin-bottom;
+    border: $main-border;
+    background: #bdc3ce;
+    color: $main-text-color;
+  }
+  
+  .card-metadata {
+    width: ($card-width - 2px);
+    height: 65px;
+    background-color: #fff;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: $card-metadata-padding;
+  }
+  
+
+  .card-thumbnail {
+    width: ($card-width - 2px);
+    height: $card-thumbnail-height;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left center;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .card-metadata label, .card-metadata p {
+    color: $main-text-color;
+    text-overflow: ellipsis;
+    width: ($card-width - 2*$card-metadata-padding);
+    overflow: hidden;
+    margin: 0;
+  }
+  
+  .card-metadata label {
+    font-size: $fs-label;
+  }
+}
+
+
+.card-metadata p {
+  font-size: $fs-paragraph;
+}
+
+.card-metadata p.noslogan {
+  font-style: italic;
+}
+
+#card-popup-shadow {
+  position: fixed;
+  min-height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  display: block;
+  z-index: 10;
+  opacity: 0;
+}
+
+#card-popup-shadow.is-visible {
+  display: block;
+  -webkit-animation: m-nav-fade-in 0.3s;
+  -moz-animation: m-nav-fade-in 0.3s;
+  animation: m-nav-fade-in 0.3s;
+  opacity: 1;
+}
+
+.card-popup {
+  position: fixed;
+  top: 190%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 900px;
+  height: 600px;
+  padding: 20px;
+  z-index: 999999;
+  background-color: #fff;
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+  transition-delay: .1s;
+  transition: cubic-bezier(0, 0.84, 0, 0.96) .5s;
+}
+
+.card-popup.is-visible {
+  top: 0;
+  transition: cubic-bezier(0, 0.84, 0, 0.96) .5s;
+}
+
+.card-popup.boxed-reg {
+   margin: 0;
+}
+
+.card-popup-options-wrapper {
+  width: 100%;
+  margin-right: -20px;
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  background-color: #fff;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 10px;
+}
+
+.card-popup-options {
+  float: right;
+}
+
+#card-popup-content {
+  overflow: overlay;
+  height: 372px;
+  border-bottom: $main-border;
+}
+
+/* portlet head panel buttons area */
+.card-popup .tools {
+  float: right;
+}
+
+.card-popup * > .box-form-headline-wrapper {
+  display: block;
+}
+
+.card-popup-content * > .form-group.form-md-line-input {
+  margin-top: 15px;
+}
+
+.card-prompt {
+  border: 1px solid #e3e3e3;
+  background-color: #fff;
+  border-radius: $rounded-corners;
+  padding: 20px;
+  z-index: 9; 
+  width: auto; 
+  height: auto;
+  position: fixed;
+  top: calc(50% - 100px);
+  left: calc(50% - 165px);
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+  transition-delay: .1s;
+  transition: cubic-bezier(0, 0.84, 0, 0.96) 0.5s;
+  
+  
+  button {
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 200;
+    min-width: 60px;
+    padding: 6px 20px;
+    margin-bottom: 20px;
+    border: none;
+    transition: .2s;
+    outline: none;
+  }
+  
+  button.btn-close-circular {
+    border-radius: 100%;
+    background-color: #000;
+    width: 24px;
+    height: 24px;
+    padding: 3px;
+    margin-bottom: 0;
+    min-width: 0;
+    color: #fff;
+    float: right;
+  }
+}
+
+.card-prompt {
+  .blue {
+    background-color: #42a5f5;
+    color: #fff;
+    border: 1px solid #42a5f5;
+  }
+
+  .white {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #000;
+  }
+  
+} 
+
+.card-prompt.script { 
+  width: 500px;
+  height: 340px;
+  position: fixed;
+  top: calc(50% - 170px);
+  left: calc(50% - 175px); 
+  resize: none;
+  
+  textarea {
+    width: 100%;
+    height: 220px;
+  }
+  
+  button {
+    border-radius: 4px;
+    font-size: $fs-paragraph;
+    font-weight: 200;
+    min-width: 60px;
+    padding: 6px 20px;
+    margin-bottom: 20px;
+    border: none;
+    transition: .2s;
+    outline: none;
+  }
+  
+}
+
+.card-prompt.ad-preview {
+  width: 800px;
+  height: 725px;
+  position: fixed;
+  top: calc(32% - 170px);
+  left: calc(35% - 175px);
+  resize: none;
+}
+
+/* Create ad page, select ad format card */
+.create-ad-select-item {
+  width: 205px;
+  height: 270px;
+  background-color: #fff;
+  border: 2px solid #bfc2c9;
+  border-radius: 4px;
+  
+  .create-ad-card-desc {
+    text-align: center;
+  }
+  
+  .card-thumbnail {
+    width: 100%;
+    height: 125px;
+    margin-bottom: 15px;
+    background-color: #ececec;
+    overflow: hidden;
+  }
+  
+  label {
+    font-size: $fs-label;
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+  
+  span {
+    display: block;
+  }
+  
+  p {
+    margin: 7px 0;
+    padding: 0 10px;
+    max-height: 65px;
+    overflow: hidden;
+  }
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

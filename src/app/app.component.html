@@ -1,0 +1,132 @@
+
+<div class="top-nav" id="top-nav">
+  <header>
+
+    <div class="page-header navbar navbar-fixed-top">
+      <div class="page-header-inner">
+
+
+
+        <!--BEGIN MOBILE HAMBURGER BUTTON-->
+        <button onclick="hamburgerToggle()" id="hamburger-menu-btn" class="c-hamburger c-hamburger--htla">
+          <span>toggle menu</span>
+        </button>
+        <!--END MOBILE HAMBURGER BUTTON-->
+
+
+        <!-- BEGIN LOGO -->
+        <div class="page-logo">
+          <a href="/">  <!--/dashboard-->
+            <span alt="logo" class="logo-top"></span> </a>
+
+        </div>
+        <!-- END LOGO -->
+
+
+        <div class="top-menu top-menu-pull-right">
+          <ul class="nav navbar-nav pull-right">
+
+
+            <li class="dropdown dropdown-user">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                <img alt="" class="img-circle" src="./img/usericon.png"/>
+                <span class="username username-hide-on-mobile">  </span> <!--{{this.storeservice.userName}}-->
+                <i class="fa fa-angle-down"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-default">
+                <li>
+                  <!--<a (click)="logout()">-->
+                  <a href="/Logout">
+                    <i class="icon-logout"></i> Logout </a>
+                </li>
+                <!-- <li (click)="changeLanguage('en');">
+                   <i>English</i>
+                 </li>
+                 <li (click)="changeLanguage('sv')">
+                   <i>Swedish</i>
+                 </li>-->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="shadow-layer"></div> <!--mobile menu hamburger backdrop-->
+
+</div>
+<!-- END TOP NAV -->
+
+
+<div id="card-popup-shadow" style="visibility: hidden"></div>
+
+
+<!--BEGIN CONTAINER-->
+<div class="page-container">
+
+  <!-- BEGIN SIDEBAR -->
+
+  <div id="main-nav">
+
+
+    <!--   <nav id="main-nav">-->
+    <ul class="accordion-menu animated" id="accordion-menu-main">
+      <li class="has-children">
+        <input type="checkbox" name="group-2" id="group-2">
+        <label (click)="gotoHome();" for="group-2">  Dashboard
+        </label>
+      </li>
+
+
+      <li class="has-children">
+        <input type="checkbox" name="group-1" id="group-1">
+        <label (click)="getMarkets()" id="sidebar-markets" for="group-1">
+          <span class="label-haschildren">Market</span>
+          <span class="fa fa-chevron-down arrow-menu-icon"></span>
+        </label>
+
+        <ul id="sidebar-dropdown">
+
+          <li>
+            <button class="btn-def btn-create-market" (click)="createMarket();">Create market</button>
+          </li>
+          <li *ngFor="let market of store.markets; let i = index" id={{market.id}}>
+            <a (click)="getMarketContent(market)"><span>{{market.name}}</span></a>
+            <div class="market-settings hidden-obj" id=edit-{{market.id}}>
+              <button class="settings-cog" (click)="editMarket()"><span>Edit</span></button>
+            </div>
+
+          </li>
+
+        </ul>
+      </li>
+
+    </ul>
+
+  </div>
+
+
+  <!-- END SIDEBAR -->
+
+
+
+  <div class="page-content-wrapper">
+
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-main-content am-mobile-content-position">
+      <div *ngIf="platformWarning">
+        <img src="./img/hand-logo.png" style="width: 100px;height: 100px; display: block;margin: auto"/>
+
+        <h4 style="line-height: 25px; text-align: center" >This application is not yet supported for mobile devices. </h4>
+        <h4 style="line-height: 25px; text-align: center" >Please use the application on desktop. </h4>
+
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+    <!-- END CONTENT BODY -->
+  </div>
+
+</div>
+<!--END PAGE CONTAINER-->
+

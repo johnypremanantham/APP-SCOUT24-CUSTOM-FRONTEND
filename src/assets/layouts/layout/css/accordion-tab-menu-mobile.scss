@@ -1,0 +1,305 @@
+@import "variables.scss";
+
+/* INCLUDE THIS FILE IN NAVIGATION.SCSS LATER */
+
+/* -------------------------------------
+ * ACCORDION MENU MOBILE
+ *
+ * Inner content menu, a menu used
+ * specific for page level content.
+ * transforms into tabs on mobile view.
+ ------------------------------------ */
+
+/* mobile tab styles */
+@media only screen and (max-width: 767px) { 
+  
+  .page-sidebar-wrapper .accordion-mobile-tab-menu.animated {
+    width: 100%;
+    margin-left: -20px;
+  }
+  
+  .accordion-mobile-tab-menu.animated {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /* reset and override */
+    max-width: 100%;
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+  
+  .accordion-mobile-tab-menu > li {
+    display: inline-block;
+  }
+  
+  .accordion-mobile-tab-menu.animated > ul > li > ul > li {
+    display: none;
+  }
+}
+
+
+
+.accordion-mobile-tab-menu {
+  width: 250px;
+  max-width: 600px;
+  list-style-type: none;
+  background: #fff;
+  border-radius: $rounded-corners;
+  font-size: 16px;
+  color: $main-text-color;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 0;
+  overflow: overlay;
+  position: fixed;
+}
+
+//.accordion-mobile-tab-menu button.settings-cog {
+//  background-image: url(./img/settings-cog.png);
+//  background-position: 50% 50%;
+//  background-repeat: no-repeat;
+//  background-size: cover;
+//  background-color: transparent;
+//  height: 20px;
+//  float: right;
+//  width: 20px;
+//  border: none;
+//  margin-top: -35px;
+//  margin-right: 12px;
+//  z-index: 1;
+//  position: relative;
+//}
+
+.accordion-mobile-tab-menu .arrow-menu-icon {
+  float: right;
+  margin-top: 7px;
+  transform: rotate(90deg);
+  font-size: 13px;
+  transition: .25s;
+}
+
+.accordion-mobile-tab-menu input[type=checkbox]:checked + label > .arrow-menu-icon {
+  transform: rotate(0deg);
+  transition: .25s;
+}
+
+.accordion-mobile-tab-menu label {
+  margin-bottom: 0;
+}
+
+.accordion-mobile-tab-menu ul {
+  /* by default hide all sub menus */
+  display: none;
+  list-style-type: none;
+  padding-left: 0;
+}
+.accordion-mobile-tab-menu li {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.accordion-mobile-tab-menu input[type=checkbox] {
+  /* hide native checkbox */
+  position: absolute;
+  opacity: 0;
+}
+.accordion-mobile-tab-menu label, .accordion-mobile-tab-menu a {
+  position: relative;
+  display: block;
+  padding: 10px 15px 10px 20px;
+  background: #fff;
+  border-radius: $rounded-corners;
+  text-decoration: none;
+  word-break: break-all;
+}
+.no-touch .accordion-mobile-tab-menu label:hover, .no-touch .accordion-mobile-tab-menu a:hover {
+  background: $highlight-hover-bg;
+}
+.accordion-mobile-tab-menu label::before, .accordion-mobile-tab-menu label::after, .accordion-mobile-tab-menu a::after {
+  /* icons */
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.accordion-mobile-tab-menu label {
+  cursor: pointer;
+}
+.accordion-mobile-tab-menu label::before, .accordion-mobile-tab-menu label::after {
+  background-image: url(../img/cd-icons.svg);
+  background-repeat: no-repeat;
+}
+.accordion-mobile-tab-menu label::before {
+  /* arrow icon */
+  left: 18px;
+  background-position: 0 0;
+  -webkit-transform: translateY(-50%) rotate(-90deg);
+  -moz-transform: translateY(-50%) rotate(-90deg);
+  -ms-transform: translateY(-50%) rotate(-90deg);
+  -o-transform: translateY(-50%) rotate(-90deg);
+  transform: translateY(-50%) rotate(-90deg);
+}
+.accordion-mobile-tab-menu label::after {
+  /* folder icons */
+  left: 41px;
+  background-position: -16px 0;
+}
+
+.accordion-mobile-tab-menu li a.active-page {
+  box-shadow: inset 7px 0 0 0 $main-accent-color;
+  border-radius: 0;
+  padding-left: 60px;
+}
+
+.accordion-mobile-tab-menu * > ul > li > a:hover {
+  background-color: $highlight-hover-bg; 
+} 
+
+.accordion-mobile-tab-menu a::after {
+  /* image icon */
+  left: 36px;
+  background: url(../img/cd-icons.svg) no-repeat -48px 0;
+}
+.accordion-mobile-tab-menu input[type=checkbox]:checked + label::before {
+  /* rotate arrow */
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.accordion-mobile-tab-menu input[type=checkbox]:checked + label::after {
+  /* show open folder icon if item is checked */
+  background-position: -32px 0;
+}
+.accordion-mobile-tab-menu input[type=checkbox]:checked + label + ul,
+.accordion-mobile-tab-menu input[type=checkbox]:checked + label:nth-of-type(n) + ul {
+  /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
+  /* show children when item is checked */
+  display: block;
+}
+
+.accordion-mobile-tab-menu input[type=checkbox]:checked + label {
+  background-color: $highlight-hover-bg;
+  color: $main-accent-color;
+}
+
+.accordion-mobile-tab-menu ul label,
+.accordion-mobile-tab-menu ul a {
+  background: transparent;
+  padding-left: 60px;
+  color: $main-text-color;
+  word-wrap: break-word;
+  display: inline-block;
+}
+
+.accordion-mobile-tab-menu * > label:hover {
+  color: $main-accent-color;
+  background-color: $highlight-hover-bg;
+} 
+
+.no-touch .accordion-mobile-tab-menu ul label:hover, .no-touch
+.accordion-mobile-tab-menu ul a:hover {
+  background: $highlight-hover-bg;
+}
+
+.accordion-mobile-tab-menu > li:last-of-type > label,
+.accordion-mobile-tab-menu > li:last-of-type > a,
+.accordion-mobile-tab-menu > li > ul > li:last-of-type label,
+.accordion-mobile-tab-menu > li > ul > li:last-of-type a {
+  box-shadow: none;
+}
+.accordion-mobile-tab-menu ul label::before {
+  left: 36px;
+}
+.accordion-mobile-tab-menu ul label::after,
+.accordion-mobile-tab-menu ul a::after {
+  left: 59px;
+}
+.accordion-mobile-tab-menu ul ul label,
+.accordion-mobile-tab-menu ul ul a {
+  padding-left: 20px;
+}
+.accordion-mobile-tab-menu ul ul label::before {
+  left: 54px;
+}
+.accordion-mobile-tab-menu ul ul label::after,
+.accordion-mobile-tab-menu ul ul a::after {
+  left: 77px;
+}
+.accordion-mobile-tab-menu ul ul ul label,
+.accordion-mobile-tab-menu ul ul ul a {
+  padding-left: 118px;
+}
+.accordion-mobile-tab-menu ul ul ul label::before {
+  left: 72px;
+}
+.accordion-mobile-tab-menu ul ul ul label::after,
+.accordion-mobile-tab-menu ul ul ul a::after {
+  left: 95px;
+}
+@media only screen and (min-width: 992px) {
+  .accordion-mobile-tab-menu {
+    line-height: 30px;
+  }
+  
+  .accordion-mobile-tab-menu label, .accordion-mobile-tab-menu a {
+    padding: 10px 15px 10px 20px;
+    font-size: 16px;
+  }
+  .accordion-mobile-tab-menu label::before {
+    left: 24px;
+  }
+  .accordion-mobile-tab-menu label::after {
+    left: 53px;
+  }
+  .accordion-mobile-tab-menu ul label,
+  .accordion-mobile-tab-menu ul a {
+    padding-left: 60px;
+    width: 100%;
+  }
+  .accordion-mobile-tab-menu ul label::before {
+    left: 48px;
+  }
+  .accordion-mobile-tab-menu ul label::after,
+  .accordion-mobile-tab-menu ul a::after {
+    left: 77px;
+  }
+  .accordion-mobile-tab-menu ul ul label,
+  .accordion-mobile-tab-menu ul ul a {
+    padding-left: 0;
+  }
+  .accordion-mobile-tab-menu ul ul label::before {
+    left: 72px;
+  }
+  .accordion-mobile-tab-menu ul ul label::after,
+  .accordion-mobile-tab-menu ul ul a::after {
+    left: 101px;
+  }
+  .accordion-mobile-tab-menu ul ul ul label,
+  .accordion-mobile-tab-menu ul ul ul a {
+    padding-left: 154px;
+  }
+  .accordion-mobile-tab-menu ul ul ul label::before {
+    left: 96px;
+  }
+  .accordion-mobile-tab-menu ul ul ul label::after,
+  .accordion-mobile-tab-menu ul ul ul a::after {
+    left: 125px;
+  }
+}
+.accordion-mobile-tab-menu.animated label::before {
+  /* this class is used if you're using jquery to animate the accordion */
+  -webkit-transition: -webkit-transform 0.3s;
+  -moz-transition: -moz-transform 0.3s;
+  transition: transform 0.3s;
+}

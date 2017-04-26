@@ -1,0 +1,123 @@
+@import "variables.scss";
+
+/* -------------------------------------
+ * TEXT & FONTS
+ *
+ * Font style for various elements
+ ------------------------------------ */
+p {
+  color: $main-text-color;
+}
+
+@media (max-width: 991px) { 
+  .page-head {
+    margin-top: ($top-nav-height + 15px);
+  }
+}
+
+.page-head .page-title {
+  padding: 0;
+}
+
+.page-head .page-title > h1 {
+  font-size: $fs-main-headline;
+  color: $main-text-color;
+  padding: 0 0 20px;
+}
+
+.page-head .page-title > h1 > small {
+  color: $main-subtitle-color;
+  font-size: $fs-paragraph;
+  margin-top: 3px;
+  display: block;
+}
+
+.page-title > .page-title {
+  display: inline-block;
+}
+
+@media (max-width: 767px) {
+  .page-content-wrapper .page-main-content .page-title {
+    margin-bottom: 0 !important;
+  } 
+}
+
+/* Sidebar */
+.page-sidebar
+.page-sidebar-menu>li>a>.title,
+.page-sidebar-closed.page-sidebar-fixed
+.page-sidebar:hover
+.page-sidebar-menu>li>a>.title {
+  font-size: $fs-nav-menu;
+}
+
+/* Username */
+.page-header.navbar
+.top-menu
+.navbar-nav>li.dropdown-user
+.dropdown-toggle>.username {
+  font-size: $fs-nav-menu;
+  font-weight: 400;
+}
+
+/* ----------------
+ * INPUT FIELDS
+ --------------- */
+
+/* label color */
+.form-group.form-md-line-input .form-control ~ label {
+  color: $main-text-color !important;
+}
+
+/* Placeholder */
+::-moz-placeholder {
+  /* Mozilla Firefox */
+  color: #bbb !important;
+  font-weight: 200;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #bbb !important;
+  font-weight: 200;
+}
+
+::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: #bbb !important;
+  font-weight: 200;
+}
+
+/* label + input field row 2column layout */
+.input-flex {
+  /* parent, to flex */
+  display: flex;
+}
+
+.input-2col-label {
+  /* left column */
+  flex: 1;
+  margin-right: 10px;
+}
+
+.input-2col-field {
+  /* right column */
+  flex: 99;
+}
+
+/* Input field help line active color */
+.form-group.form-md-line-input .form-control.edited:not([readonly]) ~ label:after,
+.form-group.form-md-line-input .form-control.edited:not([readonly]) ~ .form-control-focus:after, .form-group.form-md-line-input .form-control:focus:not([readonly]) ~ label:after,
+.form-group.form-md-line-input .form-control:focus:not([readonly]) ~ .form-control-focus:after {
+//  visibility: visible;
+//  left: 0;
+//  width: 100%;
+  background: $main-accent-color !important;
+}
+
+/* Input field help line active text color */
+.form-group.form-md-line-input .form-control.edited:not([readonly]) ~ .help-block, .form-group.form-md-line-input .form-control:focus:not([readonly]) ~ .help-block {
+  color: $main-accent-color !important;
+//  opacity: 1 ;
+//  filter: alpha(opacity=100);
+}

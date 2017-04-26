@@ -1,0 +1,80 @@
+<div *ngIf="showComponent">
+  <!-- BEGIN PAGE HEAD-->
+  <div class="page-head">
+    <!-- BEGIN PAGE TITLE -->
+    <div class="page-title">
+      <h1>Create market
+        <small>Create a market to target a specific group of audience</small>
+        <!--      <small>Adjust the feed to customize and prioritize the games to be shown in the ad</small>-->
+      </h1>
+    </div>
+    <!-- END PAGE TITLE -->
+    <!-- BEGIN PAGE TOOLBAR -->
+    <div class="page-toolbar">
+      <!-- BEGIN PAGE BUTTON -->
+      <div class="btn-group btn-theme-panel">
+        <a href="#" class="btn dropdown-toggle">
+          <i class="icon-settings"></i>
+        </a>
+      </div>
+      <!-- END PAGE BUTTON -->
+    </div>
+    <!-- END PAGE TOOLBAR -->
+  </div>
+  <!-- END PAGE HEAD-->
+
+  <!-- BEGIN MARKET SETTINGS -->
+  <div class="row col-xs-12-mod content-margin-fix">
+
+    <!-- * * * * * *  BEGIN METADATA SECTION * * * * * * -->
+    <!--BEGIN LEFT COLUMN WRAPPER 1-->
+    <div class="col-md-12">
+
+      <!--BEGIN LEFT COLUMN 1-->
+      <div class="col-md-6-mod-10 boxed-reg">
+
+        <div class="box-form-headline-panel">
+          <div class="box-form-headline-wrapper">
+            <span class="caption-subject box-headline">Market</span>
+          </div>
+        </div>
+
+        <!--BEGIN SECTION MARKET INFO FORM-->
+        <div class="form-group form-md-line-input">
+          <input [(ngModel)]="marketname" (keyup)="updateMetadata()" type="text" class="form-control"
+                 id="form_control_1"
+                 placeholder="Choose your campaign name">
+          <label for="form_control_1">Market Name</label>
+          <span class="help-block">E.g. Sweden, Germany..</span>
+          <span *ngIf="marketnameError" class="input-text-error">Enter a market name</span>
+
+        </div>
+
+
+        <div class="form-group form-md-line-input">
+          <input [(ngModel)]="marketdescription" (keyup)="updateMetadata()" type="text" class="form-control"
+                 id="form_control_1"
+                 placeholder="Describe the market">
+          <label for="form_control_1">Market Description</label>
+          <span class="help-block">This will help you identify the purpose of this specific campaign</span>
+          <span *ngIf="marketdescriptionError" class="input-text-error">Enter a description</span>
+        </div>
+
+
+      </div>
+
+    </div>
+    <!--END LEFT COLUMN WRAPPER 1-->
+    <!-- * * * * * *  END METADATA SECTION * * * * * * -->
+
+    <button id="createButton" class="btn-reg" (click)="save()">Save</button>
+
+
+  </div>
+  <!-- END MARKET SETTINGS -->
+</div>
+
+<div *ngIf="showLoadingIcon">
+  <img style="position: fixed; top: 50%; left: 60%; transform: translate(-50%, -50%);"
+       src="./img/ripple-load.gif"/>
+</div>
