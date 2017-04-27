@@ -9,6 +9,7 @@ import {StoreService} from './store.service';
 import { GetcontentComponent } from './getcontent/getcontent.component';
 import { CreatemarketComponent } from './createmarket/createmarket.component';
 import { EditmarketComponent } from './editmarket/editmarket.component';
+import {DragulaModule} from 'ng2-dragula';
 
 
 
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes, {useHash: true}),
+    DragulaModule
 
   ],
   exports: [

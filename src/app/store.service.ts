@@ -9,7 +9,7 @@ export class StoreService {
   markets;
   market;
   serverName = 'http://rd001:32826/ApiSocut24-web';
-  serverPin = '6QdfkC';
+  serverPin = 'CmyGjP';
   expandSidebar = true;
   constructor() { }
 

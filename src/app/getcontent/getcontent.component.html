@@ -29,16 +29,57 @@
 
 <div>
   <input type="text" [(ngModel)]="objectId" />
-
-
-
-
   <button (click) = "getData();">Get data</button>
-
+  <div *ngIf="showData">
   <div>
-    {{objectData}}
+    <img src="{{objectData.titlepicture.href}}">
   </div>
-
+  <div>
+    <label for="cityname">City name:</label>
+    <P id="cityname">{{objectData.address.geoHierarchy.city.name}}</P>
+    <label for="quartername">Quarter name:</label>
+    <p id="quartername">{{objectData.address.geoHierarchy.quarter.name}}</p>
+    <label for="regionname">Region name:</label>
+    <p id="regionname">{{objectData.address.geoHierarchy.region.name}}</p>
+    <label for="postcode">Post code:</label>
+    <p id="postcode">{{objectData.address.postcode}}</p>
+    <label for="price">Price:</label>
+    <p id="price">{{objectData.price.value}}</p>
+    <label for="currency">Currency</label>
+    <p id="currency">{{objectData.price.currency}}</p>
+    <label for="livingspace">Livingspace</label>
+    <p id="livingspace">{{objectData.livingspace}}</p>
+  </div>
+    <button (click)="selectObject();">Select</button>
+  </div>
 </div>
+
+<div [dragula]='"bag-one"' [dragulaModel]='selectedDataContent'>
+    <div style="margin-left: 400px; border: solid" *ngFor="let object of selectedDataContent; let i = index" >
+
+        <img src="{{object.titlepicture.href}}">
+        <label for="cityname">City name:</label>
+        <P id="cityname">{{object.address.geoHierarchy.city.name}}</P>
+        <label for="quartername">Quarter name:</label>
+        <p id="quartername">{{object.address.geoHierarchy.quarter.name}}</p>
+        <label for="regionname">Region name:</label>
+        <p id="regionname">{{object.address.geoHierarchy.region.name}}</p>
+        <label for="postcode">Post code:</label>
+        <p id="postcode">{{object.address.postcode}}</p>
+        <label for="price">Price:</label>
+        <p id="price">{{object.price.value}}</p>
+        <label for="currency">Currency</label>
+        <p id="currency">{{object.price.currency}}</p>
+        <label for="livingspace">Livingspace</label>
+        <p id="livingspace">{{object.livingspace}}</p>
+
+      <button (click)="removeObject(i)">remove</button>
+      </div>
+    </div>
+
+<button (click)="saveObjects()">Save</button>
+
+
+
 
 
