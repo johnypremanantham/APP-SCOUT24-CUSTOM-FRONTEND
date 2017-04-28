@@ -27,24 +27,37 @@
           <ul class="nav navbar-nav pull-right">
 
 
+            <li class="top-nav-item active-page page-tabs" id="feedIndicator" *ngIf="store.showMarketOptions">
+              <a (click)="getMarketOption('feeds')"  data-close-others="true">
+                <span> Feed </span>
+              </a>
+            </li>
+
+            <li class="top-nav-item page-tabs" id="adsIndicator" *ngIf="store.showMarketOptions">
+              <a (click)="getMarketOption('ads')"  data-close-others="true">
+                <span> Ads </span>
+              </a>
+            </li>
+
+
             <li class="dropdown dropdown-user">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                 <img alt="" class="img-circle" src="./img/usericon.png"/>
-                <span class="username username-hide-on-mobile">  </span> <!--{{this.storeservice.userName}}-->
+                <span class="username username-hide-on-mobile"> {{store.userName}} </span>
                 <i class="fa fa-angle-down"></i>
               </a>
               <ul class="dropdown-menu dropdown-menu-default">
                 <li>
                   <!--<a (click)="logout()">-->
-                  <a href="/Logout">
+                  <a href="/App-SCM-Api-web/Logout">
                     <i class="icon-logout"></i> Logout </a>
                 </li>
-                <!-- <li (click)="changeLanguage('en');">
-                   <i>English</i>
-                 </li>
-                 <li (click)="changeLanguage('sv')">
-                   <i>Swedish</i>
-                 </li>-->
+              <!--  <li (click)="changeLanguage('en');">
+                  <i>English</i>
+                </li>
+                <li (click)="changeLanguage('sv')">
+                  <i>Swedish</i>
+                </li>-->
               </ul>
             </li>
           </ul>

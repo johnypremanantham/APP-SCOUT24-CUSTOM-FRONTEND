@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {StoreService} from "../store.service";
 import {JsonService} from "../json-service.service";
 import {ActivatedRoute, Params} from "@angular/router";
+import {DragulaService} from "ng2-dragula";
 
 @Component({
   selector: 'app-getcontent',
@@ -16,17 +17,28 @@ export class GetcontentComponent implements OnInit {
   showData = false;
   selectedObjects;
   selectedDataContent = [];
-  constructor(public store: StoreService, private json: JsonService, private activatedRoute: ActivatedRoute) { }
+  constructor(public store: StoreService, private json: JsonService, private activatedRoute: ActivatedRoute, private dragulaService: DragulaService) {
+    dragulaService.setOptions('bag-one', {
+      revertOnSpill: true
+    });
+  }
 
   // CLICK SIDEBAR
   ngOnInit() {
+    this.store.showMarketOptions = true;
     let getObjects = true;
     if(this.store.market === undefined) {
+      const sidebar: any = document.getElementById('sidebar-markets');
+      sidebar.click();
+
       getObjects = false;
       this.activatedRoute.params.subscribe((params: Params) => {
-        console.log(params);
         this.store.marketId = params['id'];
-        console.log(this.store.marketId);
+        const _localThis = this;
+        setTimeout(function () {
+          _localThis.store.addEditMarker(_localThis.store.marketId);
+        },1000);
+
         this.json.getJSON(this.store.serverName + '/Market?marketId=' + this.store.marketId)
           .subscribe(response => {
             this.store.market = response[0];
@@ -51,18 +63,21 @@ export class GetcontentComponent implements OnInit {
 
   getSelectedObjects(){
     this.selectedDataContent = [];
-    this.json.getJSON(this.store.serverName + '/FeedServlet?marketId=' + this.store.marketId)
+    this.json.getJSON(this.store.serverName + '/Object?marketId=' + this.store.marketId)
       .subscribe(response => {
-        this.selectedObjects = response[0]['json'];
-        this.selectedObjects = JSON.parse(this.selectedObjects);
-        const _localThis = this;
-        // Get data for each entry
-        this.selectedObjects.forEach(function (elm) {
-          _localThis.json.getJSON(_localThis.store.serverName + '/GetAppartment?pin='+_localThis.store.serverPin+'&objectId=' + elm)
-            .subscribe(response => {
-              _localThis.selectedDataContent.push(response);
-            });
-        });
+        console.log(response);
+        if(response.length > 0) {
+          this.selectedObjects = response[0]['json'];
+          this.selectedObjects = JSON.parse(this.selectedObjects);
+          const _localThis = this;
+          // Get data for each entry
+          this.selectedObjects.forEach(function (elm) {
+            _localThis.json.getJSON(_localThis.store.serverName + '/GetAppartment?pin=' + _localThis.store.serverPin + '&objectId=' + elm)
+              .subscribe(response => {
+                _localThis.selectedDataContent.push(response);
+              });
+          });
+        }
       });
   }
 
@@ -114,7 +129,7 @@ export class GetcontentComponent implements OnInit {
         'marketId': this.store.marketId,
         'json': this.selectedObjects
       };
-    this.json.postJSON(this.store.serverName + '/FeedServlet', obj)
+    this.json.postJSON(this.store.serverName + '/Object', obj)
       .subscribe(
         response => {
           // Update list of selected objects

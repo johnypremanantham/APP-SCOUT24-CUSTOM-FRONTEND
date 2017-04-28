@@ -41,6 +41,11 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/getcontent', this.store.market.id]);
 
   }
+
+  getMarketOptions(option){
+    console.log(option);
+  }
+
   editMarket() {
 
   }

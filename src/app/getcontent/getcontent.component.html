@@ -1,28 +1,23 @@
 <div *ngIf = "showComponent">
+
 <!-- BEGIN PAGE HEAD-->
 <div class="page-head">
   <!-- BEGIN PAGE TITLE -->
-
   <div class="page-title">
     <h1>Market: {{store.marketName}}
-
       <small>Description: {{store.marketDescription}}</small>
-      <!--
-            <small>Market name: <b>{{storeservice.marketName}}</b></small>
-      -->
       <!--      <small>Adjust the feed to customize and prioritize the games to be shown in the ad</small>-->
     </h1>
   </div>
-
-  <div class="page-btn-container">
-    <i class="icon-settings hide-desktop"></i> <!--(click)="editMarket();"-->
-  </div>
-
   <!-- END PAGE TITLE -->
+
+  <div class="page-btn-container">  <!--*ngIf="!storeservice.createdAdDiv"-->
+    <button type="submit" (click)="saveObjects()" class="btn-reg">Save</button>
+  </div>
 
 </div>
 <!-- END PAGE HEAD-->
-</div>
+
 
 
 
@@ -36,50 +31,45 @@
   </div>
   <div>
     <label for="cityname">City name:</label>
-    <P id="cityname">{{objectData.address.geoHierarchy.city.name}}</P>
+    <span id="cityname">{{objectData.address.geoHierarchy.city.name}}</span>
     <label for="quartername">Quarter name:</label>
-    <p id="quartername">{{objectData.address.geoHierarchy.quarter.name}}</p>
+    <span id="quartername">{{objectData.address.geoHierarchy.quarter.name}}</span>
     <label for="regionname">Region name:</label>
-    <p id="regionname">{{objectData.address.geoHierarchy.region.name}}</p>
+    <span id="regionname">{{objectData.address.geoHierarchy.region.name}}</span>
     <label for="postcode">Post code:</label>
-    <p id="postcode">{{objectData.address.postcode}}</p>
+    <span id="postcode">{{objectData.address.postcode}}</span>
     <label for="price">Price:</label>
-    <p id="price">{{objectData.price.value}}</p>
+    <span id="price">{{objectData.price.value}}</span>
     <label for="currency">Currency</label>
-    <p id="currency">{{objectData.price.currency}}</p>
+    <span id="currency">{{objectData.price.currency}}</span>
     <label for="livingspace">Livingspace</label>
-    <p id="livingspace">{{objectData.livingspace}}</p>
+    <span id="livingspace">{{objectData.livingspace}}</span>
   </div>
     <button (click)="selectObject();">Select</button>
   </div>
 </div>
 
-<div [dragula]='"bag-one"' [dragulaModel]='selectedDataContent'>
+<div [dragula]='"bag-one"' [dragulaModel]='selectedDataContent' *ngIf="selectedDataContent.length > 0">
     <div style="margin-left: 400px; border: solid" *ngFor="let object of selectedDataContent; let i = index" >
 
         <img src="{{object.titlepicture.href}}">
         <label for="cityname">City name:</label>
-        <P id="cityname">{{object.address.geoHierarchy.city.name}}</P>
+        <span id="cityname">{{object.address.geoHierarchy.city.name}}</span>
         <label for="quartername">Quarter name:</label>
-        <p id="quartername">{{object.address.geoHierarchy.quarter.name}}</p>
+        <span id="quartername">{{object.address.geoHierarchy.quarter.name}}</span>
         <label for="regionname">Region name:</label>
-        <p id="regionname">{{object.address.geoHierarchy.region.name}}</p>
+        <span id="regionname">{{object.address.geoHierarchy.region.name}}</span>
         <label for="postcode">Post code:</label>
-        <p id="postcode">{{object.address.postcode}}</p>
+        <span id="postcode">{{object.address.postcode}}</span>
         <label for="price">Price:</label>
-        <p id="price">{{object.price.value}}</p>
+        <span id="price">{{object.price.value}}</span>
         <label for="currency">Currency</label>
-        <p id="currency">{{object.price.currency}}</p>
+        <span id="currency">{{object.price.currency}}</span>
         <label for="livingspace">Livingspace</label>
-        <p id="livingspace">{{object.livingspace}}</p>
+        <span id="livingspace">{{object.livingspace}}</span>
 
       <button (click)="removeObject(i)">remove</button>
       </div>
     </div>
 
-<button (click)="saveObjects()">Save</button>
-
-
-
-
-
+</div>
