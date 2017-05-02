@@ -1,75 +1,142 @@
-<div *ngIf = "showComponent">
+<div *ngIf="showComponent">
 
-<!-- BEGIN PAGE HEAD-->
-<div class="page-head">
-  <!-- BEGIN PAGE TITLE -->
-  <div class="page-title">
-    <h1>Market: {{store.marketName}}
-      <small>Description: {{store.marketDescription}}</small>
-      <!--      <small>Adjust the feed to customize and prioritize the games to be shown in the ad</small>-->
-    </h1>
+  <!-- BEGIN PAGE HEAD-->
+  <div class="page-head">
+    <!-- BEGIN PAGE TITLE -->
+    <div class="page-title">
+      <h1>Market: {{store.marketName}}
+        <small>Description: {{store.marketDescription}}</small>
+        <!--      <small>Adjust the feed to customize and prioritize the games to be shown in the ad</small>-->
+      </h1>
+    </div>
+    <!-- END PAGE TITLE -->
+
+    <div class="page-btn-container">  <!--*ngIf="!storeservice.createdAdDiv"-->
+      <button type="submit" (click)="saveObjects()" class="btn-reg">Save</button>
+    </div>
+
   </div>
-  <!-- END PAGE TITLE -->
-
-  <div class="page-btn-container">  <!--*ngIf="!storeservice.createdAdDiv"-->
-    <button type="submit" (click)="saveObjects()" class="btn-reg">Save</button>
-  </div>
-
-</div>
-<!-- END PAGE HEAD-->
+  <!-- END PAGE HEAD-->
 
 
-
-
-
-<div>
-  <input type="text" [(ngModel)]="objectId" />
-  <button (click) = "getData();">Get data</button>
-  <div *ngIf="showData">
+  <!-- BEGIN SEARCH FIELD -->
   <div>
-    <img src="{{objectData.titlepicture.href}}">
+    <input type="text" [(ngModel)]="objectId"/>
+    <button (click)="getData();">Get data</button>
   </div>
-  <div>
-    <label for="cityname">City name:</label>
-    <span id="cityname">{{objectData.address.geoHierarchy.city.name}}</span>
-    <label for="quartername">Quarter name:</label>
-    <span id="quartername">{{objectData.address.geoHierarchy.quarter.name}}</span>
-    <label for="regionname">Region name:</label>
-    <span id="regionname">{{objectData.address.geoHierarchy.region.name}}</span>
-    <label for="postcode">Post code:</label>
-    <span id="postcode">{{objectData.address.postcode}}</span>
-    <label for="price">Price:</label>
-    <span id="price">{{objectData.price.value}}</span>
-    <label for="currency">Currency</label>
-    <span id="currency">{{objectData.price.currency}}</span>
-    <label for="livingspace">Livingspace</label>
-    <span id="livingspace">{{objectData.livingspace}}</span>
-  </div>
-    <button (click)="selectObject();">Select</button>
-  </div>
-</div>
+  <!-- END SEARCH FIELD -->
 
-<div [dragula]='"bag-one"' [dragulaModel]='selectedDataContent' *ngIf="selectedDataContent.length > 0">
-    <div style="margin-left: 400px; border: solid" *ngFor="let object of selectedDataContent; let i = index" >
 
-        <img src="{{object.titlepicture.href}}">
+  <!-- BEGIN SEARCH RESULT AREA -->
+  <div class="sc-search-result-area">
+    <div class="sc-search-result" *ngIf="showData">
+      <div><img src="{{objectData.titlepicture.href}}"></div>
+      <div class="sc-search-result-metadata">
         <label for="cityname">City name:</label>
-        <span id="cityname">{{object.address.geoHierarchy.city.name}}</span>
+        <span id="cityname">{{objectData.address.geoHierarchy.city.name}}</span>
         <label for="quartername">Quarter name:</label>
-        <span id="quartername">{{object.address.geoHierarchy.quarter.name}}</span>
+        <span id="quartername">{{objectData.address.geoHierarchy.quarter.name}}</span>
         <label for="regionname">Region name:</label>
-        <span id="regionname">{{object.address.geoHierarchy.region.name}}</span>
+        <span id="regionname">{{objectData.address.geoHierarchy.region.name}}</span>
         <label for="postcode">Post code:</label>
-        <span id="postcode">{{object.address.postcode}}</span>
+        <span id="postcode">{{objectData.address.postcode}}</span>
         <label for="price">Price:</label>
-        <span id="price">{{object.price.value}}</span>
+        <span id="price">{{objectData.price.value}}</span>
         <label for="currency">Currency</label>
-        <span id="currency">{{object.price.currency}}</span>
+        <span id="currency">{{objectData.price.currency}}</span>
         <label for="livingspace">Livingspace</label>
-        <span id="livingspace">{{object.livingspace}}</span>
+        <span id="livingspace">{{objectData.livingspace}}</span>
+      </div>
+      <button (click)="selectObject();">Select</button>
+    </div>
+  </div>
+  <!-- END SEARCH RESULT AREA -->
 
-      <button (click)="removeObject(i)">remove</button>
+<!-- START ADD LOGO-->
+  <div>
+    <button (click)="addLogo();">Add logo</button>
+    <div *ngIf="showLogoDiv">
+
+      <input id="imgInput" style="display: none" (change)="readImage();" type="file"  name="picture">
+      <div>
+        <img id="imgImage" src="" (click)="triggerFileUpload();" dragover="allowDrop($event);" (drop)="dropImage($event);" style="width: 100px; height:100px;">
+      </div>
+
+      <span>Add URL:</span>
+      <input type="text" [(ngModel)]="logoURL" />
+      <button (click)="selectLogo();">Select</button>
+    </div>
+  </div>
+  <!-- END ADD LOGO-->
+
+
+
+  <!--BEGIN PREVIEW SIDEBAR-->
+  <div class="sc-selected-objects-sidebar">
+    <!--BEGIN PREVIEW SIDEBAR HEAD-->
+    <div class="box-form-headline-panel">
+      <div class="box-form-headline-wrapper">
+        <span class="caption-subject box-headline">Selected objects</span>
+      </div>
+      <!--
+          <div class="tools">
+            <a onclick="spinIcon(this)" (click)="generatePreview();" class="reload" data-original-title="" title=""> </a>
+            <a onclick="closePreviewSidebar()" class="collapse-icon-black"></a>
+            <a onclick="collapsePreviewSidebar()" class="fullscreen-collapse-icon color-black"></a>
+          </div>
+          <div class="options-wrapper">
+            <div class="options">
+              <button class="btn-inverted black" (click)="savePoints()">Save Priority</button>
+            </div>
+          </div>
+      -->
+    </div>
+    <!--END PREVIEW SIDEBAR HEAD-->
+
+    <hr class="hr-headline-panel">
+
+
+    <!-- BEGIN SELECTED OBJECTS -->
+    <div class="sc-selected-objects-inner">
+      <div [dragula]='"bag-one"' [dragulaModel]='selectedObjects' *ngIf="selectedDataContent.length > 0">
+        <div class="sc-selected-object" *ngFor="let object of selectedDataContent; let i = index">
+
+          <div *ngIf="object.type === undefined">
+          <div class="sc-object-thumbnail-wrapper">
+            <img class="sc-object-thumbnail" src="{{object.titlepicture.href}}">
+          </div>
+
+          <div class="sc-selected-object-metadata">
+
+            <label>
+              {{object.address.geoHierarchy.city.name}}
+              {{object.address.geoHierarchy.quarter.name}}
+              {{object.address.geoHierarchy.region.name}}
+            </label>
+            <label>
+              <span id="price">{{object.price.value}}</span>
+              <span id="currency">{{object.price.currency}}</span>
+            </label>
+            <button (click)="removeObject(i)">remove</button>
+          </div>
+          </div>
+
+
+          <div *ngIf="object.type === 'logo'">
+            <img src="{{object.picture}}" style="width: 118px; height: 118px">
+            <label for="url">URL</label>
+            <span id="url">{{object.url}}</span>
+            <button (click)="removeObject(i)">remove</button>
+          </div>
+
+
+        </div>
       </div>
     </div>
+    <!-- END SELECTED OBJECTS -->
+
+
+  </div>
+  <!--END PREVIEW SIDEBAR-->
 
 </div>

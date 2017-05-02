@@ -3283,6 +3283,115 @@ p {
   top: 7px;
   right: 3px; }
 
+/* ------------------------- */
+/* -------------------------------------
+ * VARIABLES
+ *
+ * Main & accent colors, font & fsize 
+ ------------------------------------ */
+/* ----------------
+ * COLORS
+ --------------- */
+/* ----------------
+ * FONT
+ --------------- */
+/* fs = font-size */
+/* ff = font-family */
+/* fc = font-color */
+/* ----------------
+ * ELEMENTS
+ --------------- */
+/* ----------------
+ * PREVIEW TOOL
+ --------------- */
+.sc-search-result-area {
+  background-color: rebeccapurple; }
+
+.sc-selected-object-metadata {
+  padding: 15px 25px; }
+  .sc-selected-object-metadata label {
+    font-size: 16px;
+    text-overflow: ellipsis;
+    width: 225px;
+    overflow: hidden;
+    white-space: nowrap; }
+  .sc-selected-object-metadata label.sub {
+    font-size: 14px; }
+
+.sc-selected-object {
+  margin-right: 6px;
+  margin-left: 6px;
+  margin-top: 3px;
+  margin-bottom: 25px;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 5px 6px;
+  border: 1px solid #e3e3e3; }
+
+.sc-selected-objects-sidebar {
+  height: calc(100% - 95px);
+  top: 95px;
+  width: 400px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background-color: white;
+  float: right;
+  right: 0px;
+  position: fixed;
+  padding: 20px 50px 0px 50px;
+  box-shadow: rgba(0, 0, 0, 0.08431) 0px 4px 7px 0px;
+  transition: All 0.5s cubic-bezier(0.06, 1.35, 0.6, 1.05); }
+
+.sc-selected-objects-inner {
+  overflow: auto;
+  height: calc(100% - 56px); }
+
+.sc-object-thumbnail {
+  display: block;
+  width: 100%;
+  height: 125px;
+  object-fit: cover; }
+
+.sc-object-thumbnail-wrapper {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  overflow: hidden; }
+
+/* ----------------
+ * RIGHT SIDEBAR
+ * SCROLLBAR
+ * (webkit)
+ --------------- */
+.sc-selected-objects-inner::-webkit-scrollbar {
+  width: 8px;
+  height: 8px; }
+
+.sc-selected-objects-inner::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px; }
+
+/* normal state for thumb */
+.sc-selected-objects-inner::-webkit-scrollbar-thumb {
+  background: #cecece;
+  border: 0px none #ffffff;
+  border-radius: 50px; }
+
+/* On hover thumb color */
+.sc-selected-objects-inner::-webkit-scrollbar-thumb:hover {
+  background: #b5b5b5; }
+
+/* normal state scroll background */
+.sc-selected-objects-inner::-webkit-scrollbar-track {
+  background: #fff;
+  border: 0px none #ffffff;
+  border-radius: 50px; }
+
+/* on hover scrollbar background */
+.sc-selected-objects-inner::-webkit-scrollbar-track:hover {
+  background: #fff; }
+
+.sc-selected-objects-inner::-webkit-scrollbar-corner {
+  background: transparent; }
+
 /* -------------------------------------
  * GENERAL
  *

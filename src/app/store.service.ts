@@ -9,7 +9,8 @@ export class StoreService {
   markets;
   market;
   serverName = 'http://rd001:32826/ApiSocut24-web';
-  serverPin = '27dwse';
+  imageServerUrl = 'https://admin.pliing.com/AdAssetsService-web';
+  serverPin = '2j2vAD';
   expandSidebar = true;
   showMarketOptions = false;
   userName;

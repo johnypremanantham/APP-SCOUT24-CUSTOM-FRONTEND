@@ -226,6 +226,19 @@
 		"oS": 0,
 		"uL": 1
 		},
+	"\/scout24.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 1,
+		"oAP": "\/scout24.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
 	"\/scrollbar.scss": {
 		"aP": 0,
 		"bl": 0,
