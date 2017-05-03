@@ -13,6 +13,7 @@ import set = Reflect.set;
 export class GetcontentComponent implements OnInit {
 
   showComponent = false;
+  showLoadingIcon = true;
   objectId;
   objectData;
   showData = false;
@@ -25,10 +26,8 @@ export class GetcontentComponent implements OnInit {
   logoPicB64;
   logoPicType;
   logoURL;
+  clickImageDiv = true;
   constructor(public store: StoreService, private json: JsonService, private activatedRoute: ActivatedRoute, private dragulaService: DragulaService) {
-    dragulaService.setOptions('bag-one', {
-      revertOnSpill: true
-    });
 
   }
 
@@ -37,6 +36,7 @@ export class GetcontentComponent implements OnInit {
   // CLICK SIDEBAR
   ngOnInit() {
     this.store.showMarketOptions = true;
+    this.store.heightlightFeed();
     let getObjects = true;
     if(this.store.market === undefined) {
       const sidebar: any = document.getElementById('sidebar-markets');
@@ -47,7 +47,7 @@ export class GetcontentComponent implements OnInit {
         this.store.marketId = params['id'];
         const _localThis = this;
         setTimeout(function () {
-          _localThis.store.addEditMarker(_localThis.store.marketId);
+         /* _localThis.store.addEditMarker(_localThis.store.marketId);*/
         },1000);
 
         this.json.getJSON(this.store.serverName + '/Market?marketId=' + this.store.marketId)
@@ -55,7 +55,7 @@ export class GetcontentComponent implements OnInit {
             this.store.market = response[0];
             this.store.marketName = this.store.market.name;
             this.store.marketDescription = this.store.market.description;
-            this.showComponent = true;
+
 
             // Get selected objects
             this.getSelectedObjects();
@@ -64,18 +64,30 @@ export class GetcontentComponent implements OnInit {
           });
       });
     }
-    this.showComponent = true;
     if(getObjects) {
     this.getSelectedObjects();
+
     }
   }
 
- /* test(id){
-    console.log(id);
-    const div: any = document.getElementById('object-' + id);
-    div.classList.add('gu-transit ex-over');
+  cancelObject(){
+    this.objectId = "";
+    this.showData = false;
+  }
 
-  }*/
+  cancelLogo(){
+    this.logoURL = "";
+    this.showData = false;
+    const img: any = document.getElementById('imgImage');
+    img.src = "";
+    const imgDiv: any = document.getElementById('imgUploadDiv');
+    imgDiv.style.display = "none";
+    const _localThis = this;
+    setTimeout(function () {
+      _localThis.clickImageDiv = true;
+    },700);
+
+  }
 
 
   getSelectedObjects(){
@@ -115,7 +127,9 @@ export class GetcontentComponent implements OnInit {
                _localThis.selectedDataContent.sort(function (a,b) {
                   return a.index - b.index;
                 });
-              },1000);
+               _localThis.showComponent = true;
+               _localThis.showLoadingIcon = false;
+              },2000);
                }
 
           });
@@ -267,6 +281,8 @@ export class GetcontentComponent implements OnInit {
 
         _localThis.logoPicB64 = base64;
         _localThis.logoPicType = fileType;
+        const imgDiv = document.getElementById('imgUploadDiv');
+        imgDiv.style.display = "block";
 
 
       }
@@ -292,7 +308,10 @@ export class GetcontentComponent implements OnInit {
   }
 
   triggerFileUpload(image){
-    document.getElementById("imgInput").click();
+    if(this.clickImageDiv) {
+      this.clickImageDiv = false;
+      document.getElementById("imgInput").click();
+    }
   }
 
 

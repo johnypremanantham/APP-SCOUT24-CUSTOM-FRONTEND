@@ -10,6 +10,7 @@ import { GetcontentComponent } from './getcontent/getcontent.component';
 import { CreatemarketComponent } from './createmarket/createmarket.component';
 import { EditmarketComponent } from './editmarket/editmarket.component';
 import {DragulaModule} from 'ng2-dragula';
+import { AdsComponent } from './getcontent/ads/ads.component';
 
 
 
@@ -23,6 +24,8 @@ const appRoutes: Routes = [
   {path: 'getcontent/:id', redirectTo: 'dashboard/getcontent/:id', pathMatch: 'full'},
   {path: 'dashboard/createmarket',  component: CreatemarketComponent},
   {path: 'createmarket', redirectTo: 'dashboard/createmarket', pathMatch: 'full'},
+  {path: 'dashboard/ads/:id',  component: AdsComponent},
+  {path: 'ads/:id', redirectTo: 'dashboard/ads/:id', pathMatch: 'full'},
 ];
 
 @NgModule({
@@ -30,7 +33,8 @@ const appRoutes: Routes = [
     AppComponent,
     GetcontentComponent,
     CreatemarketComponent,
-    EditmarketComponent
+    EditmarketComponent,
+    AdsComponent
 
 
 
