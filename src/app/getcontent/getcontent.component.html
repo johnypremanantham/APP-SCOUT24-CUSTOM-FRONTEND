@@ -21,10 +21,11 @@
 
   <!-- BEGIN SEARCH FIELD -->
   <div id="sc-search-field">
-    <input type="text" [(ngModel)]="objectId" (keyup)="validateObjectID();" placeholder="Object ID" />
+    <input type="text" [(ngModel)]="objectId" (keyup)="validateObjectID();" placeholder="Object ID" (keyup.enter)="getData();" />
     <i class="fa fa-search" aria-hidden="true"></i>
     <button (click)="getData();">Find</button>
     <span *ngIf="showObjectidWarning" style="color: red;">Enter a object ID</span>
+    <span *ngIf="showObjectidNotexistWarning" style="color: red;">Object ID does not exist</span>
   </div>
   <!-- END SEARCH FIELD -->
 

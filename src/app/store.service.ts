@@ -8,10 +8,10 @@ export class StoreService {
   marketDescription;
   markets;
   market;
-  serverName = 'https://tte9.pliing.com/ApiSocut24-web';
+  serverName = 'http://rd001:32826/ApiSocut24-web';  //https://tte9.pliing.com/ApiSocut24-web http://rd001:32826/ApiSocut24-web/FeedServlet?marketId=1
   imageServerUrl = 'https://admin.pliing.com/AdAssetsService-web';
   adServerUrl  = "https://admin.pliing.com/BanGen";
-  serverPin = 'xY8Xid';
+  serverPin = null;
   expandSidebar = true;
   showMarketOptions = false;
   userName;

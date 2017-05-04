@@ -19,7 +19,11 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log('a');
+    const _localThis = this;
+    setTimeout(function () {
+      _localThis.store.userName = localStorage.getItem("username");
+
+    }, 500);
   }
   createMarket() {
     this.store.expandSidebar = false;

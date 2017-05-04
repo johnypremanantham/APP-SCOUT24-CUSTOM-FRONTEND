@@ -28,6 +28,7 @@ export class GetcontentComponent implements OnInit {
   logoURL;
   clickImageDiv = true;
   showObjectidWarning = false;
+  showObjectidNotexistWarning = false;
   showFilesizeError = false;
   constructor(public store: StoreService, private json: JsonService, private activatedRoute: ActivatedRoute, private dragulaService: DragulaService) {
 
@@ -194,10 +195,13 @@ export class GetcontentComponent implements OnInit {
     if(this.objectId !== "" && this.objectId !== undefined && isInt) {
       this.json.getJSON(this.store.serverName + '/GetAppartment?pin=' + this.store.serverPin + '&objectId=' + this.objectId)
         .subscribe(response => {
-          console.log(response);
-          response["adpicture"]["href"] = response["adpicture"]["href"].replace("%WIDTH%", "285").replace("%HEIGHT%","300");
-          this.objectData = response;
-          this.showData = true;
+          if(response["error"] === undefined) {
+            response["adpicture"]["href"] = response["adpicture"]["href"].replace("%WIDTH%", "285").replace("%HEIGHT%", "300");
+            this.objectData = response;
+            this.showData = true;
+          }else{
+            this.showObjectidNotexistWarning = true;
+          }
         });
     }else{
       this.showObjectidWarning = true;
@@ -220,6 +224,7 @@ export class GetcontentComponent implements OnInit {
   validateObjectID(){
     if(this.objectId !== "" && this.objectId !== undefined){
       this.showObjectidWarning = false;
+      this.showObjectidNotexistWarning = false;
     }
   }
 
@@ -309,7 +314,7 @@ export class GetcontentComponent implements OnInit {
         fileType = fileType.replace("image/", "");
 
         const fileSize = file.size/1024;
-        if(fileSize < 1001) {
+        if(fileSize < 101) {
           _localThis.showFilesizeError = false;
           const obj = {};
           obj['base64'] = base64;
