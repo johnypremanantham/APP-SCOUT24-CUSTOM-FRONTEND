@@ -1,19 +1,55 @@
 @import "variables.scss";
 
-.sc-search-result-area {
-  background-color: azure;
-  height: 100%;
-  width: 100%;
-}
-
 .sc-search-result {
   
+  
+  h1 {
+    margin: 0;
+	font-size: 22px;
+    font-weight: 500;
+  }
+  
+  h2 {
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+  
+  .col-md-4 {
+    margin-right: 20px;
+  }
+}
+
+.sc-search-result-options {
+  display: inline-block;
+  position: absolute;
+  bottom: 20px;
+  right: 0;
+  margin-right: 20px;
+  
+  
+  button.select {
+    background-color: $main-accent-color;
+    color: #fff;
+    border: 2px solid $main-accent-color;
+    padding: 5px 15px;
+    border-radius: 4px;
+  }
+  
+  button.cancel {
+    background-color: rgba(255, 255, 255, 0);
+    color: #000;
+    box-sizing: border-box;
+    border: 2px solid black;
+    padding: 5px 15px;
+    border-radius: 4px;
+  }
 }
 
 .sc-search-result-metadata {
   float: left;
   display: inline-block;
-  padding: 40px;
+  padding: 25px 25px 25px 35px;
   width: calc(100% - 300px);
 }
 
@@ -132,32 +168,77 @@
 }
 
 .sc-search-result-area {
-  
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+}
+
   .sc-search-result-thumbnail {
-    width: 300px;
+    width: 285px;
     height: 300px;
     display: block;
     object-fit: cover;
     float: left;
   }
-}
 
 
-.sc-upload-area {
+.sc-object-select-area {
   margin-top: 15px;
   width: 770px;
   height: 300px;
   background-color: #D9DDE6;
   border-radius: $rounded-corners;
   overflow: hidden;
+  position: relative;
 }
 
+.sc-drop-media {
+  border: 5px dashed #7c8394;
+}
 
-/* ----------------
- * SEARCH FIELD
- --------------- */
+.sc-object-placeholder {
+  color: white;
+  margin: 37px auto;
+  max-width: 400px;
+  width: 50%;
+  height: 75%;
+  text-align: center;
+  position: relative;
+  
+  img {
+    margin-top: 20px;
+    width: 160px;
+    height: 98px;
+  }
+  
+  p {
+    margin-top: 10px;
+    font-size: 20px;
+    color: #a3a9b7;
+    
+    span {
+      font-size: 17px;
+    }
+  }
+}
 
+.sc-object-placeholder-inner {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
+.sc-custom-image-area {
+  position: absolute;
+  top: 0;
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+}
 
 
 /* ----------------

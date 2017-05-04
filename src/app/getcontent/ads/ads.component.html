@@ -1,3 +1,213 @@
-<p>
-  ads works!
-</p>
+<div *ngIf="store.showComponent">
+
+
+  <!-- BEGIN PAGE HEAD-->
+  <div class="page-head">
+    <!-- BEGIN PAGE TITLE -->
+    <div class="page-title">
+      <h1>Market Name: {{store.marketName}}
+        <small>Market description: {{store.marketDescription}}</small>
+        <!--      <small>Adjust the feed to customize and prioritize the games to be shown in the ad</small>-->
+      </h1>
+    </div>
+    <!-- END PAGE TITLE -->
+
+    <div class="page-btn-container" *ngIf="!store.showFeedEmptyError">
+      <button type="submit" (click)="create()" class="btn-reg">Create ad</button>
+    </div>
+
+  </div>
+
+</div>
+<div *ngIf="store.showFeedEmptyError">
+  <span style="color: red">You must first build your feed before you can create an ad</span>
+</div>
+
+
+<div id="ad-list-market" class="col-md-11" *ngIf="store.adListDiv">
+
+  <table>
+    <thead>
+    <tr>
+      <th>Banner ID</th>
+      <th>Banner Name</th>
+      <th>Format</th>
+      <th>Size</th>
+      <th>Demo Link</th>
+      <th style="width: 120px;">Script</th>
+      <th style="text-align: center;">Adsscore</th>
+    </tr>
+    </thead>
+
+    <tfoot>
+    <td colspan="999">
+      <div style="display: inline-block;" *ngIf="store.adList.length > 5">
+        <select [(ngModel)]="pageLimit" [ngModelOptions]="{standalone: true}"
+                class="inp"
+                name="test">
+          <option *ngFor="let option of pageLimitArray">{{option}}</option>
+        </select>
+      </div>
+      <pagination-controls class="my-pagination" style="float: right; padding-left: 0px;" (pageChange)="p = $event"
+                           autoHide="true"
+                           previousLabel="Previous"
+                           nextLabel="Next"
+                           screenReaderPaginationLabel="Pagination"
+                           screenReaderPageLabel="page"
+                           screenReaderCurrentLabel="You're on page">
+      </pagination-controls>
+
+    </td>
+    </tfoot>
+
+    <tbody>
+    <tr
+      *ngFor="let ad of store.adList | paginate:{itemsPerPage:pageLimit, currentPage: p}"
+      id={{ad.bannerId}}>
+      <td style="width: 110px;">{{ad.bannerId}}</td>
+      <td style="width: 200px">{{ad.bannerName}}</td>
+      <td>{{ad.formatName}}</td>
+      <td>{{ad.width}}x{{ad.height}}</td>
+      <td><a href="{{ad.launchReturnJson.demoUrl}}" target="_blank">View</a></td>
+      <td><a (click)="showScript(ad.launchReturnJson.loadScript)">Show script</a></td> <!--{{ad.launchReturnJson.loadScript}}-->
+      <td style="padding-right: 0; text-align: center;"><a href="{{ad.launchReturnJson.adsscoreUrl}}" target="_blank"><img class="icon" src="./img/adsscore-symbol-small.png"></a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 *ngIf="store.noAdWarning">No ads created and linked to this market</h3>
+
+
+
+
+
+<div class="create-ad-container" id="createAdDiv" *ngIf="store.createAdDiv">
+
+<!--  &lt;!&ndash;<div id="card-popup-shadow"></div>&ndash;&gt;-->
+
+  <div class="create-ad-select-item" *ngFor="let format of store.adFormatsToCreate" (click)="getAdsByFormat(format);" style="cursor: pointer">
+
+    <div class="card-thumbnail">
+      <img style="display: block;" src="{{format.templateImg}}" id="{{format.idAdFormat}}"/>
+    </div>
+    <div> <!--&lt;!&ndash; So that the option "ALL" does not get included in this list, "ALL" is just used for filtering&ndash;&gt;-->
+      <div class="create-ad-card-desc">
+        <label>{{format.name}}</label>
+        <span>{{format.width}}x{{format.height}}</span>
+        <p><b>Create</b></p>
+      </div>
+
+    </div>
+  </div>
+
+
+    <div id="previewPopup" style="margin: 0 auto; z-index:99999; overflow: auto;" *ngIf="showPreviewPopup" class="card-prompt ad-preview no-margin boxed-reg is-visible">
+
+      <button class="btn-close-circular" (click)="hidePreviewPopup();"><i class="fa fa-times"></i></button>
+
+      <iframe id="adIframe" style="width: 100%; height: 350px; border: none; visibility: hidden">      </iframe>
+
+      <div *ngIf="showmetadata">
+
+
+        <div class="form-group form-md-line-input" *ngIf="showResponsiveDiv">
+          <label for="form_control_1">Ad Size</label>
+          <br>
+
+          <div class="col-md-6">
+            <input type="radio" checked id="responsiveWidthRadio" (click)="setResponseWidth();" />
+            <label>Fill ad space width</label>
+            <br>
+            <input type="radio" id="adWidthRadio" (click)="enableWidthInput();" />
+            <label>Set width</label>
+            <input type="text" id="adWidthInput" style="width: 5em" [(ngModel)]="width" (keyup)="setWidth();" disabled> <label *ngIf="showPxWidth"> px</label>
+            <span *ngIf="showAdWidthWarning" style="color: red; display: block">A value must be set</span>
+          </div>
+
+          <div class="col-md-6">
+
+            <input type="radio" checked id="responsiveHeightRadio" (click)="setResponseHeight();" />
+            <label>Fill ad space height</label>
+            <br>
+            <input type="radio" id="adHeightRadio" (click)="enableHeightInput();" />
+            <label>Set height</label>
+            <input type="text" id="adHeightInput" style="width: 5em" [(ngModel)]="height" (keyup)="setHeight();" disabled> <label *ngIf="showPxHeight"> px</label>
+            <span *ngIf="showAdHeightWarning" style="color: red; display: block">A value must be set</span>
+
+          </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="form-group form-md-line-input">
+          <input [(ngModel)]="adName" type="text" class="form-control" id="form_control_1"
+                 placeholder="Enter ad name" (mouseup)="validateAdName();"/>
+          <label for="form_control_1">Ad Name</label>
+          <span class="help-block">Your ad name to identify your ad</span>
+          <p id="nameErrorMsg" *ngIf="showAdNameWarning" class="input-text-error" >Enter a name for your ad</p>
+        </div>
+
+        <div class="form-group form-md-line-input">
+          <input [(ngModel)]="adClickTracker" type="text" class="form-control" id="form_control_1"
+                 placeholder="Enter ad name"  />
+          <label for="form_control_1">Click Tracker URL (Optional)</label>
+          <span class="help-block">This is the ad click counter</span>
+          <!--
+                    <p id="nameErrorMsg" *ngIf="showNameErrorMsg" class="input-text-error" >{{'editmarket.metadata.input1error' | translate}}</p>
+          -->
+        </div>
+
+        <div class="form-group form-md-line-input">
+          <input [(ngModel)]="adImpTracker" type="text" class="form-control" id="form_control_1"
+                 placeholder="Enter ad name"  />
+          <label for="form_control_1">Impression Tracker URL (Optional)</label>
+          <span class="help-block">This is the ad impression counter</span>
+          <!--
+                    <p id="nameErrorMsg" *ngIf="showNameErrorMsg" class="input-text-error" >{{'editmarket.metadata.input1error' | translate}}</p>
+          -->
+        </div>
+
+        <button (click)="createAd(format)" class="btn-reg float-r">Create</button> <!--*ngIf="adName.length > 0"-->
+
+        <!--
+                <div class="form-entry">Enter a name for your banner <input [(ngModel)]="adName" type="text"/></div>
+                <div class="form-entry">Enter a click tracker url (click counter)<i> Optional</i> <input [(ngModel)]="adClickTracker" type="text"/></div>
+                <div class="form-entry">Enter a impression tracker url (impression counter)<i> Optional</i> <input [(ngModel)]="adImpTracker" type="text"/></div>
+        -->
+      </div>
+
+    </div>
+  </div>
+
+<div id="scriptPopup" class="card-prompt script no-margin boxed-reg is-visible" *ngIf="showScriptDiv" style="z-index: 99999">
+
+  <div class="box-form-headline-panel">
+    <div class="box-form-headline-wrapper">
+      <span class="caption-subject box-headline">SCRIPT</span>
+      <div style="top: 15px; position: absolute; right: 20px; cursor: pointer;" (click)="closeScript()"><b>x</b></div>
+    </div>
+  </div>
+
+  <!--<hr class="hr-headline-panel">-->
+
+  <textarea id="scriptTextArea">{{showLoadScript}}</textarea>
+
+  <span id="copyMsg" >
+        {{copyMsg}}
+      </span>
+
+
+  <button class="blue float-r" (click)="copyScript()">Copy</button>
+</div>
+
+
+
+
+
+<div *ngIf="store.showLoadingIcon">
+  <img id="loadingIcon" style="position: fixed; top: 50%; left: 60%; transform: translate(-50%, -50%);"
+       src="./img/ripple-load.gif"/>
+</div>

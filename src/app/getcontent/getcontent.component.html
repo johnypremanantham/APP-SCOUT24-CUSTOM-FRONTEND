@@ -1,4 +1,4 @@
-<div *ngIf="showComponent">
+<div *ngIf="store.showComponent">
 
   <!-- BEGIN PAGE HEAD-->
   <div class="page-head">
@@ -21,9 +21,10 @@
 
   <!-- BEGIN SEARCH FIELD -->
   <div id="sc-search-field">
-    <input type="text" [(ngModel)]="objectId" placeholder="Object ID" />
+    <input type="text" [(ngModel)]="objectId" (keyup)="validateObjectID();" placeholder="Object ID" />
     <i class="fa fa-search" aria-hidden="true"></i>
     <button (click)="getData();">Find</button>
+    <span *ngIf="showObjectidWarning" style="color: red;">Enter a object ID</span>
   </div>
   <!-- END SEARCH FIELD -->
 
@@ -36,49 +37,99 @@
         <div *ngIf="showLogoDiv">-->
 
 
-    <div class="sc-upload-area">
+    <div id="imgDivContainer" class="sc-object-select-area"> <!--Add class "sc-drop-media" when mouse drag over-->
+
+
+      <div class="sc-object-placeholder">
+        <div class="sc-object-placeholder-inner">
+          <img src="https://mds.pliing.com/sync/libs/scout24/media-upload-icon.png">
+          <p>Search or Create an object<br><span>Drag an image or click here to create a custom object.</span></p>
+        </div>
+      </div>
+
+      <span *ngIf="showFilesizeError" style="color: red; position: fixed">The file you tried to upload exceeds the limit which is 1000kb</span>
+
+
+
+
+
+      <!-- BEGIN CUSTOM IMAGE UPLOAD AREA -->
+      <div style="opacity: 0; cursor: pointer;" id="imgUploadDiv" class="sc-custom-image-area" (click)="triggerFileUpload();" (dragover)="allowDrop($event);"
+           (drop)="dropImage($event);">
+
+        <div><img id="imgImage" class="sc-search-result-thumbnail" src=""></div>
+
+
+        <div class="sc-search-result-metadata">
+          <div class="form-group form-md-line-input">
+            <input class="form-control" type="text" placeholder="http://www.example.com" [(ngModel)]="logoURL">
+            <label>Enter a URL</label>
+            <span class="help-block">Your custom image will be linked to this URL.</span>
+          </div>
+        </div>
+
+        <div class="sc-search-result-options">
+          <button class="cancel" (click)="cancelLogo();">Cancel</button>
+          <button class="select" (click)="selectLogo();">Select</button>
+        </div>
+
+      </div>
+
+      <input id="imgInput" style="display: none" (change)="readImage();" type="file"  name="picture" />
+      <!-- END CUSTOM IMAGE UPLOAD AREA -->
+
+
+
 
 
       <!-- BEGIN SEARCH RESULT AREA -->
       <div class="sc-search-result-area" *ngIf="showData">
         <div class="sc-search-result">
-          <div><img class="sc-search-result-thumbnail" src="{{objectData.titlepicture.href}}"></div>
+          <div><img class="sc-search-result-thumbnail" src="{{objectData.adpicture.href}}"></div>
           <div class="sc-search-result-metadata">
 
-            <h1>Quarter, Region, City!</h1>
+            <h1>{{objectData.address.geoHierarchy.quarter.name}},
+              {{objectData.address.geoHierarchy.city.name}}
+            </h1>
+            <h1 style="margin-bottom: 10px;">
+              {{objectData.address.geoHierarchy.region.name}}, {{objectData.address.postcode}}
+            </h1>
 
-             <label for="cityname">City name:</label>
-             <span id="cityname">{{objectData.address.geoHierarchy.city.name}}</span>
-             <label for="quartername">Quarter name:</label>
-             <span id="quartername">{{objectData.address.geoHierarchy.quarter.name}}</span>
-             <label for="regionname">Region name:</label>
-             <span id="regionname">{{objectData.address.geoHierarchy.region.name}}</span>
-             <label for="postcode">Post code:</label>
-             <span id="postcode">{{objectData.address.postcode}}</span>
-             <label for="price">Price:</label>
-             <span id="price">{{objectData.price.value}}</span>
-             <label for="currency">Currency</label>
-             <span id="currency">{{objectData.price.currency}}</span>
-             <label for="livingspace">Livingspace</label>
-             <span id="livingspace">{{objectData.livingspace}}</span>
+            <div class="col-md-4">
+              <h2>{{objectData.price.value}} {{objectData.price.currency}}</h2>
+              <span>Kaufpreis</span>
+            </div>
+            <div class="col-md-4">
+              <h2>{{objectData.livingspace}} m<sup>2</sup></h2>
+              <span>Wohnfläche</span>
+            </div>
+           <!-- <div class="col-md-4">
+              <h2>{{objectData.livingspace}} m<sup>2</sup></h2>
+              <span>Wohnfläche</span>
+            </div>-->
+            <!--             <label for="cityname">City name:</label>
+                         <span id="cityname">{{objectData.address.geoHierarchy.city.name}}</span>
+                         <label for="quartername">Quarter name:</label>
+                         <span id="quartername">{{objectData.address.geoHierarchy.quarter.name}}</span>
+                         <label for="regionname">Region name:</label>
+                         <span id="regionname">{{objectData.address.geoHierarchy.region.name}}</span>
+                         <label for="postcode">Post code:</label>
+                         <span id="postcode">{{objectData.address.postcode}}</span>
+                         <label for="price">Price:</label>
+                         <span id="price">{{objectData.price.value}}</span>
+                         <label for="currency">Currency</label>
+                         <span id="currency">{{objectData.price.currency}}</span>
+                         <label for="livingspace">Livingspace</label>
+                         <span id="livingspace">{{objectData.livingspace}}</span>-->
+            <div class="sc-search-result-options">
+              <button class="cancel" (click)="cancelObject();">Cancel</button>
+              <button class="select" (click)="selectObject();">Select</button>
+            </div>
           </div>
-          <button (click)="cancelObject();">Cancel</button>
-          <button (click)="selectObject();">Select</button>
+
         </div>
       </div>
       <!-- END SEARCH RESULT AREA -->
-      <div style="width: 770px; height: 300px;" (click)="triggerFileUpload();" dragover="allowDrop($event);" (drop)="dropImage($event);">
-        <div id="imgUploadDiv" style="display: none">
-         <img src="" id="imgImage" src=""  style="width: 100px; height:100px;">
-          <span>Add URL:</span>
-          <input type="text" [(ngModel)]="logoURL" />
-          <button (click)="selectLogo();">Select</button>
-          <button (click)="cancelLogo();">Cancel</button>
-        </div>
-      </div>
-      <input id="imgInput" style="display: none" (change)="readImage();" type="file"  name="picture" />
-
-
 
 
 
@@ -128,7 +179,7 @@
 
           <div *ngIf="object.type === undefined">
             <div class="sc-selected-object-thumbnail-wrapper">
-              <img class="sc-selected-object-thumbnail" src="{{object.titlepicture.href}}">
+              <img class="sc-selected-object-thumbnail" src="{{object.adpicture.href}}">
             </div>
 
             <div class="sc-selected-object-metadata">
@@ -165,7 +216,7 @@
   <!--END PREVIEW SIDEBAR-->
 
 </div>
-<div *ngIf="showLoadingIcon">
+<div *ngIf="store.showLoadingIcon">
   <img style="position: fixed; top: 50%; left: 60%; transform: translate(-50%, -50%);"
        src="./img/ripple-load.gif"/>
 </div>

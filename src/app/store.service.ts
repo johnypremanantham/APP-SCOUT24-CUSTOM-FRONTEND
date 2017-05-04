@@ -8,16 +8,22 @@ export class StoreService {
   marketDescription;
   markets;
   market;
-  serverName = 'http://rd001:32826/ApiSocut24-web';
+  serverName = 'https://tte9.pliing.com/ApiSocut24-web';
   imageServerUrl = 'https://admin.pliing.com/AdAssetsService-web';
-  serverPin = 'TEdIDp';
+  adServerUrl  = "https://admin.pliing.com/BanGen";
+  serverPin = 'xY8Xid';
   expandSidebar = true;
   showMarketOptions = false;
   userName;
-  createdAdDiv;
-  adListDiv;
+  createAdDiv = false;
+  adListDiv = false;
+  noAdWarning;
+  adFormatsToCreate = [{"idAdFormat":1,"templateImg":"https://mds.pliing.com/sync/libs/scm/transformer.png","name": "Transformer", "width": "250", "height": "300", "idAdFormatType": 1}];
+  adList = [];
+  showLoadingIcon = true;
+  showComponent = false;
+  showFeedEmptyError = false;
   constructor() { }
-
 
 
   addEditMarker(marketId){

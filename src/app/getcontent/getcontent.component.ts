@@ -27,6 +27,8 @@ export class GetcontentComponent implements OnInit {
   logoPicType;
   logoURL;
   clickImageDiv = true;
+  showObjectidWarning = false;
+  showFilesizeError = false;
   constructor(public store: StoreService, private json: JsonService, private activatedRoute: ActivatedRoute, private dragulaService: DragulaService) {
 
   }
@@ -81,7 +83,12 @@ export class GetcontentComponent implements OnInit {
     const img: any = document.getElementById('imgImage');
     img.src = "";
     const imgDiv: any = document.getElementById('imgUploadDiv');
-    imgDiv.style.display = "none";
+    imgDiv.style.opacity = "0";
+    imgDiv.style.cursor = "pointer";
+
+    const imgInput: any = document.getElementById('imgInput');
+    imgInput.value = "";
+
     const _localThis = this;
     setTimeout(function () {
       _localThis.clickImageDiv = true;
@@ -91,14 +98,29 @@ export class GetcontentComponent implements OnInit {
 
 
   getSelectedObjects(){
-    this.selectedDataContent = [];
-    /*this.json.getJSON(this.store.serverName + '/FeedServlet?marketId=' + this.store.marketId)
-      .subscribe(response => {
-        console.log(response);
-        this.selectedDataContent = response;*/
-    /*});*/
 
-        this.json.getJSON(this.store.serverName + '/Object?marketId=' + this.store.marketId)
+    this.json.getJSON(this.store.serverName + '/FeedServlet?marketId=' + this.store.marketId)
+      .subscribe(response => {
+        this.selectedDataContent = response;
+        this.selectedDataContent.forEach(function (elm, index) {
+          if(elm["type"] === undefined){
+            const img = elm["adpicture"]["href"];
+            elm["adpicture"]["href"] = img.replace("%WIDTH%", "278").replace("%HEIGHT%","125");
+
+          }
+        });
+        this.store.showComponent = true;
+        this.store.showLoadingIcon = false;
+    });
+    this.json.getJSON(this.store.serverName + '/Object?marketId=' + this.store.marketId)
+      .subscribe(response => {
+        if(response.length > 0) {
+          this.selectedObjects = response[0]['json'];
+          this.selectedObjects = JSON.parse(this.selectedObjects);
+        }
+          });
+
+       /* this.json.getJSON(this.store.serverName + '/Object?marketId=' + this.store.marketId)
           .subscribe(response => {
             console.log(response);
             if(response.length > 0) {
@@ -132,14 +154,14 @@ export class GetcontentComponent implements OnInit {
               },2000);
                }
 
-          });
+          });*/
   }
 
-  updateSelectedList(){
+/*  updateSelectedList(){
     this.selectedDataContent = [];
     const _localThis = this;
     // Get data for each entry
-    this.selectedObjects.forEach(function (elm, index) {
+   /!* this.selectedObjects.forEach(function (elm, index) {
       if(parseInt(elm)) {
         _localThis.json.getJSON(_localThis.store.serverName + '/GetAppartment?pin=' + _localThis.store.serverPin + '&objectId=' + elm)
           .subscribe(response => {
@@ -157,36 +179,48 @@ export class GetcontentComponent implements OnInit {
         });
       },1000);
 
-    });
-  }
+    });*!/
+  }*/
 
   removeObject(index){
-    console.log(index);
-    console.log(this.selectedObjects);
     this.selectedObjects.splice(index,1);
-    console.log(this.selectedObjects);
-    this.updateSelectedList();
+    this.selectedDataContent.splice(index,1);
   }
 
 
   getData(){
-    console.log(this.objectId);
-    this.json.getJSON(this.store.serverName + '/GetAppartment?pin='+this.store.serverPin+'&objectId=' + this.objectId)
-      .subscribe(response => {
-        console.log(response);
-        this.objectData = response;
-        this.showData = true;
-
-      });
+    this.showFilesizeError = false;
+    const isInt = parseInt(this.objectId);
+    if(this.objectId !== "" && this.objectId !== undefined && isInt) {
+      this.json.getJSON(this.store.serverName + '/GetAppartment?pin=' + this.store.serverPin + '&objectId=' + this.objectId)
+        .subscribe(response => {
+          console.log(response);
+          response["adpicture"]["href"] = response["adpicture"]["href"].replace("%WIDTH%", "285").replace("%HEIGHT%","300");
+          this.objectData = response;
+          this.showData = true;
+        });
+    }else{
+      this.showObjectidWarning = true;
+    }
   }
 
   selectObject(){
-    console.log();
+
     this.selectedObjects.push(parseInt(this.objectId));
-    this.updateSelectedList();
+    this.json.getJSON(this.store.serverName + '/GetAppartment?pin='+this.store.serverPin+'&objectId=' + this.objectId)
+      .subscribe(response => {
+        this.selectedDataContent.push(response);
+
+      });
     this.objectId = '';
     this.showData = false;
 
+  }
+
+  validateObjectID(){
+    if(this.objectId !== "" && this.objectId !== undefined){
+      this.showObjectidWarning = false;
+    }
   }
 
   selectLogo(){
@@ -211,11 +245,8 @@ export class GetcontentComponent implements OnInit {
           img.src = "";
           this.showLogoDiv = false;
 
-          console.log(this.selectedObjects);
-
-          this.updateSelectedList();
-
-
+          this.selectedDataContent.push(obj);
+          this.cancelLogo();
         }
       );
   }
@@ -260,6 +291,7 @@ export class GetcontentComponent implements OnInit {
       return;
     } else {
       // Retrieve base64 of image
+      this.clickImageDiv = false;
       this.readFiles(file, file.type, image, input);
     }
   }
@@ -275,14 +307,21 @@ export class GetcontentComponent implements OnInit {
 
         base64 = base64.replace("data:" + fileType + ";base64,", "");
         fileType = fileType.replace("image/", "");
-        const obj = {};
-        obj['base64'] = base64;
-        obj['type'] = fileType;
 
-        _localThis.logoPicB64 = base64;
-        _localThis.logoPicType = fileType;
-        const imgDiv = document.getElementById('imgUploadDiv');
-        imgDiv.style.display = "block";
+        const fileSize = file.size/1024;
+        if(fileSize < 1001) {
+          _localThis.showFilesizeError = false;
+          const obj = {};
+          obj['base64'] = base64;
+          obj['type'] = fileType;
+          _localThis.logoPicB64 = base64;
+          _localThis.logoPicType = fileType;
+          const imgDiv = document.getElementById('imgUploadDiv');
+          imgDiv.style.opacity = "";
+          imgDiv.style.cursor = "";
+        }else{
+          _localThis.showFilesizeError = true;
+        }
 
 
       }
@@ -301,6 +340,8 @@ export class GetcontentComponent implements OnInit {
 
   dropImage(event){
     event.preventDefault();
+    const imgContainer: any = document.getElementById('imgDivContainer');
+    imgContainer.classList.remove("sc-drop-media");
     const data = event.dataTransfer.files;
     const file = data["0"];
 
@@ -309,7 +350,6 @@ export class GetcontentComponent implements OnInit {
 
   triggerFileUpload(image){
     if(this.clickImageDiv) {
-      this.clickImageDiv = false;
       document.getElementById("imgInput").click();
     }
   }
@@ -317,6 +357,8 @@ export class GetcontentComponent implements OnInit {
 
   allowDrop(event){
     event.preventDefault();
+    const imgContainer: any = document.getElementById('imgDivContainer');
+    imgContainer.classList.add("sc-drop-media");
   }
 
 

@@ -66,24 +66,24 @@
   <link href="./assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
   <link href="./assets/global/plugins/clockface/css/clockface.css" rel="stylesheet" type="text/css" />
   <!-- END DATE PICK SCRIPTS -->
- <!-- <script>
+  <script>
     function authUser() {
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
           data = xhr.responseText;
-          localStorage.setItem("username", "CHNAGE ME"); //data
+          localStorage.setItem("username", data); //data
         }
       }
       xhr.open('GET', 'FrontendLogin', true);
       xhr.send(null);
     }
-  </script>-->
+  </script>
 </head>
 
 
 
-<body class="page-sidebar-fixed"> <!-- onload="authUser();"-->
+<body class="page-sidebar-fixed"  onload="authUser();"> <!---->
 
 <app-root>
   <div>

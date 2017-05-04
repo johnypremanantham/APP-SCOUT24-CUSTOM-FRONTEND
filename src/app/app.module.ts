@@ -11,6 +11,7 @@ import { CreatemarketComponent } from './createmarket/createmarket.component';
 import { EditmarketComponent } from './editmarket/editmarket.component';
 import {DragulaModule} from 'ng2-dragula';
 import { AdsComponent } from './getcontent/ads/ads.component';
+import {Ng2PaginationModule} from 'ng2-pagination';
 
 
 
@@ -44,7 +45,8 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes, {useHash: true}),
-    DragulaModule
+    DragulaModule,
+    Ng2PaginationModule
 
   ],
   exports: [

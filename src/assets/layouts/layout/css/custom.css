@@ -3304,15 +3304,43 @@ p {
 /* ----------------
  * PREVIEW TOOL
  --------------- */
-.sc-search-result-area {
-  background-color: azure;
-  height: 100%;
-  width: 100%; }
+.sc-search-result h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500; }
+
+.sc-search-result h2 {
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 0; }
+
+.sc-search-result .col-md-4 {
+  margin-right: 20px; }
+
+.sc-search-result-options {
+  display: inline-block;
+  position: absolute;
+  bottom: 20px;
+  right: 0;
+  margin-right: 20px; }
+  .sc-search-result-options button.select {
+    background-color: #42a5f5;
+    color: #fff;
+    border: 2px solid #42a5f5;
+    padding: 5px 15px;
+    border-radius: 4px; }
+  .sc-search-result-options button.cancel {
+    background-color: rgba(255, 255, 255, 0);
+    color: #000;
+    box-sizing: border-box;
+    border: 2px solid black;
+    padding: 5px 15px;
+    border-radius: 4px; }
 
 .sc-search-result-metadata {
   float: left;
   display: inline-block;
-  padding: 40px;
+  padding: 25px 25px 25px 35px;
   width: calc(100% - 300px); }
 
 .sc-selected-object-metadata {
@@ -3407,24 +3435,65 @@ p {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px; }
 
-.sc-search-result-area .sc-search-result-thumbnail {
-  width: 300px;
+.sc-search-result-area {
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0; }
+
+.sc-search-result-thumbnail {
+  width: 285px;
   height: 300px;
   display: block;
   object-fit: cover;
   float: left; }
 
-.sc-upload-area {
+.sc-object-select-area {
   margin-top: 15px;
   width: 770px;
   height: 300px;
   background-color: #D9DDE6;
   border-radius: 4px;
-  overflow: hidden; }
+  overflow: hidden;
+  position: relative; }
 
-/* ----------------
- * SEARCH FIELD
- --------------- */
+.sc-drop-media {
+  border: 5px dashed #7c8394; }
+
+.sc-object-placeholder {
+  color: white;
+  margin: 37px auto;
+  max-width: 400px;
+  width: 50%;
+  height: 75%;
+  text-align: center;
+  position: relative; }
+  .sc-object-placeholder img {
+    margin-top: 20px;
+    width: 160px;
+    height: 98px; }
+  .sc-object-placeholder p {
+    margin-top: 10px;
+    font-size: 20px;
+    color: #a3a9b7; }
+    .sc-object-placeholder p span {
+      font-size: 17px; }
+
+.sc-object-placeholder-inner {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
+.sc-custom-image-area {
+  position: absolute;
+  top: 0;
+  background-color: #fff;
+  width: 100%;
+  height: 100%; }
+
 /* ----------------
  * RIGHT SIDEBAR
  * SCROLLBAR
