@@ -1,4 +1,4 @@
-<div *ngIf="store.showComponent">
+<div *ngIf="store.showComponent" style="height: 100%;">
 
   <!-- BEGIN PAGE HEAD-->
   <div class="page-head">
@@ -11,210 +11,236 @@
         </div>-->
     <!-- END PAGE TITLE -->
 
-    <div class="page-btn-container">  <!--*ngIf="!storeservice.createdAdDiv"-->
-      <button type="submit" (click)="saveObjects()" class="btn-reg">Save</button>
-    </div>
+    <!--    <div class="page-btn-container">  &lt;!&ndash;*ngIf="!storeservice.createdAdDiv"&ndash;&gt;
+          <button type="submit" (click)="saveObjects()" class="btn-reg">Save</button>
+        </div>-->
 
   </div>
   <!-- END PAGE HEAD-->
 
-
-  <!-- BEGIN SEARCH FIELD -->
-  <div id="sc-search-field">
-    <input type="text" [(ngModel)]="objectId" (keyup)="validateObjectID();" placeholder="Object ID" (keyup.enter)="getData();" />
-    <i class="fa fa-search" aria-hidden="true"></i>
-    <button (click)="getData();">Find</button>
-    <span *ngIf="showObjectidWarning" style="color: red;">Enter a object ID</span>
-    <span *ngIf="showObjectidNotexistWarning" style="color: red;">Object ID does not exist</span>
-  </div>
-  <!-- END SEARCH FIELD -->
+  <!--BEGIN COL-MD-12-->
+  <div class="col-md-12" style="height: calc(100% - 19px)">
 
 
-
-
-  <!-- START ADD LOGO-->
-  <div>
-    <!--    <button (click)="addLogo();">Add logo</button>
-        <div *ngIf="showLogoDiv">-->
-
-
-    <div id="imgDivContainer" class="sc-object-select-area"> <!--Add class "sc-drop-media" when mouse drag over-->
-
-
-      <div class="sc-object-placeholder">
-        <div class="sc-object-placeholder-inner">
-          <img src="https://mds.pliing.com/sync/libs/scout24/media-upload-icon.png">
-          <p>Search or Create an object<br><span>Drag an image or click here to create a custom object.</span></p>
+    <div style="width: calc(100% - 420px); min-width: 650px; float: left;">
+      <div class="sc-search-area">
+        <!-- BEGIN SEARCH FIELD -->
+        <div id="sc-search-field">
+          <input type="text" [(ngModel)]="objectId" (keyup)="validateObjectID();" placeholder="Object ID" (keyup.enter)="getData();" />
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <button (click)="getData();">Find</button>
+          <span *ngIf="showObjectidWarning" style="color: red;">Enter an object ID</span>
+          <span *ngIf="showObjectidNotexistWarning" style="color: red;">Object ID does not exist</span>
         </div>
-      </div>
-
-      <span *ngIf="showFilesizeError" style="color: red; position: fixed">The file you tried to upload exceeds the limit which is 1000kb</span>
+        <!-- END SEARCH FIELD -->
 
 
 
 
-
-      <!-- BEGIN CUSTOM IMAGE UPLOAD AREA -->
-      <div style="opacity: 0; cursor: pointer;" id="imgUploadDiv" class="sc-custom-image-area" (click)="triggerFileUpload();" (dragover)="allowDrop($event);"
-           (drop)="dropImage($event);">
-
-        <div><img id="imgImage" class="sc-search-result-thumbnail" src=""></div>
+        <!-- START ADD LOGO-->
+        <div>
+          <!--    <button (click)="addLogo();">Add logo</button>
+              <div *ngIf="showLogoDiv">-->
 
 
-        <div class="sc-search-result-metadata">
-          <div class="form-group form-md-line-input">
-            <input class="form-control" type="text" placeholder="http://www.example.com" [(ngModel)]="logoURL">
-            <label>Enter a URL</label>
-            <span class="help-block">Your custom image will be linked to this URL.</span>
+          <div id="imgDivContainer" class="sc-object-select-area"> <!--Add class "sc-drop-media" when mouse drag over-->
+
+
+            <div class="sc-object-placeholder">
+              <div class="sc-object-placeholder-inner">
+                <img src="https://mds.pliing.com/sync/libs/scout24/media-upload-icon.png">
+                <p>Search or Create an object<br><span>Drag an image or click here to create a custom object.</span></p>
+              </div>
+            </div>
+
+            <span *ngIf="showFilesizeError" style="color: red; position: fixed">The file you tried to upload exceeds the limit which is 1000kb</span>
+
+
+
+
+
+            <!-- BEGIN CUSTOM IMAGE UPLOAD AREA -->
+            <div style="opacity: 0; cursor: pointer;" id="imgUploadDiv" class="sc-custom-image-area" (click)="triggerFileUpload();" (dragover)="allowDrop($event);"
+                 (drop)="dropImage($event);">
+
+              <div><img id="imgImage" class="sc-search-result-thumbnail" src=""></div>
+
+
+              <div class="sc-search-result-metadata">
+                <div class="form-group form-md-line-input">
+                  <input class="form-control" type="text" placeholder="http://www.example.com" [(ngModel)]="logoURL">
+                  <label>Enter a URL</label>
+                  <span class="help-block">Your custom image will be linked to this URL.</span>
+                </div>
+              </div>
+
+              <div class="sc-search-result-options">
+                <button class="cancel" (click)="cancelLogo();">Cancel</button>
+                <button class="select" (click)="selectLogo();">Select</button>
+              </div>
+
+            </div>
+
+            <input id="imgInput" style="display: none" (change)="readImage();" type="file"  name="picture" />
+            <!-- END CUSTOM IMAGE UPLOAD AREA -->
+
+
+
+
+
+            <!-- BEGIN SEARCH RESULT AREA -->
+            <div class="sc-search-result-area" *ngIf="showData">
+              <div class="sc-search-result">
+                <div><img class="sc-search-result-thumbnail" src="{{objectData.adpicture.href}}"></div>
+                <div class="sc-search-result-metadata">
+
+                  <h1>{{objectData.address.geoHierarchy.quarter.name}},
+                    {{objectData.address.geoHierarchy.city.name}}
+                  </h1>
+                  <h1 style="margin-bottom: 10px;">
+                    {{objectData.address.geoHierarchy.region.name}}, {{objectData.address.postcode}}
+                  </h1>
+
+                  <div class="col-md-4">
+                   <!-- <h2>{{objectData.price.value}} {{objectData.price.currency}}</h2>-->
+                    <h2>{{objectData.pricem2}} &euro; m<sup>2</sup></h2>
+                    <!--<span>Kaufpreis</span>-->
+                  </div>
+                  <div class="col-md-4">
+                    <h2>{{objectData.livingspace}} m<sup>2</sup></h2>
+                    <span>Wohnfläche</span>
+                  </div>
+                  <!-- <div class="col-md-4">
+                     <h2>{{objectData.livingspace}} m<sup>2</sup></h2>
+                     <span>Wohnfläche</span>
+                   </div>-->
+                  <!--             <label for="cityname">City name:</label>
+                               <span id="cityname">{{objectData.address.geoHierarchy.city.name}}</span>
+                               <label for="quartername">Quarter name:</label>
+                               <span id="quartername">{{objectData.address.geoHierarchy.quarter.name}}</span>
+                               <label for="regionname">Region name:</label>
+                               <span id="regionname">{{objectData.address.geoHierarchy.region.name}}</span>
+                               <label for="postcode">Post code:</label>
+                               <span id="postcode">{{objectData.address.postcode}}</span>
+                               <label for="price">Price:</label>
+                               <span id="price">{{objectData.price.value}}</span>
+                               <label for="currency">Currency</label>
+                               <span id="currency">{{objectData.price.currency}}</span>
+                               <label for="livingspace">Livingspace</label>
+                               <span id="livingspace">{{objectData.livingspace}}</span>-->
+                  <div class="sc-search-result-options">
+                    <button class="cancel" (click)="cancelObject();">Cancel</button>
+                    <button class="select" (click)="selectObject();">Select</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- END SEARCH RESULT AREA -->
+
+
+
+
           </div>
-        </div>
 
-        <div class="sc-search-result-options">
-          <button class="cancel" (click)="cancelLogo();">Cancel</button>
-          <button class="select" (click)="selectLogo();">Select</button>
+
+
+          <!--    </div>-->
         </div>
+        <!-- END ADD LOGO-->
 
       </div>
-
-      <input id="imgInput" style="display: none" (change)="readImage();" type="file"  name="picture" />
-      <!-- END CUSTOM IMAGE UPLOAD AREA -->
-
-
-
-
-
-      <!-- BEGIN SEARCH RESULT AREA -->
-      <div class="sc-search-result-area" *ngIf="showData">
-        <div class="sc-search-result">
-          <div><img class="sc-search-result-thumbnail" src="{{objectData.adpicture.href}}"></div>
-          <div class="sc-search-result-metadata">
-
-            <h1>{{objectData.address.geoHierarchy.quarter.name}},
-              {{objectData.address.geoHierarchy.city.name}}
-            </h1>
-            <h1 style="margin-bottom: 10px;">
-              {{objectData.address.geoHierarchy.region.name}}, {{objectData.address.postcode}}
-            </h1>
-
-            <div class="col-md-4">
-              <h2>{{objectData.price.value}} {{objectData.price.currency}}</h2>
-              <span>Kaufpreis</span>
-            </div>
-            <div class="col-md-4">
-              <h2>{{objectData.livingspace}} m<sup>2</sup></h2>
-              <span>Wohnfläche</span>
-            </div>
-           <!-- <div class="col-md-4">
-              <h2>{{objectData.livingspace}} m<sup>2</sup></h2>
-              <span>Wohnfläche</span>
-            </div>-->
-            <!--             <label for="cityname">City name:</label>
-                         <span id="cityname">{{objectData.address.geoHierarchy.city.name}}</span>
-                         <label for="quartername">Quarter name:</label>
-                         <span id="quartername">{{objectData.address.geoHierarchy.quarter.name}}</span>
-                         <label for="regionname">Region name:</label>
-                         <span id="regionname">{{objectData.address.geoHierarchy.region.name}}</span>
-                         <label for="postcode">Post code:</label>
-                         <span id="postcode">{{objectData.address.postcode}}</span>
-                         <label for="price">Price:</label>
-                         <span id="price">{{objectData.price.value}}</span>
-                         <label for="currency">Currency</label>
-                         <span id="currency">{{objectData.price.currency}}</span>
-                         <label for="livingspace">Livingspace</label>
-                         <span id="livingspace">{{objectData.livingspace}}</span>-->
-            <div class="sc-search-result-options">
-              <button class="cancel" (click)="cancelObject();">Cancel</button>
-              <button class="select" (click)="selectObject();">Select</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <!-- END SEARCH RESULT AREA -->
-
-
-
 
     </div>
 
+    <!--TEST-->
+    <!--  <div class="col-md-4 sc-selected-objects-container"></div>-->
 
 
-    <!--    </div>-->
-  </div>
-  <!-- END ADD LOGO-->
-
-
-
-  <!--BEGIN PREVIEW SIDEBAR-->
-  <div class="sc-selected-objects-sidebar">
-    <!--BEGIN PREVIEW SIDEBAR HEAD-->
-    <div class="box-form-headline-panel">
-      <div class="box-form-headline-wrapper">
-        <span class="caption-subject box-headline">Selected objects</span>
-      </div>
-      <!--
-          <div class="tools">
-            <a onclick="spinIcon(this)" (click)="generatePreview();" class="reload" data-original-title="" title=""> </a>
-            <a onclick="closePreviewSidebar()" class="collapse-icon-black"></a>
-            <a onclick="collapsePreviewSidebar()" class="fullscreen-collapse-icon color-black"></a>
+    <!--BEGIN SELECTED OBJECTS SIDEBAR-->
+    <div class="sc-selected-objects-sidebar col-md-4">
+      <!--BEGIN PREVIEW SIDEBAR HEAD-->
+      <div class="box-form-headline-panel">
+        <div class="box-form-headline-wrapper">
+          <span class="caption-subject box-headline">Selected objects</span>
+        </div>
+        <!--
+            <div class="tools">
+              <a onclick="spinIcon(this)" (click)="generatePreview();" class="reload" data-original-title="" title=""> </a>
+              <a onclick="closePreviewSidebar()" class="collapse-icon-black"></a>
+              <a onclick="collapsePreviewSidebar()" class="fullscreen-collapse-icon color-black"></a>
+            </div>
+        -->
+        <div class="options-wrapper">
+          <div class="options-inner">
+            <div class="options">
+              <button class="btn-inverted black" type="submit" (click)="saveObjects()">Save Order</button>
+            </div>
           </div>
-      -->
-      <div class="options-wrapper">
-        <div class="options-inner">
-          <div class="options">
-            <button class="btn-inverted black" type="submit" (click)="saveObjects()">Save Priority</button>
+        </div>
+
+      </div>
+      <!--END SELECTED OBJECTS HEAD-->
+
+      <hr class="hr-headline-panel">
+
+
+      <!-- BEGIN SELECTED OBJECTS -->
+
+
+      <!--Remove the class "sc-list-selected-objects" below to enable card view (column view)-->
+      <div class="sc-selected-objects-inner sc-list-selected-objects">
+        <div [dragula]='"bag-one"' [dragulaModel]='store.selectedObjects' *ngIf="store.selectedDataContent.length > 0">
+          <div class="sc-selected-object" *ngFor="let object of store.selectedDataContent; let i = index">
+
+            <div id="sc-selected-property" *ngIf="object.type === undefined">
+              <div class="sc-selected-object-thumbnail-wrapper">
+                <img class="sc-selected-object-thumbnail" src="{{object.adpicture.href}}">
+              </div>
+
+              <div class="sc-selected-object-metadata">
+                <label>
+                  {{object.address.geoHierarchy.city.name}}
+                  {{object.address.geoHierarchy.quarter.name}}
+                  {{object.address.geoHierarchy.region.name}}
+                </label>
+                <label class="sc-sub">
+                  <span id="price">{{object.pricem2}} &euro; m<sup>2</sup></span>
+                 <!-- <span id="currency">{{object.price.currency}}</span>-->
+                </label>
+                <div class="btn-card-thumbnail-delete">
+                  <i class="fa fa-times" (click)="removeObject(i)"></i>
+                </div>
+              </div>
+            </div>
+
+            <div id="sc-selected-custom">
+              <div class="sc-selected-object-thumbnail-wrapper" *ngIf="object.type === 'logo'">
+                <img class="sc-selected-object-thumbnail" src="{{object.picture}}">
+                <div class="sc-selected-object-metadata link">
+                  <!--Set char limit 150, hovering will show title, aka full URL path-->
+                  <label class="sc-selected-object-metadata-link" title="{{object.url}}"
+                         id="url">Link: {{object.url}}</label>
+                  <div class="btn-card-thumbnail-delete">
+                    <i class="fa fa-times" (click)="removeObject(i)"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
+      <!-- END SELECTED OBJECTS -->
+
 
     </div>
-    <!--END PREVIEW SIDEBAR HEAD-->
-
-    <hr class="hr-headline-panel">
-
-
-    <!-- BEGIN SELECTED OBJECTS -->
-    <div class="sc-selected-objects-inner">
-      <div [dragula]='"bag-one"' [dragulaModel]='selectedObjects' *ngIf="selectedDataContent.length > 0">
-        <div class="sc-selected-object" *ngFor="let object of selectedDataContent; let i = index">
-
-          <div *ngIf="object.type === undefined">
-            <div class="sc-selected-object-thumbnail-wrapper">
-              <img class="sc-selected-object-thumbnail" src="{{object.adpicture.href}}">
-            </div>
-
-            <div class="sc-selected-object-metadata">
-
-              <label>
-                {{object.address.geoHierarchy.city.name}}
-                {{object.address.geoHierarchy.quarter.name}}
-                {{object.address.geoHierarchy.region.name}}
-              </label>
-              <label>
-                <span id="price">{{object.price.value}}</span>
-                <span id="currency">{{object.price.currency}}</span>
-              </label>
-              <button (click)="removeObject(i)">remove</button>
-            </div>
-          </div>
-
-
-          <div *ngIf="object.type === 'logo'">
-            <img src="{{object.picture}}" style="width: 118px; height: 118px">
-            <label for="url">URL</label>
-            <span id="url">{{object.url}}</span>
-            <button (click)="removeObject(i)">remove</button>
-          </div>
-
-
-        </div>
-      </div>
-    </div>
-    <!-- END SELECTED OBJECTS -->
+    <!--END PREVIEW SIDEBAR-->
 
 
   </div>
-  <!--END PREVIEW SIDEBAR-->
+  <!--END COL-MD-12-->
+
 
 </div>
 <div *ngIf="store.showLoadingIcon">

@@ -3304,6 +3304,15 @@ p {
 /* ----------------
  * PREVIEW TOOL
  --------------- */
+.page-content-wrapper, page-main-content, .page-container {
+  height: 100%; }
+
+.page-content-wrapper .page-main-content {
+  height: 100%; }
+
+.page-container {
+  min-width: 1270px; }
+
 .sc-search-result h1 {
   margin: 0;
   font-size: 22px;
@@ -3313,9 +3322,6 @@ p {
   font-size: 19px;
   font-weight: 600;
   margin-bottom: 0; }
-
-.sc-search-result .col-md-4 {
-  margin-right: 20px; }
 
 .sc-search-result-options {
   display: inline-block;
@@ -3353,6 +3359,19 @@ p {
     white-space: nowrap; }
   .sc-selected-object-metadata label.sub {
     font-size: 14px; }
+  .sc-selected-object-metadata .btn-card-thumbnail-delete {
+    top: 0;
+    right: 0;
+    margin: 0;
+    display: none;
+    text-shadow: none;
+    color: #000000; }
+
+.btn-card-thumbnail-delete:hover {
+  cursor: pointer; }
+
+.sc-selected-object:hover .btn-card-thumbnail-delete {
+  display: block; }
 
 .sc-selected-object {
   margin-right: 6px;
@@ -3361,21 +3380,22 @@ p {
   margin-bottom: 25px;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.06) 0px 5px 6px;
-  border: 1px solid #e3e3e3; }
+  border: 1px solid #e3e3e3;
+  position: relative; }
 
 .sc-selected-objects-sidebar {
-  height: calc(100% - 95px);
-  top: 95px;
-  width: 400px;
+  min-height: 500px;
+  height: 100%;
+  max-width: 400px;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   background-color: white;
   float: right;
   right: 0px;
-  position: fixed;
   padding: 20px 50px 0px 50px;
   box-shadow: rgba(0, 0, 0, 0.08431) 0px 4px 7px 0px;
-  transition: All 0.5s cubic-bezier(0.06, 1.35, 0.6, 1.05); }
+  transition: All 0.5s cubic-bezier(0.06, 1.35, 0.6, 1.05);
+  position: relative; }
   .sc-selected-objects-sidebar .options-wrapper {
     position: absolute;
     bottom: 0;
@@ -3408,9 +3428,15 @@ p {
   border-top-right-radius: 4px;
   overflow: hidden; }
 
+.sc-search-area {
+  display: block;
+  margin-top: 90px; }
+
 #sc-search-field {
+  margin: 0 auto;
   position: relative;
-  width: 770px; }
+  max-width: 650px;
+  width: 100%; }
   #sc-search-field input[type=text] {
     height: 65px;
     width: 80%;
@@ -3423,7 +3449,8 @@ p {
   #sc-search-field i.fa-search {
     position: absolute;
     left: 30px;
-    top: 25px; }
+    top: 25px;
+    color: #a5a5a5; }
   #sc-search-field button {
     height: 65px;
     width: 20%;
@@ -3450,8 +3477,9 @@ p {
   float: left; }
 
 .sc-object-select-area {
-  margin-top: 15px;
-  width: 770px;
+  margin: 15px auto;
+  max-width: 650px;
+  width: 100%;
   height: 300px;
   background-color: #D9DDE6;
   border-radius: 4px;
@@ -3493,6 +3521,65 @@ p {
   background-color: #fff;
   width: 100%;
   height: 100%; }
+
+.sc-selected-objected-metadata-link {
+  word-break: break-all; }
+
+/* ----------------
+ * SELECTED OBJECTS LIST VIEW
+ --------------- */
+.sc-list-selected-objects > div > .sc-selected-object {
+  overflow: hidden;
+  margin-bottom: 15px; }
+
+.sc-list-selected-objects > div > * {
+  display: block;
+  height: 55px; }
+  .sc-list-selected-objects > div > * .sc-selected-object-thumbnail-wrapper {
+    width: 70px;
+    height: 55px;
+    float: left;
+    display: inline-block; }
+  .sc-list-selected-objects > div > * .sc-selected-object-thumbnail {
+    height: 55px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 4px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 4px; }
+  .sc-list-selected-objects > div > * .sc-selected-object-thumbnail-wrapper {
+    border-top-right-radius: 0;
+    border-top-left-radius: 4px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 4px; }
+  .sc-list-selected-objects > div > * .sc-selected-object-metadata {
+    float: left;
+    /* 70px is thumbnail size */
+    width: calc(100% - 70px);
+    padding: 10px 8px 0 8px; }
+    .sc-list-selected-objects > div > * .sc-selected-object-metadata label {
+      font-size: 12px;
+      margin: 0; }
+    .sc-list-selected-objects > div > * .sc-selected-object-metadata label:first-child {
+      margin-bottom: -5px;
+      cursor: move; }
+    .sc-list-selected-objects > div > * .sc-selected-object-metadata label.sc-sub {
+      color: #848484;
+      cursor: move; }
+  .sc-list-selected-objects > div > * .sc-selected-object-metadata-link {
+    float: left; }
+  .sc-list-selected-objects > div > * .link {
+    position: absolute;
+    top: 0;
+    left: 70px; }
+
+/* ----------------
+ * SELECTED OBJECT CONTAINER
+ --------------- */
+.sc-selected-objects-container {
+  height: 100%;
+  min-height: 500px;
+  background-color: #fff;
+  max-width: 400px; }
 
 /* ----------------
  * RIGHT SIDEBAR

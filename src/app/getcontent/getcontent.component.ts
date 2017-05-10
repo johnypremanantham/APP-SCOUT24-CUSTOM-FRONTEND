@@ -5,6 +5,8 @@ import {ActivatedRoute, Params} from "@angular/router";
 import {DragulaService} from "ng2-dragula";
 import set = Reflect.set;
 
+
+declare let toastr: any;
 @Component({
   selector: 'app-getcontent',
   templateUrl: './getcontent.component.html',
@@ -17,8 +19,8 @@ export class GetcontentComponent implements OnInit {
   objectId;
   objectData;
   showData = false;
-  selectedObjects;
-  selectedDataContent = [];
+  /*selectedObjects;*/
+  /*selectedDataContent = [];*/
   showLogoDiv = false;
   allowed_types = ["jpeg", "tiff", "png", "jpg", "bmp", "gif", "svg", "image/png", "image/jpeg", "image/tiff", "image/jpg", "image/bmp", "image/gif", "image/svg+xml"];
 
@@ -102,11 +104,12 @@ export class GetcontentComponent implements OnInit {
 
     this.json.getJSON(this.store.serverName + '/FeedServlet?marketId=' + this.store.marketId)
       .subscribe(response => {
-        this.selectedDataContent = response;
-        this.selectedDataContent.forEach(function (elm, index) {
+        this.store.selectedDataContent = response;
+        this.store.selectedDataContent.forEach(function (elm, index) {
           if(elm["type"] === undefined){
             const img = elm["adpicture"]["href"];
             elm["adpicture"]["href"] = img.replace("%WIDTH%", "278").replace("%HEIGHT%","125");
+            elm["pricem2"] = (elm["price"]["value"]/elm["livingspace"]);
 
           }
         });
@@ -116,8 +119,8 @@ export class GetcontentComponent implements OnInit {
     this.json.getJSON(this.store.serverName + '/Object?marketId=' + this.store.marketId)
       .subscribe(response => {
         if(response.length > 0) {
-          this.selectedObjects = response[0]['json'];
-          this.selectedObjects = JSON.parse(this.selectedObjects);
+          this.store.selectedObjects = response[0]['json'];
+          this.store.selectedObjects = JSON.parse(this.store.selectedObjects);
         }
           });
 
@@ -184,8 +187,8 @@ export class GetcontentComponent implements OnInit {
   }*/
 
   removeObject(index){
-    this.selectedObjects.splice(index,1);
-    this.selectedDataContent.splice(index,1);
+    this.store.selectedObjects.splice(index,1);
+    this.store.selectedDataContent.splice(index,1);
   }
 
 
@@ -197,6 +200,7 @@ export class GetcontentComponent implements OnInit {
         .subscribe(response => {
           if(response["error"] === undefined) {
             response["adpicture"]["href"] = response["adpicture"]["href"].replace("%WIDTH%", "285").replace("%HEIGHT%", "300");
+            response["pricem2"] = (response["price"]["value"]/response["livingspace"]);
             this.objectData = response;
             this.showData = true;
           }else{
@@ -210,10 +214,17 @@ export class GetcontentComponent implements OnInit {
 
   selectObject(){
 
-    this.selectedObjects.push(parseInt(this.objectId));
+    if(this.store.selectedObjects === undefined){
+      this.store.selectedObjects = [];
+    }
+    this.store.selectedObjects.push(parseInt(this.objectId));
     this.json.getJSON(this.store.serverName + '/GetAppartment?pin='+this.store.serverPin+'&objectId=' + this.objectId)
       .subscribe(response => {
-        this.selectedDataContent.push(response);
+        const img = response["adpicture"]["href"];
+        response["adpicture"]["href"] = img.replace("%WIDTH%", "278").replace("%HEIGHT%","125");
+        response["pricem2"] = (response["price"]["value"]/response["livingspace"]);
+
+        this.store.selectedDataContent.push(response);
 
       });
     this.objectId = '';
@@ -244,13 +255,13 @@ export class GetcontentComponent implements OnInit {
             "url": this.logoURL
           };
 
-          this.selectedObjects.push(obj);
+          this.store.selectedObjects.push(obj);
           this.logoURL = "";
           const img: any = document.getElementById("imgImage");
           img.src = "";
           this.showLogoDiv = false;
 
-          this.selectedDataContent.push(obj);
+          this.store.selectedDataContent.push(obj);
           this.cancelLogo();
         }
       );
@@ -258,16 +269,17 @@ export class GetcontentComponent implements OnInit {
 
 
   saveObjects(){
-    console.log(this.selectedObjects);
+    console.log(this.store.selectedObjects);
     const obj =
       {
         'marketId': this.store.marketId,
-        'json': this.selectedObjects
+        'json': this.store.selectedObjects
       };
     this.json.postJSON(this.store.serverName + '/Object', obj)
       .subscribe(
         response => {
           // Update list of selected objects
+          toastr.success("Order successfully saved!");
           this.getSelectedObjects();
         });
   }

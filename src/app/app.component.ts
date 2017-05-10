@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   markets;
   showFeedEmptyError = false;
 
-  constructor(private json: JsonService, private router: Router, private store: StoreService) {
+  constructor(private json: JsonService, private router: Router, public store: StoreService) {
   }
 
 
@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/createmarket']);
   }
   getMarketContent(market) {
+    this.store.showFeedEmptyError = false; // Resets the error message "you must first build your feed before creating an ad"
     this.store.showComponent = false;
     this.store.showLoadingIcon = true;
     this.store.marketId = market.id;
@@ -47,8 +48,29 @@ export class AppComponent implements OnInit {
 
     /*edit.classList.remove('hidden-obj');*/
 
-    this.router.navigate(['/getcontent', this.store.market.id]);
+    this.json.getJSON(this.store.serverName + '/FeedServlet?marketId=' + this.store.marketId)
+      .subscribe(response => {
+        this.store.selectedDataContent = response;
+        this.store.selectedDataContent.forEach(function (elm, index) {
+          if(elm["type"] === undefined){
+            const img = elm["adpicture"]["href"];
+            elm["adpicture"]["href"] = img.replace("%WIDTH%", "278").replace("%HEIGHT%","125");
+            elm["pricem2"] = (elm["price"]["value"]/elm["livingspace"]);
 
+          }
+        });
+
+        this.json.getJSON(this.store.serverName + '/Object?marketId=' + this.store.marketId)
+          .subscribe(response => {
+            if(response.length > 0) {
+              this.store.selectedObjects = response[0]['json'];
+              this.store.selectedObjects = JSON.parse(this.store.selectedObjects);
+            }
+            this.store.showComponent = true;
+            this.store.showLoadingIcon = false;
+            this.router.navigate(['/getcontent', this.store.market.id]);
+          });
+      });
   }
 
   getMarketOption(option){

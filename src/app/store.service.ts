@@ -8,7 +8,7 @@ export class StoreService {
   marketDescription;
   markets;
   market;
-  serverName = 'http://rd001:32826/ApiSocut24-web';  //https://tte9.pliing.com/ApiSocut24-web http://rd001:32826/ApiSocut24-web/FeedServlet?marketId=1
+  serverName = 'https://tte9.pliing.com/ApiSocut24-web';  // https://tte9.pliing.com/ApiSocut24-web http://rd001:32826/ApiSocut24-web/FeedServlet?marketId=1  http://rd001:32826/ApiSocut24-web
   imageServerUrl = 'https://admin.pliing.com/AdAssetsService-web';
   adServerUrl  = "https://admin.pliing.com/BanGen";
   serverPin = null;
@@ -23,6 +23,8 @@ export class StoreService {
   showLoadingIcon = true;
   showComponent = false;
   showFeedEmptyError = false;
+  selectedObjects;
+  selectedDataContent = [];
   constructor() { }
 
 
