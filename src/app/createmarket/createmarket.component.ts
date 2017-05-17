@@ -73,11 +73,11 @@ export class CreatemarketComponent implements OnInit {
                 this.showLoadingIcon = true;
 
                 const _localThis = this;
-                setTimeout(function () {
+               /* setTimeout(function () {
                   const editmarket: any = document.getElementById('edit-' + _localThis.store.marketId);
-                  editmarket.classList.remove('hidden-obj');
+                  editmarket.classList.remove('hidden-obj');*/
                   _localThis.router.navigate(['/getcontent', _localThis.store.market.id]);
-                },500);
+                /*},500);*/
 
 
               });

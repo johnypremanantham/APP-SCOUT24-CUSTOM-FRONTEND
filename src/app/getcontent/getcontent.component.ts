@@ -6,7 +6,7 @@ import {DragulaService} from "ng2-dragula";
 import set = Reflect.set;
 
 
-declare let toastr: any;
+declare const toastr: any;
 @Component({
   selector: 'app-getcontent',
   templateUrl: './getcontent.component.html',
@@ -16,9 +16,7 @@ export class GetcontentComponent implements OnInit {
 
   showComponent = false;
   showLoadingIcon = true;
-  objectId;
   objectData;
-  showData = false;
   /*selectedObjects;*/
   /*selectedDataContent = [];*/
   showLogoDiv = false;
@@ -32,6 +30,10 @@ export class GetcontentComponent implements OnInit {
   showObjectidWarning = false;
   showObjectidNotexistWarning = false;
   showFilesizeError = false;
+
+  selectedImage;
+  selectimagepopup = false;
+
   constructor(public store: StoreService, private json: JsonService, private activatedRoute: ActivatedRoute, private dragulaService: DragulaService) {
 
   }
@@ -52,7 +54,7 @@ export class GetcontentComponent implements OnInit {
         this.store.marketId = params['id'];
         const _localThis = this;
         setTimeout(function () {
-         /* _localThis.store.addEditMarker(_localThis.store.marketId);*/
+          /* _localThis.store.addEditMarker(_localThis.store.marketId);*/
         },1000);
 
         this.json.getJSON(this.store.serverName + '/Market?marketId=' + this.store.marketId)
@@ -70,19 +72,50 @@ export class GetcontentComponent implements OnInit {
       });
     }
     if(getObjects) {
-    this.getSelectedObjects();
+      this.getSelectedObjects();
 
     }
   }
 
+  getSelectedObjects(){
+
+    this.json.getJSON(this.store.serverName + '/FeedServlet?marketId=' + this.store.marketId)
+      .subscribe(response => {
+        console.log(response);
+        this.store.selectedDataContent = response;
+        this.store.selectedDataContent.forEach(function (elm, index) {
+          if(elm["type"] === undefined){
+            const img = elm["adpicture"]["href"]; /*["href"]*/
+            elm["adpicture"]["href"] = img.replace("%WIDTH%", "278").replace("%HEIGHT%","125"); /* ["href"]*/
+            elm["pricem2"] = Math.round((elm["price"]["value"]/elm["livingspace"]));
+
+          }
+        });
+        this.store.showComponent = true;
+        this.store.showLoadingIcon = false;
+      });
+    this.json.getJSON(this.store.serverName + '/Object?marketId=' + this.store.marketId)
+      .subscribe(response => {
+        if(response.length > 0) {
+          this.store.selectedObjects = response[0]['json'];
+          this.store.selectedObjects = JSON.parse(this.store.selectedObjects);
+        }
+      });
+
+
+  }
+
+
+
+
   cancelObject(){
-    this.objectId = "";
-    this.showData = false;
+    this.store.objectId = "";
+    this.store.showData = false;
   }
 
   cancelLogo(){
     this.logoURL = "";
-    this.showData = false;
+    this.store.showData = false;
     const img: any = document.getElementById('imgImage');
     img.src = "";
     const imgDiv: any = document.getElementById('imgUploadDiv');
@@ -100,92 +133,6 @@ export class GetcontentComponent implements OnInit {
   }
 
 
-  getSelectedObjects(){
-
-    this.json.getJSON(this.store.serverName + '/FeedServlet?marketId=' + this.store.marketId)
-      .subscribe(response => {
-        this.store.selectedDataContent = response;
-        this.store.selectedDataContent.forEach(function (elm, index) {
-          if(elm["type"] === undefined){
-            const img = elm["adpicture"]["href"];
-            elm["adpicture"]["href"] = img.replace("%WIDTH%", "278").replace("%HEIGHT%","125");
-            elm["pricem2"] = (elm["price"]["value"]/elm["livingspace"]);
-
-          }
-        });
-        this.store.showComponent = true;
-        this.store.showLoadingIcon = false;
-    });
-    this.json.getJSON(this.store.serverName + '/Object?marketId=' + this.store.marketId)
-      .subscribe(response => {
-        if(response.length > 0) {
-          this.store.selectedObjects = response[0]['json'];
-          this.store.selectedObjects = JSON.parse(this.store.selectedObjects);
-        }
-          });
-
-       /* this.json.getJSON(this.store.serverName + '/Object?marketId=' + this.store.marketId)
-          .subscribe(response => {
-            console.log(response);
-            if(response.length > 0) {
-              this.selectedObjects = response[0]['json'];
-              this.selectedObjects = JSON.parse(this.selectedObjects);
-
-              console.log(this.selectedObjects);
-              const _localThis = this;
-              // Get data for each entry
-              this.selectedObjects.forEach(function (elm, index) {
-               if(parseInt(elm)) {
-                 _localThis.json.getJSON(_localThis.store.serverName + '/GetAppartment?pin=' + _localThis.store.serverPin + '&objectId=' + elm)
-                   .subscribe(response => {
-                     response["index"] = index;
-                     _localThis.selectedDataContent.push(response);
-                   });
-               }else{
-                 elm["index"] = index;
-                   _localThis.selectedDataContent.push(elm);
-
-               }
-
-               });
-
-              setTimeout(function () {
-               _localThis.selectedDataContent.sort(function (a,b) {
-                  return a.index - b.index;
-                });
-               _localThis.showComponent = true;
-               _localThis.showLoadingIcon = false;
-              },2000);
-               }
-
-          });*/
-  }
-
-/*  updateSelectedList(){
-    this.selectedDataContent = [];
-    const _localThis = this;
-    // Get data for each entry
-   /!* this.selectedObjects.forEach(function (elm, index) {
-      if(parseInt(elm)) {
-        _localThis.json.getJSON(_localThis.store.serverName + '/GetAppartment?pin=' + _localThis.store.serverPin + '&objectId=' + elm)
-          .subscribe(response => {
-            response["index"] = index;
-            _localThis.selectedDataContent.push(response);
-          });
-      }else{
-        elm["index"] = index;
-        _localThis.selectedDataContent.push(elm);
-
-      }
-      setTimeout(function () {
-        _localThis.selectedDataContent.sort(function (a,b) {
-          return a.index - b.index;
-        });
-      },1000);
-
-    });*!/
-  }*/
-
   removeObject(index){
     this.store.selectedObjects.splice(index,1);
     this.store.selectedDataContent.splice(index,1);
@@ -194,15 +141,30 @@ export class GetcontentComponent implements OnInit {
 
   getData(){
     this.showFilesizeError = false;
-    const isInt = parseInt(this.objectId);
-    if(this.objectId !== "" && this.objectId !== undefined && isInt) {
-      this.json.getJSON(this.store.serverName + '/GetAppartment?pin=' + this.store.serverPin + '&objectId=' + this.objectId)
+    const isInt = parseInt(this.store.objectId);
+    if(this.store.objectId !== "" && this.store.objectId !== undefined && isInt) {
+      this.json.getJSON(this.store.serverName + '/GetAppartment?pin=' + this.store.serverPin + '&objectId=' + this.store.objectId)
         .subscribe(response => {
+          // If entered object ID is valid
           if(response["error"] === undefined) {
-            response["adpicture"]["href"] = response["adpicture"]["href"].replace("%WIDTH%", "285").replace("%HEIGHT%", "300");
-            response["pricem2"] = (response["price"]["value"]/response["livingspace"]);
+           /* response["adpicture"]["href"] = response["adpicture"]["href"].replace("%WIDTH%", "285").replace("%HEIGHT%", "300");*/
+            response["pricem2"] = Math.round((response["price"]["value"]/response["livingspace"]));
+            // Go through all pictures and pick out the ones that can scale
+            response["allpictures"].forEach(function (elm, index) {
+              if(elm["urls"] !== undefined) {
+                elm["urls"]["url"].forEach(function (elm1, index1) {
+                  // If a img that can scale is found pick that img as the one to use
+                  if (elm1["scale"] === "SCALE") {
+                    elm = {};
+                    elm["image"] = elm1["href"].replace("%WIDTH%", "285").replace("%HEIGHT%", "300");
+                    response["allpictures"][index] = elm;
+                  }
+                });
+              }
+            });
+            this.selectedImage = response["allpictures"][0].image;
             this.objectData = response;
-            this.showData = true;
+            this.store.showData = true;
           }else{
             this.showObjectidNotexistWarning = true;
           }
@@ -217,23 +179,30 @@ export class GetcontentComponent implements OnInit {
     if(this.store.selectedObjects === undefined){
       this.store.selectedObjects = [];
     }
-    this.store.selectedObjects.push(parseInt(this.objectId));
-    this.json.getJSON(this.store.serverName + '/GetAppartment?pin='+this.store.serverPin+'&objectId=' + this.objectId)
+    const obj = {
+      "type": "object",
+      "url": this.selectedImage,
+      "objectid": this.store.objectId
+    }
+   /* this.store.selectedObjects.push(parseInt(this.store.objectId));*/
+    this.store.selectedObjects.push(obj);
+    this.json.getJSON(this.store.serverName + '/GetAppartment?pin='+this.store.serverPin+'&objectId=' + this.store.objectId)
       .subscribe(response => {
-        const img = response["adpicture"]["href"];
-        response["adpicture"]["href"] = img.replace("%WIDTH%", "278").replace("%HEIGHT%","125");
-        response["pricem2"] = (response["price"]["value"]/response["livingspace"]);
+        console.log(response);
+       /* const img = response["adpicture"]["href"];*/
+        response["adpicture"]["href"] = this.selectedImage.replace("%WIDTH%", "278").replace("%HEIGHT%","125"); /*["href"]*/
+        response["pricem2"] = Math.round((response["price"]["value"]/response["livingspace"]));
 
         this.store.selectedDataContent.push(response);
 
       });
-    this.objectId = '';
-    this.showData = false;
+    this.store.objectId = '';
+    this.store.showData = false;
 
   }
 
   validateObjectID(){
-    if(this.objectId !== "" && this.objectId !== undefined){
+    if(this.store.objectId !== "" && this.store.objectId !== undefined){
       this.showObjectidWarning = false;
       this.showObjectidNotexistWarning = false;
     }
@@ -243,7 +212,7 @@ export class GetcontentComponent implements OnInit {
 
     const obj = {
       "data": [{"base64": this.logoPicB64, "type": this.logoPicType, "key": "1"}]
-    }
+    };
     this.json.postJSON(this.store.imageServerUrl + "/assets", obj)
       .subscribe(
         response => {
@@ -270,8 +239,7 @@ export class GetcontentComponent implements OnInit {
 
   saveObjects(){
     console.log(this.store.selectedObjects);
-    const obj =
-      {
+    const obj = {
         'marketId': this.store.marketId,
         'json': this.store.selectedObjects
       };
@@ -284,6 +252,14 @@ export class GetcontentComponent implements OnInit {
         });
   }
 
+  selectImage(url){
+    this.selectedImage = url;
+    this.selectimagepopup = false;
+  }
+
+  selectImagePopup(){
+    this.selectimagepopup = true;
+  }
 
 
   addLogo(){
@@ -341,7 +317,7 @@ export class GetcontentComponent implements OnInit {
         }
 
 
-      }
+      };
       // Display image use the url that the servlet responds with
       image.src = window.URL.createObjectURL(file);
     });
@@ -392,4 +368,68 @@ export class GetcontentComponent implements OnInit {
 
   // -----------------------END IMAGE UPLOAD--------------------------
 
+
+  /* this.json.getJSON(this.store.serverName + '/Object?marketId=' + this.store.marketId)
+   .subscribe(response => {
+   console.log(response);
+   if(response.length > 0) {
+   this.selectedObjects = response[0]['json'];
+   this.selectedObjects = JSON.parse(this.selectedObjects);
+
+   console.log(this.selectedObjects);
+   const _localThis = this;
+   // Get data for each entry
+   this.selectedObjects.forEach(function (elm, index) {
+   if(parseInt(elm)) {
+   _localThis.json.getJSON(_localThis.store.serverName + '/GetAppartment?pin=' + _localThis.store.serverPin + '&objectId=' + elm)
+   .subscribe(response => {
+   response["index"] = index;
+   _localThis.selectedDataContent.push(response);
+   });
+   }else{
+   elm["index"] = index;
+   _localThis.selectedDataContent.push(elm);
+
+   }
+
+   });
+
+   setTimeout(function () {
+   _localThis.selectedDataContent.sort(function (a,b) {
+   return a.index - b.index;
+   });
+   _localThis.showComponent = true;
+   _localThis.showLoadingIcon = false;
+   },2000);
+   }
+
+   });*/
+
+  /*  updateSelectedList(){
+   this.selectedDataContent = [];
+   const _localThis = this;
+   // Get data for each entry
+   /!* this.selectedObjects.forEach(function (elm, index) {
+   if(parseInt(elm)) {
+   _localThis.json.getJSON(_localThis.store.serverName + '/GetAppartment?pin=' + _localThis.store.serverPin + '&objectId=' + elm)
+   .subscribe(response => {
+   response["index"] = index;
+   _localThis.selectedDataContent.push(response);
+   });
+   }else{
+   elm["index"] = index;
+   _localThis.selectedDataContent.push(elm);
+
+   }
+   setTimeout(function () {
+   _localThis.selectedDataContent.sort(function (a,b) {
+   return a.index - b.index;
+   });
+   },1000);
+
+   });*!/
+   }*/
+
 }
+
+

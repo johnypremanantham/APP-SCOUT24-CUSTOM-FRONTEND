@@ -30,12 +30,16 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/createmarket']);
   }
   getMarketContent(market) {
+    this.store.objectId = '';
+    this.store.showData = false;
     this.store.showFeedEmptyError = false; // Resets the error message "you must first build your feed before creating an ad"
     this.store.showComponent = false;
     this.store.showLoadingIcon = true;
     this.store.marketId = market.id;
     this.store.marketName = market.name;
     this.store.marketDescription = market.description;
+    this.store.selectedObjects;
+    this.store.selectedDataContent = [];
     this.store.markets.forEach(function (market) {
       const removeedit: any = document.getElementById('edit-' + market.id);
       if(removeedit !== null){
@@ -53,9 +57,9 @@ export class AppComponent implements OnInit {
         this.store.selectedDataContent = response;
         this.store.selectedDataContent.forEach(function (elm, index) {
           if(elm["type"] === undefined){
-            const img = elm["adpicture"]["href"];
-            elm["adpicture"]["href"] = img.replace("%WIDTH%", "278").replace("%HEIGHT%","125");
-            elm["pricem2"] = (elm["price"]["value"]/elm["livingspace"]);
+            const img = elm["adpicture"]; /*["href"]*/
+            elm["adpicture"] = img.replace("%WIDTH%", "278").replace("%HEIGHT%","125");  /*["href"]*/
+            elm["pricem2"] = Math.round((elm["price"]["value"]/elm["livingspace"]));
 
           }
         });
@@ -108,7 +112,7 @@ export class AppComponent implements OnInit {
                   const loadScript = obj["launchReturnJson"]["loadScript"];
 
                   // Parse out width and height from loadScript atm only the transformer has this value in the loadscript
-                  let pattern = /(\{.+?})/g; // parse the object containing the width and height
+                  const pattern = /(\{.+?})/g; // parse the object containing the width and height
                   if(loadScript !== undefined && loadScript !== null && loadScript !== "undefined") {
                     const res = pattern.exec(loadScript);
 
@@ -116,12 +120,20 @@ export class AppComponent implements OnInit {
 
                       const result = res[0]; // pick the object that has been parsed
 
-                      pattern = /(\'.+?')/g; // pattern for obtaining the width and height from the object
-                      const values = pattern.exec(result); // parse the object for obtaining width and height
+                      /*  pattern = /(\'.+?')/g; // pattern for obtaining the width and height from the object
+                       const values = pattern.exec(result); // parse the object for obtaining width and height*/
+                      /*  console.log(result);*/
 
-                      if (values !== null || values !== undefined) {
-                        obj["width"] = values[0].replace(/\'/g,""); // set the width, parses the '' that surrounds the value
-                        obj["height"] = values[1].replace(/\'/g,""); // set the height
+                      /*   if (values !== null || values !== undefined) {
+                       /!*   console.log(values);*!/
+                       obj["width"] = values[0].replace(/\'/g,""); // set the width, parses the '' that surrounds the value
+                       obj["height"] = values[1].replace(/\'/g,""); // set the height
+                       } */
+                      const resSplit = result.split("'");
+                      if (resSplit !== null || resSplit !== undefined) {
+                        /*   console.log(values);*/
+                        obj["width"] = resSplit[1]; // set the width, parses the '' that surrounds the value
+                        obj["height"] = resSplit[3]; // set the height
                       }
                     }
                   }
@@ -159,13 +171,13 @@ export class AppComponent implements OnInit {
     this.json.getJSON(this.store.serverName + '/Market')
       .subscribe(response => {
         this.store.markets = response;
-  });
-}
+      });
+  }
 
   heightlightAd(){
     setTimeout(function () {
-    const feedTab: any = document.getElementById('feedIndicator');
-    const adTab: any = document.getElementById('adsIndicator');
+      const feedTab: any = document.getElementById('feedIndicator');
+      const adTab: any = document.getElementById('adsIndicator');
 
       if(feedTab !== null) {
         feedTab.classList.remove('active-page');

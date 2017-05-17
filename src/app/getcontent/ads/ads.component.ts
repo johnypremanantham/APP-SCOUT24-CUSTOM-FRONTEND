@@ -91,7 +91,7 @@ export class AdsComponent implements OnInit, AfterViewInit {
                         const loadScript = obj["launchReturnJson"]["loadScript"];
 
                         // Parse out width and height from loadScript atm only the transformer has this value in the loadscript
-                        let pattern = /(\{.+?})/g; // parse the object containing the width and height
+                        const pattern = /(\{.+?})/g; // parse the object containing the width and height
                         if(loadScript !== undefined && loadScript !== null && loadScript !== "undefined") {
                           const res = pattern.exec(loadScript);
 
@@ -99,12 +99,20 @@ export class AdsComponent implements OnInit, AfterViewInit {
 
                             const result = res[0]; // pick the object that has been parsed
 
-                            pattern = /(\'.+?')/g; // pattern for obtaining the width and height from the object
-                            const values = pattern.exec(result); // parse the object for obtaining width and height
+                          /*  pattern = /(\'.+?')/g; // pattern for obtaining the width and height from the object
+                            const values = pattern.exec(result); // parse the object for obtaining width and height*/
+                            /*  console.log(result);*/
 
-                            if (values !== null || values !== undefined) {
+                         /*   if (values !== null || values !== undefined) {
+                           /!*   console.log(values);*!/
                               obj["width"] = values[0].replace(/\'/g,""); // set the width, parses the '' that surrounds the value
                               obj["height"] = values[1].replace(/\'/g,""); // set the height
+                            } */
+                            const resSplit = result.split("'");
+                            if (resSplit !== null || resSplit !== undefined) {
+                           /*   console.log(values);*/
+                              obj["width"] = resSplit[1]; // set the width, parses the '' that surrounds the value
+                              obj["height"] = resSplit[3]; // set the height
                             }
                           }
                         }
@@ -243,7 +251,7 @@ export class AdsComponent implements OnInit, AfterViewInit {
 
         const obj = {
           "bannerId": this.bannerId,
-          "service": "cacheTime<=>60<;>url<=>https:\/\/tte9.pliing.com\/ApiSocut24-web\/FeedServlet?idMarket=" + this.store.marketId
+          "service": "cacheTime<=>0<;>url<=>https:\/\/tte9.pliing.com\/ApiSocut24-web\/FeedServlet?marketId=" + this.store.marketId
         };
 
 
@@ -254,7 +262,10 @@ export class AdsComponent implements OnInit, AfterViewInit {
             response => {
               const iframe: any = document.getElementById("adIframe");
               iframe.style.visibility = "visible";
+/*
               iframe.contentDocument.write(this.loadScript);
+*/
+              iframe.setAttribute("srcdoc",this.loadScript);
             });
       });
   }
@@ -333,7 +344,7 @@ export class AdsComponent implements OnInit, AfterViewInit {
       "width": this.format.width,
       "height": this.format.height,
       "publisher": 89, /*this.store.publisherId*/
-      "service": "cacheTime<=>60<;>url<=>https:\/\/tte9.pliing.com\/ApiSocut24-web\/FeedServlet?idMarket=" + this.store.marketId,
+      "service": "cacheTime<=>60<;>url<=>https:\/\/tte9.pliing.com\/ApiSocut24-web\/FeedServlet?marketId=" + this.store.marketId,
       "tags": ["Scout24-custom", this.format.name, this.store.marketId]
     };
 

@@ -26,7 +26,7 @@
       <div class="sc-search-area">
         <!-- BEGIN SEARCH FIELD -->
         <div id="sc-search-field">
-          <input type="text" [(ngModel)]="objectId" (keyup)="validateObjectID();" placeholder="Object ID" (keyup.enter)="getData();" />
+          <input type="text" [(ngModel)]="store.objectId" (keyup)="validateObjectID();" placeholder="Object ID" (keyup.enter)="getData();" />
           <i class="fa fa-search" aria-hidden="true"></i>
           <button (click)="getData();">Find</button>
           <span *ngIf="showObjectidWarning" style="color: red;">Enter an object ID</span>
@@ -43,7 +43,7 @@
               <div *ngIf="showLogoDiv">-->
 
 
-          <div id="imgDivContainer" class="sc-object-select-area"> <!--Add class "sc-drop-media" when mouse drag over-->
+          <div id="imgDivContainer" class="sc-object-select-area">
 
 
             <div class="sc-object-placeholder">
@@ -89,9 +89,12 @@
 
 
             <!-- BEGIN SEARCH RESULT AREA -->
-            <div class="sc-search-result-area" *ngIf="showData">
+            <div class="sc-search-result-area" *ngIf="store.showData">
               <div class="sc-search-result">
-                <div><img class="sc-search-result-thumbnail" src="{{objectData.adpicture.href}}"></div>
+                <!--<div><img class="sc-search-result-thumbnail" src="{{objectData.adpicture.href}}"></div>-->
+                <div>
+                  <img (click)="selectImagePopup();" class="sc-search-result-thumbnail" src={{selectedImage}}>
+                </div>
                 <div class="sc-search-result-metadata">
 
                   <h1>{{objectData.address.geoHierarchy.quarter.name}},
@@ -102,7 +105,7 @@
                   </h1>
 
                   <div class="col-md-4">
-                   <!-- <h2>{{objectData.price.value}} {{objectData.price.currency}}</h2>-->
+                    <!-- <h2>{{objectData.price.value}} {{objectData.price.currency}}</h2>-->
                     <h2>{{objectData.pricem2}} &euro; m<sup>2</sup></h2>
                     <!--<span>Kaufpreis</span>-->
                   </div>
@@ -110,6 +113,7 @@
                     <h2>{{objectData.livingspace}} m<sup>2</sup></h2>
                     <span>Wohnfläche</span>
                   </div>
+
                   <!-- <div class="col-md-4">
                      <h2>{{objectData.livingspace}} m<sup>2</sup></h2>
                      <span>Wohnfläche</span>
@@ -138,20 +142,19 @@
             </div>
             <!-- END SEARCH RESULT AREA -->
 
-
-
-
           </div>
-
-
-
-          <!--    </div>-->
         </div>
         <!-- END ADD LOGO-->
-
       </div>
 
     </div>
+
+    <div *ngIf="selectimagepopup" style="position: fixed; width: 100%; height: 100%; background-color: grey; z-index: 999">
+      <div *ngFor="let img of objectData.allpictures">
+        <img (click)="selectImage(img.image);" class="sc-search-result-thumbnail" src="{{img.image}}">
+      </div>
+    </div>
+
 
     <!--TEST-->
     <!--  <div class="col-md-4 sc-selected-objects-container"></div>-->
@@ -195,7 +198,7 @@
 
             <div id="sc-selected-property" *ngIf="object.type === undefined">
               <div class="sc-selected-object-thumbnail-wrapper">
-                <img class="sc-selected-object-thumbnail" src="{{object.adpicture.href}}">
+                <img class="sc-selected-object-thumbnail" src="{{object.adpicture.href}}">  <!--.href-->
               </div>
 
               <div class="sc-selected-object-metadata">
@@ -206,7 +209,7 @@
                 </label>
                 <label class="sc-sub">
                   <span id="price">{{object.pricem2}} &euro; m<sup>2</sup></span>
-                 <!-- <span id="currency">{{object.price.currency}}</span>-->
+                  <!-- <span id="currency">{{object.price.currency}}</span>-->
                 </label>
                 <div class="btn-card-thumbnail-delete">
                   <i class="fa fa-times" (click)="removeObject(i)"></i>
