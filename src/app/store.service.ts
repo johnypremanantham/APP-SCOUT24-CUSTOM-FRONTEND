@@ -8,10 +8,9 @@ export class StoreService {
   marketDescription;
   markets;
   market;
-  serverName = 'http://rd001:32826/ApiScout24-web';  // https://tte9.pliing.com/ApiScout24-web https://tte9.pliing.com/ApiSocut24-web http://rd001:32826/ApiSocut24-web/FeedServlet?marketId=1  http://rd001:32826/ApiSocut24-web
+  serverName = 'https://tte9.pliing.com/ApiScout24-web';  // https://tte9.pliing.com/ApiScout24-web https://tte9.pliing.com/ApiSocut24-web http://rd001:32826/ApiSocut24-web/FeedServlet?marketId=1  http://rd001:32826/ApiSocut24-web
   imageServerUrl = 'https://admin.pliing.com/AdAssetsService-web';
-  adServerUrl  = "https://test.pliing.com/BanGen";  // ADMIN
-  serverPin = null;
+  adServerUrl  = "https://admin.pliing.com/BanGen";  // ADMIN
   expandSidebar = true;
   showMarketOptions = false;
   userName;
@@ -51,7 +50,6 @@ export class StoreService {
   heightlightFeed(){
     const feedTab: any = document.getElementById('feedIndicator');
     const adTab: any = document.getElementById('adsIndicator');
-    console.log(adTab);
     setTimeout(function () {
       if(feedTab !== null) {
         feedTab.classList.add('active-page');

@@ -64,6 +64,7 @@ export class CreatemarketComponent implements OnInit {
           response => {
             response = JSON.parse(response['_body']);
             this.store.market = response[0];
+            this.store.marketId = this.store.market.id;
 
             this.json.getJSON(this.store.serverName + '/Market')
               .subscribe(response => {

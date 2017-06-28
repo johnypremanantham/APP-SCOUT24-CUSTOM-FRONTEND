@@ -72,7 +72,7 @@
       xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
           data = xhr.responseText;
-          localStorage.setItem("username", "CHANGE ME"); //data
+          localStorage.setItem("username", data); //data
         }
       }
       xhr.open('GET', 'FrontendLogin', true);

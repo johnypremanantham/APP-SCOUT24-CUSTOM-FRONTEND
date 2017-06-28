@@ -251,9 +251,11 @@ export class AdsComponent implements OnInit, AfterViewInit {
 
         const obj = {
           "bannerId": this.bannerId,
-          "service": "cacheTime<=>0<;>url<=>https:\/\/tte9.pliing.com\/ApiSocut24-web\/FeedServlet?marketId=" + this.store.marketId
+          /*"service": "cacheTime<=>0<;>url<=>http:\/\/test.pliing.com\/ApiScout24-web\/FeedServlet?marketId=" + this.store.marketId + "&lazyLoad=yes"*/
+          "service": "cacheTime<=>0<;>url<=>https:\/\/tte9.pliing.com\/ApiScout24-web\/FeedServlet?marketId=" + this.store.marketId + "&lazyLoad=yes" // lazyLoad=yes
         };
 
+        console.log(obj);
 
         this.showPreviewPopup = true;
         // Updates ad to the service given in obj
@@ -262,9 +264,6 @@ export class AdsComponent implements OnInit, AfterViewInit {
             response => {
               const iframe: any = document.getElementById("adIframe");
               iframe.style.visibility = "visible";
-/*
-              iframe.contentDocument.write(this.loadScript);
-*/
               iframe.setAttribute("srcdoc",this.loadScript);
             });
       });
@@ -291,7 +290,7 @@ export class AdsComponent implements OnInit, AfterViewInit {
 
   createAd(format) {
 
-    if(this.showResponsiveDiv){ // If it is a response ad format check that width and height also is defined
+    if(this.showResponsiveDiv){ // If it is a responsive ad format check that width and height also is defined
       if(this.adName !== undefined && this.adName !== "" && this.width !== undefined && this.width !== "" && this.height !== undefined && this.height !== "") {
         this.duplicateAd(this.bannerId);
       }else{
@@ -310,8 +309,6 @@ export class AdsComponent implements OnInit, AfterViewInit {
           const inp: any = document.getElementById("adWidthInput");
           inp.style.border = "1px solid red";
         }
-
-
       }
     }else{ // If the format is not responsive only the adname must be defined
       if(this.adName !== undefined && this.adName !== "") {
@@ -327,12 +324,11 @@ export class AdsComponent implements OnInit, AfterViewInit {
 
   duplicateAd(bannerId) {
 
-
-    if(this.width !== undefined){
+    if(this.width !== undefined){ // If no width has been defined use the format width, if it is a transformer the width will be 100%
       this.format.width = this.width;
     }
 
-    if(this.height !== undefined){
+    if(this.height !== undefined){ // If no height has been defined use the format height, if it is a transformer the height will be 100%
       this.format.height = this.height;
     }
 
@@ -344,7 +340,7 @@ export class AdsComponent implements OnInit, AfterViewInit {
       "width": this.format.width,
       "height": this.format.height,
       "publisher": 89, /*this.store.publisherId*/
-      "service": "cacheTime<=>60<;>url<=>https:\/\/tte9.pliing.com\/ApiSocut24-web\/FeedServlet?marketId=" + this.store.marketId,
+      "service": "cacheTime<=>60<;>url<=>https:\/\/tte9.pliing.com\/ApiScout24-web\/FeedServlet?marketId=" + this.store.marketId + "&lazyLoad=yes", // lazyLoad=yes
       "tags": ["Scout24-custom", this.format.name, this.store.marketId]
     };
 
@@ -362,23 +358,9 @@ export class AdsComponent implements OnInit, AfterViewInit {
         response => {
           const body = JSON.parse(response["_body"]);
           this.bannerId = body["bannerId"];
-
           this.showmetadata = false;
           this.store.createAdDiv = false;
-
-
           this.getAds(true);
-          /* this.hidePreviewPopup();
-           this.storeservice.createdAdDiv = false;
-           this.storeservice.adListDiv = true;
-           var _localThis = this;  //MOVE THIS PART TO GETADS(); SEND A PARAMTER GETADS(TRUE) IF TRUE IT SHOULD HIGHTLIGHT OTHERWISE NOT
-           setTimeout(function () {
-           var tr: any = document.getElementById(_localThis.bannerId);
-           if(tr !== null) {
-           tr.style.backgroundColor = "rgba(0, 0, 0, 0.1)";
-           }
-           }, 1500);*/
-
         });
   }
 

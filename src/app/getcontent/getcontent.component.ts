@@ -34,6 +34,9 @@ export class GetcontentComponent implements OnInit {
   selectedImage;
   selectimagepopup = false;
 
+  tileWidth = "285";
+  tileHeight = "300";
+
   constructor(public store: StoreService, private json: JsonService, private activatedRoute: ActivatedRoute, private dragulaService: DragulaService) {
 
   }
@@ -42,6 +45,7 @@ export class GetcontentComponent implements OnInit {
 
   // CLICK SIDEBAR
   ngOnInit() {
+    console.log("getmarket init");
     this.store.showMarketOptions = true;
     this.store.heightlightFeed();
     let getObjects = true;
@@ -81,14 +85,13 @@ export class GetcontentComponent implements OnInit {
 
     this.json.getJSON(this.store.serverName + '/FeedServlet?marketId=' + this.store.marketId)
       .subscribe(response => {
-        console.log(response);
+        /*console.log(response);*/
         this.store.selectedDataContent = response;
         this.store.selectedDataContent.forEach(function (elm, index) {
           if(elm["type"] === undefined){
             const img = elm["adpicture"]["href"]; /*["href"]*/
             elm["adpicture"]["href"] = img.replace("%WIDTH%", "278").replace("%HEIGHT%","125"); /* ["href"]*/
             elm["pricem2"] = Math.round((elm["price"]["value"]/elm["livingspace"]));
-
           }
         });
         this.store.showComponent = true;
@@ -141,9 +144,14 @@ export class GetcontentComponent implements OnInit {
 
   getData(){
     this.showFilesizeError = false;
+    const _localThis = this;
     const isInt = parseInt(this.store.objectId);
+
+    console.log(this.store.objectId + "|");
+    console.log(isInt);
+
     if(this.store.objectId !== "" && this.store.objectId !== undefined && isInt) {
-      this.json.getJSON(this.store.serverName + '/GetAppartment?pin=' + this.store.serverPin + '&objectId=' + this.store.objectId)
+      this.json.getJSON(this.store.serverName + '/GetApartment?objectId=' + this.store.objectId)
         .subscribe(response => {
           // If entered object ID is valid
           if(response["error"] === undefined) {
@@ -156,7 +164,7 @@ export class GetcontentComponent implements OnInit {
                   // If a img that can scale is found pick that img as the one to use
                   if (elm1["scale"] === "SCALE") {
                     elm = {};
-                    elm["image"] = elm1["href"].replace("%WIDTH%", "285").replace("%HEIGHT%", "300");
+                    elm["image"] = elm1["href"].replace("%WIDTH%", _localThis.tileWidth).replace("%HEIGHT%", _localThis.tileHeight);
                     response["allpictures"][index] = elm;
                   }
                 });
@@ -179,16 +187,21 @@ export class GetcontentComponent implements OnInit {
     if(this.store.selectedObjects === undefined){
       this.store.selectedObjects = [];
     }
+
+
+
+    const img = this.selectedImage;
     const obj = {
       "type": "object",
-      "url": this.selectedImage,
-      "objectid": this.store.objectId
-    }
+      "url": img.replace("%WIDTH%", this.tileWidth).replace("%HEIGHT%", this.tileHeight),
+      "objectid": this.store.objectId.trim()
+    };
    /* this.store.selectedObjects.push(parseInt(this.store.objectId));*/
+   // Push obj, img should not have width height replaced when pushed
     this.store.selectedObjects.push(obj);
-    this.json.getJSON(this.store.serverName + '/GetAppartment?pin='+this.store.serverPin+'&objectId=' + this.store.objectId)
+    this.json.getJSON(this.store.serverName + '/GetApartment?objectId=' + this.store.objectId)
       .subscribe(response => {
-        console.log(response);
+        /*console.log(response);*/
        /* const img = response["adpicture"]["href"];*/
         response["adpicture"]["href"] = this.selectedImage.replace("%WIDTH%", "278").replace("%HEIGHT%","125"); /*["href"]*/
         response["pricem2"] = Math.round((response["price"]["value"]/response["livingspace"]));
@@ -238,11 +251,12 @@ export class GetcontentComponent implements OnInit {
 
 
   saveObjects(){
-    console.log(this.store.selectedObjects);
+   /* console.log(this.store.selectedObjects);*/
     const obj = {
         'marketId': this.store.marketId,
         'json': this.store.selectedObjects
       };
+    console.log(this.store.selectedObjects);
     this.json.postJSON(this.store.serverName + '/Object', obj)
       .subscribe(
         response => {

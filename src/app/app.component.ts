@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
     this.store.expandSidebar = false;
     this.router.navigate(['/createmarket']);
   }
+
   getMarketContent(market) {
     this.store.objectId = '';
     this.store.showData = false;
@@ -38,8 +39,17 @@ export class AppComponent implements OnInit {
     this.store.marketId = market.id;
     this.store.marketName = market.name;
     this.store.marketDescription = market.description;
-    this.store.selectedObjects;
+    this.store.selectedObjects = [];
     this.store.selectedDataContent = [];
+
+    // Highlight feedtab
+    const feedTab: any = document.getElementById('feedIndicator');
+    const adTab: any = document.getElementById('adsIndicator');
+    if(feedTab && adTab !== null) {
+      feedTab.classList.add('active-page');
+      adTab.classList.remove('active-page');
+    }
+
     this.store.markets.forEach(function (market) {
       const removeedit: any = document.getElementById('edit-' + market.id);
       if(removeedit !== null){
@@ -57,8 +67,8 @@ export class AppComponent implements OnInit {
         this.store.selectedDataContent = response;
         this.store.selectedDataContent.forEach(function (elm, index) {
           if(elm["type"] === undefined){
-            const img = elm["adpicture"]; /*["href"]*/
-            elm["adpicture"] = img.replace("%WIDTH%", "278").replace("%HEIGHT%","125");  /*["href"]*/
+            const img = elm["adpicture"]["href"]; /*["href"]*/
+            elm["adpicture"]["href"] = img.replace("%WIDTH%", "278").replace("%HEIGHT%","125");  /*["href"]*/
             elm["pricem2"] = Math.round((elm["price"]["value"]/elm["livingspace"]));
 
           }

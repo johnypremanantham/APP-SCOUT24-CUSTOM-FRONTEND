@@ -1,5 +1,20 @@
 <div *ngIf="store.showComponent" style="height: 100%;">
 
+
+  <!--BEGIN SCOUT 24 GALLERY POPUP-->
+
+  <div *ngIf="selectimagepopup" style="position: fixed; border-radius: 4px; width: 750px; height: auto; padding: 30px; background-color: #fff; z-index: 999;">
+    <div class="col-md-3" style="position: relative;" *ngFor="let img of objectData.allpictures">
+      <img *ngIf="img.image !== undefined" style="border: 1px solid #bbbbbb; width: 150px; height: 150px;" (click)="selectImage(img.image);" class="sc-search-result-thumbnail" src="{{img.image}}">
+    </div>
+  </div>
+
+  <!--END SCOUT 24 GALLERY POPUP-->
+
+
+
+
+
   <!-- BEGIN PAGE HEAD-->
   <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
@@ -147,12 +162,6 @@
         <!-- END ADD LOGO-->
       </div>
 
-    </div>
-
-    <div *ngIf="selectimagepopup" style="position: fixed; width: 100%; height: 100%; background-color: grey; z-index: 999">
-      <div *ngFor="let img of objectData.allpictures">
-        <img (click)="selectImage(img.image);" class="sc-search-result-thumbnail" src="{{img.image}}">
-      </div>
     </div>
 
 
